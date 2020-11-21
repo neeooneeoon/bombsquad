@@ -46,7 +46,7 @@ public class PlayScreen implements Screen {
         hud = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("C:\\Users\\ASUS\\Documents\\LibGDX\\core\\assets\\Tiled map\\Boomer.tmx");
+        map = mapLoader.load("C:\\Users\\ASUS\\Documents\\BoomerProject\\boomer\\Boomer\\core\\assets\\Tiled map\\BomberMan.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Boomer.PPM);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
@@ -57,7 +57,7 @@ public class PlayScreen implements Screen {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-        //breakable bricks
+        //walls
         for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -69,7 +69,7 @@ public class PlayScreen implements Screen {
             body.createFixture(fdef);
         }
 
-        //walls
+        //breakable bricks
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;

@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class Boomer extends Game {
-	public static final int V_WIDTH = 600;
-	public static final int V_HEIGHT = 260;
+	public static final int V_WIDTH = 1000;
+	public static final int V_HEIGHT = 400;
 	public static final float PPM = 100;
 
 	public SpriteBatch batch;
