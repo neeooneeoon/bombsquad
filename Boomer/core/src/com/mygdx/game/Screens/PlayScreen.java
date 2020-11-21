@@ -50,7 +50,7 @@ public class PlayScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / Boomer.PPM);
         gameCam.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-        world = new World(new Vector2(0, -10 / Boomer.PPM), true);
+        world = new World(new Vector2(0, 0 / Boomer.PPM), true);
         b2dr = new Box2DDebugRenderer();
 
         BodyDef bdef = new BodyDef();
@@ -109,7 +109,7 @@ public class PlayScreen implements Screen {
         handleInput(dt);
         world.step(1/60f, 6, 2);
 
-        gameCam.position.x = player.b2body.getPosition().x;
+        //gameCam.position.x = player.b2body.getPosition().x;
 
         gameCam.update();
         renderer.setView(gameCam);
