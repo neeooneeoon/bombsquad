@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Boomer;
 import com.mygdx.game.Scences.Hud;
 import com.mygdx.game.Sprites.Player;
+import com.mygdx.game.Tools.B2WorldCreator;
 import org.graalvm.compiler.word.Word;
 
 public class PlayScreen implements Screen {
@@ -53,33 +54,7 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, 0 / Boomer.PPM), true);
         b2dr = new Box2DDebugRenderer();
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-        //walls
-        for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / Boomer.PPM, (rect.getY() + rect.getHeight() / 2) / Boomer.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / Boomer.PPM, rect.getHeight() / 2 / Boomer.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        //breakable bricks
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / Boomer.PPM, (rect.getY() + rect.getHeight() / 2) / Boomer.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / Boomer.PPM, rect.getHeight() / 2 / Boomer.PPM);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new B2WorldCreator(world, map);
 
         player = new Player(world);
         player.b2body.setGravityScale(0);
@@ -124,6 +99,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         b2dr.render(world, gameCam.combined);
+        
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -155,6 +131,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
     }
 }
