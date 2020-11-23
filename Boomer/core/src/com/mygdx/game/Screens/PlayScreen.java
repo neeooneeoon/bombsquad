@@ -42,6 +42,7 @@ public class PlayScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     public PlayScreen(Boomer game) {
+        atlas = new TextureAtlas("C:\\Users\\ASUS\\Documents\\BoomerProject\\boomer\\Boomer\\core\\assets\\Movements\\TheBomberMan.pack");
         this.game = game;
 
         gameCam = new OrthographicCamera();
@@ -58,8 +59,12 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world, map);
 
-        player = new Player(world);
+        player = new Player(world, this);
         player.b2body.setGravityScale(0);
+    }
+
+    public TextureAtlas getAtlas() {
+        return atlas;
     }
 
     @Override
@@ -96,17 +101,18 @@ public class PlayScreen implements Screen {
 
         Gdx.gl.glClearColor(0, 0, 1, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         renderer.render();
 
         b2dr.render(world, gameCam.combined);
 
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-//        game.batch.setProjectionMatrix(gameCam.combined);
-//        game.batch.begin();
-//        game.batch.draw(texture, 0, 0);
-//        game.batch.end();
     }
 
     @Override
