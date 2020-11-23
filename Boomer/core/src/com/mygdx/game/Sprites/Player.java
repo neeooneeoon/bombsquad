@@ -33,7 +33,7 @@ public class Player extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / Boomer.PPM);
+        shape.setRadius((float) (6.5 / Boomer.PPM));
         fdef.shape = shape;
         b2body.createFixture(fdef);
     }

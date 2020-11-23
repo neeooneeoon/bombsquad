@@ -1,0 +1,12 @@
+
+TheBomberMan.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+boomer
+  rotate: false
+  xy: 1, 1
+  size: 224, 383
+  orig: 224, 383
+  offset: 0, 0
+  index: -1
