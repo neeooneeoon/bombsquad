@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -28,6 +29,7 @@ import org.graalvm.compiler.word.Word;
 public class PlayScreen implements Screen {
     private Boomer game;
     private Player player;
+    private TextureAtlas atlas;
     //Texture texture;
     private OrthographicCamera gameCam;
     private Viewport viewport;
@@ -41,7 +43,7 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(Boomer game) {
         this.game = game;
-        //texture = new Texture("C:\\Users\\ASUS\\Documents\\LibGDX\\core\\assets\\images\\badlogic.jpg");
+
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(Boomer.V_WIDTH / Boomer.PPM, Boomer.V_HEIGHT / Boomer.PPM, gameCam);
         hud = new Hud(game.batch);
@@ -84,8 +86,6 @@ public class PlayScreen implements Screen {
         handleInput(dt);
         world.step(1/60f, 6, 2);
 
-        //gameCam.position.x = player.b2body.getPosition().x;
-
         gameCam.update();
         renderer.setView(gameCam);
     }
@@ -99,7 +99,7 @@ public class PlayScreen implements Screen {
         renderer.render();
 
         b2dr.render(world, gameCam.combined);
-        
+
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
