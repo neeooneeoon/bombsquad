@@ -16,14 +16,18 @@ public class Player extends Sprite {
         super(screen.getAtlas().findRegion("boomer"));
         this.world = world;
         definePlayer();
-        bomberStand = new TextureRegion(getTexture(), 1, 11, 16, 16);
+        bomberStand = new TextureRegion(getTexture(), 64, 0, 16, 16);
         setBounds(0, 0, 16 / Boomer.PPM, 16 / Boomer.PPM);
         setRegion(bomberStand);
     }
 
+    public void update(float dt) {
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+    }
+
     public void definePlayer() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / Boomer.PPM, 32 / Boomer.PPM);
+        bdef.position.set(16 / Boomer.PPM, 304 / Boomer.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

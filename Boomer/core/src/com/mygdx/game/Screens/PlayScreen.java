@@ -91,6 +91,8 @@ public class PlayScreen implements Screen {
         handleInput(dt);
         world.step(1/60f, 6, 2);
 
+        player.update(dt);
+
         gameCam.update();
         renderer.setView(gameCam);
     }
