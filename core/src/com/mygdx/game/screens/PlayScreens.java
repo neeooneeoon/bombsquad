@@ -1,24 +1,15 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Boomer;
 
-enum DIRECTION{
+enum DIRECTION {
     UP,
     DOWN,
     RIGHT,
@@ -34,38 +25,33 @@ public class PlayScreens implements Screen {
 
     DIRECTION direction = DIRECTION.STAY;
 
-
+    private final static float PlayerAnimationSpeed = 0.18f;
     private float stateTime;
 
     public PlayScreens(Boomer game) {
         this.game = game;
         rolls = new Animation[5];
 
-        TextureRegion[][] rollSpriteSheet  = TextureRegion.split(new Texture("output-onlinepngtools.png"), 32,32);
+        TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("output-onlinepngtools.png"), 32, 32);
+
 
         TextureRegion[] left = new TextureRegion[3];
-        for( int i =0; i < 3; i++){
-            left[i] = rollSpriteSheet[0][i];
-        }
+        System.arraycopy(rollSpriteSheet[0], 0, left, 0, 3);
         TextureRegion[] down = new TextureRegion[3];
-        for( int i =3; i < 6; i++){
-            down[i-3] = rollSpriteSheet[0][i];
-        }
+        System.arraycopy(rollSpriteSheet[0], 3, down, 0, 3);
         TextureRegion[] right = new TextureRegion[3];
-        for( int i =0; i < 3; i++){
-            right[i] = rollSpriteSheet[1][i];
-        }
+        System.arraycopy(rollSpriteSheet[1], 0, right, 0, 3);
         TextureRegion[] up = new TextureRegion[3];
-        for( int i =3; i < 6; i++){
-            up[i-3] = rollSpriteSheet[1][i];
-        }
+        System.arraycopy(rollSpriteSheet[1], 3, up, 0, 3);
         TextureRegion[] stay = new TextureRegion[1];
         stay[0] = rollSpriteSheet[0][4];
-        rolls[0] = new Animation(0.5f, left);
-        rolls[1] = new Animation(0.5f, right);
-        rolls[2] = new Animation(0.5f, up);
-        rolls[3] = new Animation(0.5f, down);
-        rolls[4] = new Animation(0.5f, stay);
+
+
+        rolls[0] = new Animation(PlayerAnimationSpeed, left);
+        rolls[1] = new Animation(PlayerAnimationSpeed, right);
+        rolls[2] = new Animation(PlayerAnimationSpeed, up);
+        rolls[3] = new Animation(PlayerAnimationSpeed, down);
+        rolls[4] = new Animation(PlayerAnimationSpeed, stay);
     }
 
     @Override
@@ -73,20 +59,24 @@ public class PlayScreens implements Screen {
     }
 
     public void handleInput(float dt) {
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            y += 100*dt;
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            y += 100 * dt;
             direction = DIRECTION.UP;
-        } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            x += 100*dt;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            x += 100 * dt;
             direction = DIRECTION.RIGHT;
-        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            y -= 100*dt;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            y -= 100 * dt;
             direction = DIRECTION.DOWN;
-        } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            x -= 100*dt;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            x -= 100 * dt;
             direction = DIRECTION.LEFT;
         }
 
+        if( Gdx.input.isTouched()){
+            System.out.println( Gdx.input.getX() + "\t" + Gdx.input.getY());
+            //Gdx.app.exit();
+        }
 
     }
 
@@ -94,15 +84,9 @@ public class PlayScreens implements Screen {
         handleInput(dt);
     }
 
-    @Override
-    public void render(float delta) {
-        update(delta);
-        stateTime += delta*3;
-        Gdx.gl.glClearColor(0, 0, 1, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public void draw() {
         game.batch.begin();
-
-        switch (direction){
+        switch (direction) {
             case LEFT:
                 game.batch.draw((TextureRegion) rolls[0].getKeyFrame(stateTime, true), x, y, 50, 50);
                 break;
@@ -120,6 +104,15 @@ public class PlayScreens implements Screen {
                 break;
         }
         game.batch.end();
+    }
+
+    @Override
+    public void render(float delta) {
+        update(delta);
+        stateTime += delta * 3;
+        Gdx.gl.glClearColor(0, 0, 1, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        draw();
         direction = DIRECTION.STAY;
     }
 
