@@ -13,18 +13,12 @@ public class Player extends Sprite {
     //the world that our player is going to live in
     public World world;
     public Body b2body;
-    public TextureRegion bomberStand;
 
 
-    public Player (World world, PlayScreens screen) {
-        //super(screen.getAtlas().findRegion("boomer"));
+    public Player(World world) {
         this.world = world;
         definePlayer();
-        bomberStand = new TextureRegion();
-        setBounds(0, 0, 32, 32 );
-        TextureRegion[][] temp = TextureRegion.split(new Texture("output-onlinepngtools.png"), 32, 32);
-        bomberStand = temp[0][4];
-        setRegion(bomberStand);
+        setBounds(0, 0, 32, 32);
     }
 
     public void update(float dt) {
@@ -33,13 +27,13 @@ public class Player extends Sprite {
 
     public void definePlayer() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100 , 100);
+        bdef.position.set(100, 100);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(16, 16, new Vector2(0,0), 0);
+        shape.setAsBox(16, 16, new Vector2(0, 0), 0);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

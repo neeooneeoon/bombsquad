@@ -73,8 +73,8 @@ public class PlayScreens implements Screen {
 
         new B2WorldCreator(world, map);
 
-        player = new Player(world, this);
-        //player.b2body.setGravityScale(0);
+        player = new Player(world);
+        player.b2body.setGravityScale(0);
 
 
     }
@@ -109,7 +109,6 @@ public class PlayScreens implements Screen {
 
     public void handleInputPlayer(float dt) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            y += 100 * dt;
             direction = DIRECTION.UP;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             x += 100 * dt;
@@ -130,51 +129,37 @@ public class PlayScreens implements Screen {
     }
 
     public void updatePlayer(float dt) {
-        handleInputPlayer(dt);
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            //player.b2body.applyLinearImpulse(new Vector2(0, 4f), player.b2body.getWorldCenter(), true);
-            player.b2body.setLinearVelocity(new Vector2(0,5000*dt));
-            //System.out.println(player.b2body.getLinearVelocity().x + " " + player.b2body.getLinearVelocity().y);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-           // player.b2body.applyLinearImpulse(new Vector2(1f, 0), player.b2body.getWorldCenter(), true);
-            player.b2body.setLinearVelocity(new Vector2(5000*dt,0));
-            //System.out.println(player.b2body.getLinearVelocity().x + " " + player.b2body.getLinearVelocity().y);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            //player.b2body.applyLinearImpulse(new Vector2(-1f, 0), player.b2body.getWorldCenter(), true);
-            player.b2body.setLinearVelocity(new Vector2(-5000*dt,0));
-            //System.out.println(player.b2body.getLinearVelocity().x + " " + player.b2body.getLinearVelocity().y);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            //player.b2body.applyLinearImpulse(new Vector2(0, -4f), player.b2body.getWorldCenter(), true);
-            player.b2body.setLinearVelocity(new Vector2(0,-5000*dt));
-            //System.out.println(player.b2body.getLinearVelocity().x + " " + player.b2body.getLinearVelocity().y);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            player.b2body.setLinearVelocity(new Vector2(0, 5000 * dt));
+            direction = DIRECTION.UP;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            player.b2body.setLinearVelocity(new Vector2(5000 * dt, 0));
+            direction = DIRECTION.RIGHT;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            player.b2body.setLinearVelocity(new Vector2(-5000 * dt, 0));
+            direction = DIRECTION.LEFT;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            player.b2body.setLinearVelocity(new Vector2(0, -5000 * dt));
+            direction = DIRECTION.DOWN;
         } else {
-            player.b2body.setLinearVelocity(new Vector2(0,0));
+            player.b2body.setLinearVelocity(new Vector2(0, 0));
+            direction = DIRECTION.STAY;
         }
-
-
-        world.step(1/60f, 6, 2);
+        world.step(1 / 60f, 6, 2);
         player.update(dt);
         x = player.getX();
         y = player.getY();
-        //System.out.println( "a " + x + " " + y);
-
-
-
-
     }
 
     public void drawPlayer() {
         game.batch.begin();
+
         switch (direction) {
             case LEFT:
                 game.batch.draw((TextureRegion) rolls[0].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
             case RIGHT:
-                game.batch.draw((TextureRegion
-                        ) rolls[1].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                game.batch.draw((TextureRegion) rolls[1].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
             case UP:
                 game.batch.draw((TextureRegion) rolls[2].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
@@ -186,6 +171,7 @@ public class PlayScreens implements Screen {
                 game.batch.draw((TextureRegion) rolls[4].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
         }
+
         game.batch.end();
     }
 
@@ -203,18 +189,15 @@ public class PlayScreens implements Screen {
     public void render(float delta) {
 
         updatePlayer(delta);
+
         stateTime += delta;
+
         Gdx.gl.glClearColor(0, 0, 1, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         drawTileMap();
         b2dr.render(world, gameCam.combined);
-
-        game.batch.begin();
-        player.draw(game.batch);
-        game.batch.end();
-
         drawPlayer();
-        direction = DIRECTION.STAY;
     }
 
     @Override
