@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="23">
+ <tileset firstgid="1" name="bomberman_spritesheet" tilewidth="16" tileheight="16" tilecount="96" columns="16">
+  <image source="bsSpriteSheet.png" width="256" height="96"/>
+  <tile id="75">
+   <objectgroup draworder="index">
+    <object id="1" x="0.25" y="0.25" width="16" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="90">
+   <objectgroup draworder="index">
+    <object id="3" x="0" y="0" width="16" height="16"/>
+   </objectgroup>
+  </tile>
+  <tile id="91">
+   <objectgroup draworder="index">
+    <object id="1" x="0" y="0" width="16" height="16"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <layer id="1" name="Background" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjZmBgYB7Fo3gUDxgGAKuMAqQ=
+  </data>
+ </layer>
+ <layer id="2" name="Graphics" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJyLYWBg8CEDx0AxOQBZrw+J9Ki9o/YORnvJyUMwDACLQR0R
+  </data>
+ </layer>
+ <objectgroup id="8" name="Walls">
+  <object id="12" x="0.360902" y="1.08271" width="15.5188" height="238.556"/>
+  <object id="13" x="0" y="0" width="240" height="15.8797"/>
+  <object id="14" x="224.12" y="0.721805" width="15.8797" height="238.917"/>
+  <object id="15" x="1.08271" y="224.842" width="238.195" height="14.4361"/>
+ </objectgroup>
+</map>

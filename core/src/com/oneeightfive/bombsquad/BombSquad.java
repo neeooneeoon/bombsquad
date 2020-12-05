@@ -7,32 +7,34 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class BombSquad extends Game {
-	public static final int V_WIDTH = 960;
-	public static final int V_HEIGHT = 540;
-	public static final float PPM = 100;
+	private SpriteBatch batch;
 
-	SpriteBatch batch;
-	public static AssetManager manager;
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		manager = new AssetManager();
-		manager.finishLoading();
+		setScreen(new PlayScreen(this));
 	}
 
 	@Override
 	public void render () {
 		super.render();
-		manager.update();
 	}
 	
 	@Override
 	public void dispose () {
 		super.dispose();
 		batch.dispose();
-		manager.dispose();
+		ResourceManager.getInstance().getAssetManager().dispose();
 	}
 }
