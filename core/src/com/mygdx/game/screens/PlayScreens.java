@@ -9,17 +9,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Boomer;
+import com.mygdx.game.Sprites.Boom;
 import com.mygdx.game.Sprites.Player;
 
 enum DIRECTION {
@@ -34,7 +32,8 @@ public class PlayScreens implements Screen {
     Boomer game;
     private float x;
     private float y;
-    Animation[] rolls;
+    Animation[] PlayerAnimation;
+    Animation BoomAnimation;
     private float tileSize = 32;
     private Player player;
 
@@ -57,7 +56,7 @@ public class PlayScreens implements Screen {
 
         this.game = game;
 
-        loadPlayerAnimation();
+        loadAnimation();
 
         gameCam = new OrthographicCamera();
         viewport = new FitViewport(Boomer.V_WIDTH, Boomer.V_HEIGHT, gameCam);
@@ -79,10 +78,10 @@ public class PlayScreens implements Screen {
 
     }
 
-    private void loadPlayerAnimation() {
+    private void loadAnimation() {
 
-        rolls = new Animation[5];
-        TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("output-onlinepngtools.png"), 32, 32);
+        PlayerAnimation = new Animation[5];
+        TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("transparent.png"), 32, 32);
 
         TextureRegion[] left = new TextureRegion[3];
         System.arraycopy(rollSpriteSheet[0], 0, left, 0, 3);
@@ -96,39 +95,33 @@ public class PlayScreens implements Screen {
         stay[0] = rollSpriteSheet[0][4];
 
 
-        rolls[0] = new Animation(PlayerAnimationSpeed, left);
-        rolls[1] = new Animation(PlayerAnimationSpeed, right);
-        rolls[2] = new Animation(PlayerAnimationSpeed, up);
-        rolls[3] = new Animation(PlayerAnimationSpeed, down);
-        rolls[4] = new Animation(PlayerAnimationSpeed, stay);
+        PlayerAnimation[0] = new Animation(PlayerAnimationSpeed, left);
+        PlayerAnimation[1] = new Animation(PlayerAnimationSpeed, right);
+        PlayerAnimation[2] = new Animation(PlayerAnimationSpeed, up);
+        PlayerAnimation[3] = new Animation(PlayerAnimationSpeed, down);
+        PlayerAnimation[4] = new Animation(PlayerAnimationSpeed, stay);
+
+        //boom
+        TextureRegion[] boom = new TextureRegion[3];
+        System.arraycopy(rollSpriteSheet[3], 0, boom, 0, 3);
+        BoomAnimation = new Animation(PlayerAnimationSpeed, boom);
     }
 
     @Override
     public void show() {
     }
 
-    public void handleInputPlayer(float dt) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            direction = DIRECTION.UP;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            x += 100 * dt;
-            direction = DIRECTION.RIGHT;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            y -= 100 * dt;
-            direction = DIRECTION.DOWN;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            x -= 100 * dt;
-            direction = DIRECTION.LEFT;
+    private void createBoom() {
+        for (int i = 0; i < player.numberOfBoom; i++) {
+            if (player.boom[i].available == false) {
+                player.boom[i] = new Boom(world, player.getX(), player.getY());
+                break;
+            }
         }
-
-        if (Gdx.input.isTouched()) {
-            System.out.println(Gdx.input.getX() + "\t" + Gdx.input.getY());
-            //Gdx.app.exit();
-        }
-
     }
 
     public void updatePlayer(float dt) {
+
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player.b2body.setLinearVelocity(new Vector2(0, 5000 * dt));
             direction = DIRECTION.UP;
@@ -145,6 +138,11 @@ public class PlayScreens implements Screen {
             player.b2body.setLinearVelocity(new Vector2(0, 0));
             direction = DIRECTION.STAY;
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            createBoom();
+        }
+
         world.step(1 / 60f, 6, 2);
         player.update(dt);
         x = player.getX();
@@ -156,21 +154,22 @@ public class PlayScreens implements Screen {
 
         switch (direction) {
             case LEFT:
-                game.batch.draw((TextureRegion) rolls[0].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                game.batch.draw((TextureRegion) PlayerAnimation[0].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
             case RIGHT:
-                game.batch.draw((TextureRegion) rolls[1].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                game.batch.draw((TextureRegion) PlayerAnimation[1].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
             case UP:
-                game.batch.draw((TextureRegion) rolls[2].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                game.batch.draw((TextureRegion) PlayerAnimation[2].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
             case DOWN:
-                game.batch.draw((TextureRegion) rolls[3].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                game.batch.draw((TextureRegion) PlayerAnimation[3].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
             case STAY:
-                game.batch.draw((TextureRegion) rolls[4].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                game.batch.draw((TextureRegion) PlayerAnimation[4].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
                 break;
         }
+
 
         game.batch.end();
     }
@@ -184,6 +183,22 @@ public class PlayScreens implements Screen {
 
     }
 
+    private void drawBoom() {
+        game.batch.begin();
+
+        for (int i = 0; i < player.numberOfBoom; i++) {
+            if (player.boom[i].available == true) {
+                System.out.println(i);
+                if (player.boom[i].timeLeft < 0) {
+                    player.boom[i].available = false;
+                }
+                player.boom[i].timeLeft -= Gdx.graphics.getDeltaTime();
+                game.batch.draw((TextureRegion) BoomAnimation.getKeyFrame(stateTime, true), player.boom[i].x, player.boom[i].y, tileSize, tileSize);
+            }
+        }
+
+        game.batch.end();
+    }
 
     @Override
     public void render(float delta) {
@@ -196,7 +211,8 @@ public class PlayScreens implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         drawTileMap();
-        b2dr.render(world, gameCam.combined);
+        drawBoom();
+        //b2dr.render(world, gameCam.combined);
         drawPlayer();
     }
 
