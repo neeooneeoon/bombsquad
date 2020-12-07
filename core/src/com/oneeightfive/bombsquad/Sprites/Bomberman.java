@@ -59,14 +59,14 @@ public class Bomberman extends Sprite {
         runningDown = new Animation(0.2f, frames);
         frames.clear();
 
-        standingUp = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 32, 2 * 32, 32, 32);
-        standingDown = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 3 * 32, 3 * 32, 32, 32);
-        standingLeft = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 3 * 32, 2 * 32, 32, 32);
-        standingRight = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 2 * 32, 2 * 32, 32, 32);
+        standingUp = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 0, 0, 32, 32);
+        standingDown = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 0, 150, 32, 32);
+        standingRight = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 40, 44, 32, 32);
+        standingLeft = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 0, 96, 32, 32);
 
         defineBomberman();
-        setBounds(0, 0, 32 / ResourceManager.PPM, 32 / ResourceManager.PPM);
-        setRegion(standingDown);
+        setBounds(0, 0, 32 / ResourceManager.PPM / 2, 32 / ResourceManager.PPM / 2);
+        setRegion(standingLeft);
     }
 
     public void defineBomberman() {
