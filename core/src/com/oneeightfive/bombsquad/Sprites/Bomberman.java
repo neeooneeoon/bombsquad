@@ -80,11 +80,10 @@ public class Bomberman extends Sprite {
         shape.setRadius(7 / ResourceManager.PPM);
         fdef.shape = shape;
         b2Body.createFixture(fdef).setUserData(this);
-
     }
 
     public void update(float dt) {
-
+        setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
     }
 
     public void draw(Batch batch) {

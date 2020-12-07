@@ -74,6 +74,7 @@ public class PlayScreen implements Screen {
         handleInput(delta);
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
+        player.update(delta);
         gameCam.update();
     }
 
