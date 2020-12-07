@@ -60,24 +60,24 @@ public class Bomberman extends Sprite {
         frames.clear();
 
         standingUp = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 32, 2 * 32, 32, 32);
-        standingDown = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 4 * 32, 2 * 32, 32, 32);
+        standingDown = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 3 * 32, 3 * 32, 32, 32);
         standingLeft = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 3 * 32, 2 * 32, 32, 32);
         standingRight = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 2 * 32, 2 * 32, 32, 32);
 
         defineBomberman();
-        setBounds(0, 0, 24 / ResourceManager.PPM, 24 / ResourceManager.PPM);
-        setRegion(standingUp);
+        setBounds(0, 0, 32 / ResourceManager.PPM, 32 / ResourceManager.PPM);
+        setRegion(standingDown);
     }
 
     public void defineBomberman() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(24 / ResourceManager.PPM, 24 / ResourceManager.PPM);
+        bdef.position.set(32 / ResourceManager.PPM, 32 / ResourceManager.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7 / ResourceManager.PPM);
+        shape.setRadius(7.5F / ResourceManager.PPM);
         fdef.shape = shape;
         b2Body.createFixture(fdef).setUserData(this);
     }
