@@ -8,8 +8,8 @@ import com.oneeightfive.bombsquad.ResourceManager;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width =  ResourceManager.V_WIDTH;
-		config.height = ResourceManager.V_HEIGHT;
+		config.width =  960;
+		config.height = 540;
 		new LwjglApplication(new BombSquad(), config);
 	}
 }

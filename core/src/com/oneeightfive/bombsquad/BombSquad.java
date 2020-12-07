@@ -1,11 +1,6 @@
 package com.oneeightfive.bombsquad;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
@@ -14,10 +9,6 @@ public class BombSquad extends Game {
 
 	public SpriteBatch getBatch() {
 		return batch;
-	}
-
-	public void setBatch(SpriteBatch batch) {
-		this.batch = batch;
 	}
 
 	@Override

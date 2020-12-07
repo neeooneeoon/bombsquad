@@ -4,9 +4,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.Disposable;
 
 public class ResourceManager implements Disposable {
-    public static final int V_WIDTH = 960;
-    public static final int V_HEIGHT = 540;
-    public static final float PPM = 500;
+    public static final int V_WIDTH = 32;
+    public static final int V_HEIGHT = 16;
+    public static final float PPM = 16;
 
     private static final ResourceManager instance = new ResourceManager();
 
@@ -26,6 +26,6 @@ public class ResourceManager implements Disposable {
 
     @Override
     public void dispose() {
-
+        assetManager.dispose();
     }
 }

@@ -1,0 +1,41 @@
+
+bsActors1.png
+size: 256,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bomb
+  rotate: false
+  xy: 2, 37
+  size: 216, 32
+  orig: 216, 32
+  offset: 0, 0
+  index: -1
+enemy
+  rotate: false
+  xy: 2, 19
+  size: 160, 16
+  orig: 160, 16
+  offset: 0, 0
+  index: -1
+explosion
+  rotate: false
+  xy: 2, 2
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1
+heart
+  rotate: false
+  xy: 155, 221
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 2, 71
+  size: 151, 182
+  orig: 151, 182
+  offset: 0, 0
+  index: -1
