@@ -34,6 +34,7 @@ public class PlayScreens implements Screen {
     private float y;
     Animation[] PlayerAnimation;
     Animation BoomAnimation;
+    Animation[] FlameAnimation;
     private float tileSize = 32;
     private Player player;
 
@@ -80,19 +81,20 @@ public class PlayScreens implements Screen {
 
     private void loadAnimation() {
 
+        //player
         PlayerAnimation = new Animation[5];
-        TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("transparent.png"), 32, 32);
+        TextureRegion[][] rollSpriteSheet = TextureRegion.split(new Texture("bomberman1.png"), 32, 64);
 
         TextureRegion[] left = new TextureRegion[3];
         System.arraycopy(rollSpriteSheet[0], 0, left, 0, 3);
         TextureRegion[] down = new TextureRegion[3];
-        System.arraycopy(rollSpriteSheet[0], 3, down, 0, 3);
+        System.arraycopy(rollSpriteSheet[3], 0, down, 0, 3);
         TextureRegion[] right = new TextureRegion[3];
         System.arraycopy(rollSpriteSheet[1], 0, right, 0, 3);
         TextureRegion[] up = new TextureRegion[3];
-        System.arraycopy(rollSpriteSheet[1], 3, up, 0, 3);
+        System.arraycopy(rollSpriteSheet[2], 0, up, 0, 3);
         TextureRegion[] stay = new TextureRegion[1];
-        stay[0] = rollSpriteSheet[0][4];
+        stay[0] = rollSpriteSheet[3][0];
 
 
         PlayerAnimation[0] = new Animation(PlayerAnimationSpeed, left);
@@ -102,9 +104,39 @@ public class PlayScreens implements Screen {
         PlayerAnimation[4] = new Animation(PlayerAnimationSpeed, stay);
 
         //boom
+        TextureRegion[][] boomSpriteSheet = TextureRegion.split(new Texture("transparent.png"), 32, 32);
+
         TextureRegion[] boom = new TextureRegion[3];
-        System.arraycopy(rollSpriteSheet[3], 0, boom, 0, 3);
+        System.arraycopy(boomSpriteSheet[3], 0, boom, 0, 3);
         BoomAnimation = new Animation(PlayerAnimationSpeed, boom);
+
+        //flame
+        TextureRegion[][] flameSpriteSheet = TextureRegion.split(new Texture("flames.png"), 32, 32);
+
+        FlameAnimation = new Animation[7];
+
+        TextureRegion[] flamesCenter = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[0], 0, flamesCenter, 0, 4);
+        TextureRegion[] flamesVertical = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[5], 0, flamesVertical, 0, 4);
+        TextureRegion[] flamesHorizontal = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[2], 0, flamesHorizontal, 0, 4);
+        TextureRegion[] flamesUp = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[6], 0, flamesUp, 0, 4);
+        TextureRegion[] flamesRight = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[4], 0, flamesRight, 0, 4);
+        TextureRegion[] flamesDown = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[7], 0, flamesDown, 0, 4);
+        TextureRegion[] flamesLeft = new TextureRegion[4];
+        System.arraycopy(flameSpriteSheet[3], 0, flamesLeft, 0, 4);
+
+        FlameAnimation[0] = new Animation(PlayerAnimationSpeed, flamesCenter);
+        FlameAnimation[1] = new Animation(PlayerAnimationSpeed, flamesVertical);
+        FlameAnimation[2] = new Animation(PlayerAnimationSpeed, flamesHorizontal);
+        FlameAnimation[3] = new Animation(PlayerAnimationSpeed, flamesUp);
+        FlameAnimation[4] = new Animation(PlayerAnimationSpeed, flamesRight);
+        FlameAnimation[5] = new Animation(PlayerAnimationSpeed, flamesDown);
+        FlameAnimation[6] = new Animation(PlayerAnimationSpeed, flamesLeft);
     }
 
     @Override
@@ -114,7 +146,7 @@ public class PlayScreens implements Screen {
     private void createBoom() {
         for (int i = 0; i < player.numberOfBoom; i++) {
             if (player.boom[i].available == false) {
-                player.boom[i] = new Boom(world, player.getX(), player.getY());
+                player.boom[i] = new Boom(world, player.getX(), player.getY(), 3);
                 break;
             }
         }
@@ -149,24 +181,33 @@ public class PlayScreens implements Screen {
         y = player.getY();
     }
 
+    private void drawAnimation(Animation t, boolean looping, float x, float y) {
+        game.batch.draw((TextureRegion) t.getKeyFrame(stateTime, looping), x, y, tileSize, tileSize);
+    }
+
+    private void drawPlayerAnimation(Animation t, boolean looping, float x, float y, float tileSizeX, float tileSizeY) {
+        game.batch.draw((TextureRegion) t.getKeyFrame(stateTime, looping), x, y, tileSizeX, tileSizeY);
+    }
+
+
     public void drawPlayer() {
         game.batch.begin();
 
         switch (direction) {
             case LEFT:
-                game.batch.draw((TextureRegion) PlayerAnimation[0].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                drawPlayerAnimation(PlayerAnimation[0], true, x, y, 32, 64);
                 break;
             case RIGHT:
-                game.batch.draw((TextureRegion) PlayerAnimation[1].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                drawPlayerAnimation(PlayerAnimation[1], true, x, y, 32, 64);
                 break;
             case UP:
-                game.batch.draw((TextureRegion) PlayerAnimation[2].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                drawPlayerAnimation(PlayerAnimation[2], true, x, y, 32, 64);
                 break;
             case DOWN:
-                game.batch.draw((TextureRegion) PlayerAnimation[3].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                drawPlayerAnimation(PlayerAnimation[3], true, x, y, 32, 64);
                 break;
             case STAY:
-                game.batch.draw((TextureRegion) PlayerAnimation[4].getKeyFrame(stateTime, true), x, y, tileSize, tileSize);
+                drawPlayerAnimation(PlayerAnimation[4], true, x, y, 32, 64);
                 break;
         }
 
@@ -183,17 +224,40 @@ public class PlayScreens implements Screen {
 
     }
 
+    private void drawFlame(int i) {
+        int radius = player.boom[i].radius;
+        drawAnimation(FlameAnimation[0], true, player.boom[i].x, player.boom[i].y);
+        for (int j = 1; j < radius; j++) {
+            drawAnimation(FlameAnimation[2], true, player.boom[i].x - 32 * j, player.boom[i].y);
+            drawAnimation(FlameAnimation[1], true, player.boom[i].x, player.boom[i].y + 32 * j);
+            drawAnimation(FlameAnimation[1], true, player.boom[i].x, player.boom[i].y - 32 * j);
+            drawAnimation(FlameAnimation[2], true, player.boom[i].x + 32 * j, player.boom[i].y);
+        }
+        drawAnimation(FlameAnimation[3], true, player.boom[i].x, player.boom[i].y + 32 * radius);
+        drawAnimation(FlameAnimation[4], true, player.boom[i].x + 32 * radius, player.boom[i].y);
+        drawAnimation(FlameAnimation[5], true, player.boom[i].x, player.boom[i].y - 32 * radius);
+        drawAnimation(FlameAnimation[6], true, player.boom[i].x - 32 * radius, player.boom[i].y);
+
+        player.boom[i].timeFlame += Gdx.graphics.getDeltaTime();
+    }
+
     private void drawBoom() {
         game.batch.begin();
 
         for (int i = 0; i < player.numberOfBoom; i++) {
             if (player.boom[i].available == true) {
-                System.out.println(i);
                 if (player.boom[i].timeLeft < 0) {
-                    player.boom[i].available = false;
+                    player.boom[i].Blow();
                 }
+                drawAnimation(BoomAnimation, true, player.boom[i].x, player.boom[i].y);
                 player.boom[i].timeLeft -= Gdx.graphics.getDeltaTime();
-                game.batch.draw((TextureRegion) BoomAnimation.getKeyFrame(stateTime, true), player.boom[i].x, player.boom[i].y, tileSize, tileSize);
+            }
+            if (player.boom[i].flame == true) {
+                if (player.boom[i].timeFlame <= 2 * PlayerAnimationSpeed) {
+                    drawFlame(i);
+                } else {
+                    player.boom[i].Clear();
+                }
             }
         }
 

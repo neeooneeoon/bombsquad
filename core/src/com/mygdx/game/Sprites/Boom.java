@@ -11,18 +11,32 @@ public class Boom extends Sprite {
     public float y;
     public double timeLeft;
     public boolean available = false;
+    public boolean flame = false;
+    public float timeFlame = 0;
+    public int radius = 1;
 
     public Boom() {
     }
 
-    public Boom(World world, float x, float y) {
+    public Boom(World world, float x, float y, int radius) {
         this.world = world;
         defineBoom();
         setBounds(0, 0, 32, 32);
         this.x = x;
         this.y = y;
-        timeLeft = 5;
+        this.radius = radius;
+        timeLeft = 4;
         available = true;
+    }
+
+    public void Blow(){
+        available = false;
+        flame = true;
+        timeFlame = 0;
+    }
+
+    public void Clear(){
+        flame = false;
     }
 
     public void update(float dt) {
