@@ -22,8 +22,10 @@ import com.oneeightfive.bombsquad.Tools.WorldCreator;
 public class PlayScreen implements Screen {
     private final BombSquad game;
     private final SpriteBatch batch;
-    private final TextureAtlas actorsAtlas;
-    private final TextureAtlas actorsAtlas2;
+    private final TextureAtlas charactersAtlas;
+    private final TextureAtlas stageAtlas;
+    private final TextureAtlas menuAtlas;
+    private final TextureAtlas weaponAtlas;
 
     private final OrthographicCamera gameCam;
     private final FitViewport gamePort;
@@ -38,8 +40,10 @@ public class PlayScreen implements Screen {
     private final Box2DDebugRenderer b2dr;
 
     public PlayScreen(BombSquad game) {
-        actorsAtlas = new TextureAtlas("bsActors1.pack");
-        actorsAtlas2 = new TextureAtlas("bsActors2.pack");
+        charactersAtlas = new TextureAtlas("characters.pack");
+        stageAtlas = new TextureAtlas("stage.pack");
+        menuAtlas = new TextureAtlas("menu.pack");
+        weaponAtlas = new TextureAtlas("weapon.pack");
 
         this.game = game;
         this.batch = game.getBatch();
@@ -48,7 +52,7 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(ResourceManager.V_WIDTH, ResourceManager.V_HEIGHT, gameCam);
 
         mapLoader = new TmxMapLoader();
-        gameMap = mapLoader.load("bsMap.tmx");
+        gameMap = mapLoader.load("map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / ResourceManager.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
         gameCam.position.set(ResourceManager.V_WIDTH / 2 - 2,ResourceManager.V_HEIGHT /2 - 0.5F, 0);
@@ -82,12 +86,20 @@ public class PlayScreen implements Screen {
         return gameWorld;
     }
 
-    public TextureAtlas getActorsAtlas() {
-        return actorsAtlas;
+    public TextureAtlas getCharactersAtlas() {
+        return charactersAtlas;
     }
 
-    public TextureAtlas getActorsAtlas2() {
-        return actorsAtlas2;
+    public TextureAtlas getStageAtlas() {
+        return stageAtlas;
+    }
+
+    public TextureAtlas getMenuAtlas() {
+        return menuAtlas;
+    }
+
+    public TextureAtlas getWeaponAtlas() {
+        return weaponAtlas;
     }
 
     @Override

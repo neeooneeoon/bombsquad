@@ -14,8 +14,8 @@ public class Bomberman extends Sprite {
     public State currentState;
     public State previousState;
 
-    private TextureRegion standingUp;
-    private TextureRegion standingDown;
+    private TextureRegion standingFront;
+    private TextureRegion standingBack;
     private TextureRegion standingLeft;
     private TextureRegion standingRight;
     private Animation runningLeft;
@@ -35,6 +35,7 @@ public class Bomberman extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
+        /*
         for (int i = 1; i <= 4; i++) {
             frames.add(new TextureRegion(screen.getActorsAtlas().findRegion("player"), i * 32, 0, 32, 32));
         }
@@ -59,14 +60,15 @@ public class Bomberman extends Sprite {
         runningDown = new Animation(0.2f, frames);
         frames.clear();
 
-        standingUp = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 0, 0, 32, 32);
-        standingDown = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 0, 150, 32, 32);
-        standingRight = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 40, 44, 32, 32);
-        standingLeft = new TextureRegion(screen.getActorsAtlas().findRegion("player"), 0, 96, 32, 32);
+         */
+        standingFront = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f02"), 0, 0, 32, 64);
+        standingBack = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f02"), 0, 0, 32, 64);
+        standingRight = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 32, 64);
+        standingLeft = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 32, 64);
 
         defineBomberman();
-        setBounds(0, 0, 32 / ResourceManager.PPM / 2, 32 / ResourceManager.PPM / 2);
-        setRegion(standingLeft);
+        setBounds(0, 0, 32 / ResourceManager.PPM, 64 / ResourceManager.PPM);
+        setRegion(standingFront);
     }
 
     public void defineBomberman() {
