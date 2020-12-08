@@ -61,19 +61,19 @@ public class Bomberman extends Sprite {
         frames.clear();
 
          */
-        standingFront = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f02"), 0, 0, 32, 64);
-        standingBack = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f02"), 0, 0, 32, 64);
-        standingRight = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 32, 64);
-        standingLeft = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 32, 64);
+        standingFront = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f02"), 0, 0, 64, 128);
+        standingBack = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f02"), 0, 0, 64, 128);
+        standingRight = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 64, 128);
+        standingLeft = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 64, 128);
 
         defineBomberman();
-        setBounds(0, 0, 32 / ResourceManager.PPM, 64 / ResourceManager.PPM);
+        setBounds(0, 0, 64 / ResourceManager.PPM, 128 / ResourceManager.PPM);
         setRegion(standingFront);
     }
 
     public void defineBomberman() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / ResourceManager.PPM, 32 / ResourceManager.PPM);
+        bdef.position.set(64 / ResourceManager.PPM, 64 / ResourceManager.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
