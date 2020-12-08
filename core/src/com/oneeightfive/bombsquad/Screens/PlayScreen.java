@@ -64,14 +64,26 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            player.b2Body.applyLinearImpulse(new Vector2(0.2f, 0), player.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            player.b2Body.applyLinearImpulse(new Vector2(-0.2f, 0), player.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            player.b2Body.applyLinearImpulse(new Vector2(0, 0.2f), player.b2Body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            player.b2Body.applyLinearImpulse(new Vector2(0, -0.2f), player.b2Body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            player.b2Body.setLinearVelocity(new Vector2(0, 400 * delta));
+            player.currentState = Bomberman.STATE.UP;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            player.b2Body.setLinearVelocity(new Vector2(400 * delta, 0));
+            player.currentState = Bomberman.STATE.RIGHT;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            player.b2Body.setLinearVelocity(new Vector2(-400 * delta, 0));
+            player.currentState = Bomberman.STATE.LEFT;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            player.b2Body.setLinearVelocity(new Vector2(0, -400 * delta));
+            player.currentState = Bomberman.STATE.DOWN;
+        } else {
+            player.b2Body.setLinearVelocity(new Vector2(0, 0));
+            player.currentState = Bomberman.STATE.STAY;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            //create bomb
+        }
     }
 
     public void update(float delta) {

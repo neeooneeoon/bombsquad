@@ -4,15 +4,20 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class Bomberman extends Sprite {
-    public enum State {STANDING, RUNNING, DEAD};
-    public State currentState;
-    public State previousState;
+    public enum STATE {STAY, UP, DOWN, RIGHT, LEFT, DEAD};
+    public STATE currentState;
+    public STATE previousState;
+    private float stateTime;
+    public final static float animationSpeed = 0.18f;
+
+
 
     private TextureRegion standingFront;
     private TextureRegion standingBack;
@@ -30,8 +35,8 @@ public class Bomberman extends Sprite {
     public Bomberman(PlayScreen screen) {
         this.screen = screen;
         this.world = screen.getWorld();
-        currentState = State.STANDING;
-        previousState = State.STANDING;
+        currentState = STATE.STAY;
+        previousState = STATE.STAY;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -73,15 +78,17 @@ public class Bomberman extends Sprite {
 
     public void defineBomberman() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(64 / ResourceManager.PPM, 64 / ResourceManager.PPM);
+        bdef.position.set(120 / ResourceManager.PPM, 120 / ResourceManager.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
-        FixtureDef fdef = new FixtureDef();
+        FixtureDef fdef1 = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(7.5F / ResourceManager.PPM);
-        fdef.shape = shape;
-        b2Body.createFixture(fdef).setUserData(this);
+        shape.setRadius(28 / ResourceManager.PPM);
+        shape.setPosition(new Vector2(0 / ResourceManager.PPM,-24 / ResourceManager.PPM));
+        fdef1.shape = shape;
+        b2Body.createFixture(fdef1).setUserData(this);
+        shape.dispose();
     }
 
     public void update(float dt) {
