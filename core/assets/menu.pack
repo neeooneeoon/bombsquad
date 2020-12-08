@@ -1,0 +1,62 @@
+
+menu.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Control_PlayerOne
+  rotate: false
+  xy: 1158, 638
+  size: 151, 23
+  orig: 151, 23
+  offset: 0, 0
+  index: -1
+Control_PlayerTwo
+  rotate: false
+  xy: 2, 60
+  size: 160, 23
+  orig: 160, 23
+  offset: 0, 0
+  index: -1
+One_Player_Hover
+  rotate: false
+  xy: 2, 31
+  size: 132, 27
+  orig: 132, 27
+  offset: 0, 0
+  index: -1
+One_Player_Normal
+  rotate: false
+  xy: 1158, 609
+  size: 132, 27
+  orig: 132, 27
+  offset: 0, 0
+  index: -1
+Two_Players_Hover
+  rotate: false
+  xy: 2, 2
+  size: 132, 27
+  orig: 132, 27
+  offset: 0, 0
+  index: -1
+Two_Players_Normal
+  rotate: false
+  xy: 1158, 580
+  size: 132, 27
+  orig: 132, 27
+  offset: 0, 0
+  index: -1
+title_background
+  rotate: false
+  xy: 2, 85
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1
+title_titletext
+  rotate: false
+  xy: 580, 85
+  size: 576, 576
+  orig: 576, 576
+  offset: 0, 0
+  index: -1

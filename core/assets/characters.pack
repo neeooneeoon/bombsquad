@@ -1,0 +1,307 @@
+
+characters.png
+size: 1024,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Bman_B_f01
+  rotate: false
+  xy: 274, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f02
+  rotate: false
+  xy: 716, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f03
+  rotate: false
+  xy: 444, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f04
+  rotate: false
+  xy: 104, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f00
+  rotate: false
+  xy: 104, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f05
+  rotate: false
+  xy: 580, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f06
+  rotate: false
+  xy: 308, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_B_f07
+  rotate: false
+  xy: 2, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f00
+  rotate: false
+  xy: 138, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f01
+  rotate: false
+  xy: 614, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f02
+  rotate: false
+  xy: 342, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f03
+  rotate: false
+  xy: 36, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f04
+  rotate: false
+  xy: 512, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f05
+  rotate: false
+  xy: 206, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f06
+  rotate: false
+  xy: 682, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_F_f07
+  rotate: false
+  xy: 410, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f00
+  rotate: false
+  xy: 750, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f01
+  rotate: false
+  xy: 478, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f02
+  rotate: false
+  xy: 172, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f03
+  rotate: false
+  xy: 648, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f04
+  rotate: false
+  xy: 376, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f05
+  rotate: false
+  xy: 70, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f06
+  rotate: false
+  xy: 546, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Bman_S_f07
+  rotate: false
+  xy: 240, 36
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Creep_B_f01
+  rotate: false
+  xy: 308, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_B_f02
+  rotate: false
+  xy: 920, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_B_f03
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_B_f00
+  rotate: false
+  xy: 36, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_B_f04
+  rotate: false
+  xy: 988, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_B_f05
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_F_f01
+  rotate: false
+  xy: 886, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_F_f02
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_F_f03
+  rotate: false
+  xy: 954, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_F_f00
+  rotate: false
+  xy: 954, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_F_f04
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_F_f05
+  rotate: false
+  xy: 274, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f00
+  rotate: false
+  xy: 172, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f01
+  rotate: false
+  xy: 818, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f02
+  rotate: false
+  xy: 240, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f03
+  rotate: false
+  xy: 138, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f04
+  rotate: false
+  xy: 784, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f05
+  rotate: false
+  xy: 206, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Creep_S_f06
+  rotate: false
+  xy: 852, 68
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

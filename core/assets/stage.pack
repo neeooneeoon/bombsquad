@@ -1,13 +1,111 @@
 
 stage.png
-size: 512,512
+size: 256,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-Mobile - Bomberman for Android - Stage Blocks
+BackgroundTile
+  rotate: false
+  xy: 2, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+BombPowerup
+  rotate: false
+  xy: 172, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Bomb_f01
+  rotate: false
+  xy: 54, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Bomb_f02
+  rotate: false
+  xy: 158, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Bomb_f03
+  rotate: false
+  xy: 80, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+ExplodableBlock
+  rotate: false
+  xy: 70, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+FlamePowerup
+  rotate: false
+  xy: 206, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Flame_F02
+  rotate: false
+  xy: 184, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Flame_F03
+  rotate: false
+  xy: 132, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Flame_F04
+  rotate: false
+  xy: 28, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Flame_f00
+  rotate: false
+  xy: 106, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Flame_f01
   rotate: false
   xy: 2, 2
-  size: 391, 260
-  orig: 391, 260
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+Portal
+  rotate: false
+  xy: 138, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+SolidBlock
+  rotate: false
+  xy: 36, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+SpeedPowerup
+  rotate: false
+  xy: 104, 28
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
