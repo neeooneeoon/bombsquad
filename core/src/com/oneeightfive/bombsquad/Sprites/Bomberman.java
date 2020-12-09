@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
@@ -112,15 +111,12 @@ public class Bomberman extends Sprite {
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
-        FixtureDef fdef = new FixtureDef();
+        FixtureDef fdef1 = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(26 / ResourceManager.PPM);
-        fdef.filter.categoryBits = BombSquad.BOMBERMAN_BIT;
-        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT;
-
-        shape.setPosition(new Vector2(0 / ResourceManager.PPM, 0 / ResourceManager.PPM));
-        fdef.shape = shape;
-        b2Body.createFixture(fdef).setUserData(this);
+        shape.setPosition(new Vector2(0 / ResourceManager.PPM,-24 / ResourceManager.PPM));
+        fdef1.shape = shape;
+        b2Body.createFixture(fdef1).setUserData(this);
         shape.dispose();
     }
 
@@ -159,7 +155,7 @@ public class Bomberman extends Sprite {
                 }
                 break;
         }
-        setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);
+        setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
     }
 
     public void draw(Batch batch) {
