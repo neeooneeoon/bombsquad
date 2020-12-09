@@ -9,6 +9,7 @@ public class Bomb extends Sprite {
     public World world;
     public PlayScreen screen;
     public Body b2body;
+    FixtureDef fdef = new FixtureDef();
 
     public float x;
     public float y;
@@ -24,14 +25,14 @@ public class Bomb extends Sprite {
     public Bomb() {}
 
     public Bomb(World world, PlayScreen screen, float x, float y, int radius) {
+        this.x = (int)((x * 64 + 24) / ResourceManager.PPM);
+        this.y = (int)((y * 64 + 24) / ResourceManager.PPM);
+        this.radius = radius;
         this.world = world;
         this.screen = screen;
         defineBomb();
         setBounds(0, 0, 48, 48);
 
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
 
         timeLeft = 4;
         available = true;
@@ -49,14 +50,15 @@ public class Bomb extends Sprite {
 
     public void defineBomb() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set((x + 24) / ResourceManager.PPM, (y + 24) / ResourceManager.PPM);
+        bdef.position.set( (int)((x * 64 + 24) / ResourceManager.PPM) + 0.5f, (int)((y * 64 + 24) / ResourceManager.PPM) + 0.5f);
         bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(20 / ResourceManager.PPM);
-
         fdef.shape = shape;
         b2body.createFixture(fdef);
     }
+
+
 }
