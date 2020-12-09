@@ -5,8 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.ResourceManager;
+import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.Tools.WorldCreator;
 
@@ -42,6 +45,8 @@ public class PlayScreen implements Screen {
     public Bomberman.STATE playerDirection;
     public float playerX;
     public float playerY;
+
+    public float stateTimer;
 
     public PlayScreen(BombSquad game) {
         charactersAtlas = new TextureAtlas("characters.pack");
@@ -90,6 +95,7 @@ public class PlayScreen implements Screen {
             player.currentState = Bomberman.STATE.STAY;
             playerDirection = Bomberman.STATE.STAY;
         }
+
         playerX = player.getX();
         playerY = player.getY();
 
@@ -104,6 +110,19 @@ public class PlayScreen implements Screen {
         mapRenderer.setView(gameCam);
         player.update(delta);
         gameCam.update();
+    }
+
+    public void drawWeaponAnimation(Animation t, boolean looping, float x, float y) {
+        batch.draw((TextureRegion) t.getKeyFrame(stateTimer, looping), x, y, 48, 48);
+    }
+
+    public void createBomb() {
+        for (int i = 0; i < player.numberOfBombs; i++) {
+            if (player.bombs[i].available == false) {
+                player.bombs[i] = new Bomb(gameWorld, this, player.getX(), player.getY(), 3);
+                break;
+            }
+        }
     }
 
     public World getWorld() {
@@ -130,6 +149,10 @@ public class PlayScreen implements Screen {
         return batch;
     }
 
+    public Bomberman getPlayer() {
+        return player;
+    }
+
     @Override
     public void show() {
 
@@ -144,12 +167,14 @@ public class PlayScreen implements Screen {
 
         mapRenderer.render();
 
-        b2dr.render(gameWorld, gameCam.combined);
+        //b2dr.render(gameWorld, gameCam.combined);
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         player.draw(batch);
         batch.end();
+
+        stateTimer += delta;
     }
 
     @Override

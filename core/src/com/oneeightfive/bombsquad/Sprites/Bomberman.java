@@ -32,6 +32,9 @@ public class Bomberman extends Sprite {
     public World world;
     public Body b2Body;
 
+    public int numberOfBombs = 5;
+    public Bomb bombs[] = new Bomb[5];
+
     public Bomberman(PlayScreen screen) {
         this.screen = screen;
         this.world = screen.getWorld();
