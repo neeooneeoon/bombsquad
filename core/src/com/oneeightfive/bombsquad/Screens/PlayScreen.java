@@ -51,6 +51,8 @@ public class PlayScreen implements Screen {
     public final Animation<TextureRegion> flameAnimation;
     public final static float animationSpeed = 0.1f;
 
+    public WorldCreator worldCreator;
+
     public float stateTimer;
 
     public PlayScreen(BombSquad game) {
@@ -70,7 +72,7 @@ public class PlayScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / ResourceManager.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
         gameCam.position.set(ResourceManager.V_WIDTH / 2 - 2,ResourceManager.V_HEIGHT /2 - 0.5F, 0);
-        new WorldCreator(gameWorld, gameMap);
+        worldCreator = new WorldCreator(gameWorld, gameMap);
 
         player = new Bomberman(this);
         playerDirection = Bomberman.STATE.DOWN;
@@ -120,6 +122,7 @@ public class PlayScreen implements Screen {
         playerY = player.getY();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            //worldCreator.brickLayerCreator.test(gameMap, player);
             createBomb();
         }
     }
@@ -139,7 +142,7 @@ public class PlayScreen implements Screen {
     public void createBomb() {
         for (int i = 0; i < player.numberOfBombs; i++) {
             if (!player.bombs[i].available) {
-                player.bombs[i] = new Bomb(gameWorld, this, player.getX(), player.getY(), 1);
+                player.bombs[i] = new Bomb(gameWorld, this, player.getX(), player.getY(), 3);
                 break;
             }
         }
@@ -149,9 +152,10 @@ public class PlayScreen implements Screen {
         for (int i = 0; i < player.numberOfBombs; i++) {
             if (player.bombs[i].available) {
                 if (player.bombs[i].timeLeft < 0) {
+                    worldCreator.brickLayerCreator.test(gameMap,player.bombs[i]);
                     player.bombs[i].blow();
                 }
-                drawWeaponAnimation(bombAnimation, true, player.bombs[i].x, player.bombs[i].y);
+                drawWeaponAnimation(bombAnimation, true, player.bombs[i].x + 10/64f, player.bombs[i].y + 10/64f);
                 player.bombs[i].timeLeft -= Gdx.graphics.getDeltaTime();
             }
             if (player.bombs[i].flame) {
