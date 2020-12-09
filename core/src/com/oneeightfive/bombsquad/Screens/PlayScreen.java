@@ -39,6 +39,10 @@ public class PlayScreen implements Screen {
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
 
+    public Bomberman.STATE playerDirection;
+    public float playerX;
+    public float playerY;
+
     public PlayScreen(BombSquad game) {
         charactersAtlas = new TextureAtlas("characters.pack");
         stageAtlas = new TextureAtlas("stage.pack");
@@ -59,27 +63,35 @@ public class PlayScreen implements Screen {
         new WorldCreator(gameWorld, gameMap);
 
         player = new Bomberman(this);
+        playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
     }
 
     public void handleInput(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            player.b2Body.setLinearVelocity(new Vector2(0, 400 * delta));
+            player.b2Body.setLinearVelocity(new Vector2(0, 250 * delta));
             player.currentState = Bomberman.STATE.UP;
+            playerDirection = Bomberman.STATE.UP;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.b2Body.setLinearVelocity(new Vector2(400 * delta, 0));
+            player.b2Body.setLinearVelocity(new Vector2(250 * delta, 0));
             player.currentState = Bomberman.STATE.RIGHT;
+            playerDirection = Bomberman.STATE.RIGHT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player.b2Body.setLinearVelocity(new Vector2(-400 * delta, 0));
+            player.b2Body.setLinearVelocity(new Vector2(-250 * delta, 0));
             player.currentState = Bomberman.STATE.LEFT;
+            playerDirection = Bomberman.STATE.LEFT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player.b2Body.setLinearVelocity(new Vector2(0, -400 * delta));
+            player.b2Body.setLinearVelocity(new Vector2(0, -250 * delta));
             player.currentState = Bomberman.STATE.DOWN;
+            playerDirection = Bomberman.STATE.DOWN;
         } else {
             player.b2Body.setLinearVelocity(new Vector2(0, 0));
             player.currentState = Bomberman.STATE.STAY;
+            playerDirection = Bomberman.STATE.STAY;
         }
+        playerX = player.getX();
+        playerY = player.getY();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             //create bomb
@@ -112,6 +124,10 @@ public class PlayScreen implements Screen {
 
     public TextureAtlas getWeaponAtlas() {
         return weaponAtlas;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
     }
 
     @Override

@@ -11,22 +11,22 @@ import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class Bomberman extends Sprite {
-    public enum STATE {STAY, UP, DOWN, RIGHT, LEFT, DEAD};
+    public enum STATE {STAY, UP, DOWN, RIGHT, LEFT, DEAD}
+
     public STATE currentState;
     public STATE previousState;
-    private float stateTime;
-    public final static float animationSpeed = 0.18f;
+    public final static float animationSpeed = 0.1f;
 
+    private float stateTimer;
 
-
-    private TextureRegion standingFront;
-    private TextureRegion standingBack;
-    private TextureRegion standingLeft;
-    private TextureRegion standingRight;
-    private Animation runningLeft;
-    private Animation runningRight;
-    private Animation runningUp;
-    private Animation runningDown;
+    private final TextureRegion standingFront;
+    private final TextureRegion standingBack;
+    private final TextureRegion standingLeft;
+    private final TextureRegion standingRight;
+    private final Animation<TextureRegion> runningLeft;
+    private final Animation<TextureRegion> runningRight;
+    private final Animation<TextureRegion> runningUp;
+    private final Animation<TextureRegion> runningDown;
 
     private final PlayScreen screen;
     public World world;
@@ -40,36 +40,58 @@ public class Bomberman extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
-        /*
-        for (int i = 1; i <= 4; i++) {
-            frames.add(new TextureRegion(screen.getActorsAtlas().findRegion("player"), i * 32, 0, 32, 32));
-        }
-        runningUp = new Animation(0.2f, frames);
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f00"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f01"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f02"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f03"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f04"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f05"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f06"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f07"), 0, 0, 64, 128));
+        runningUp = new Animation(animationSpeed, frames);
         frames.clear();
 
-        for (int i = 1; i <= 4; i++) {
-            frames.add(new TextureRegion(screen.getActorsAtlas().findRegion("player"), i * 32, 32, 32, 32));
-        }
-        runningRight = new Animation(0.2f, frames);
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f00"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f01"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f02"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f03"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f04"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f05"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f06"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f07"), 0, 0, 64, 128));
+        runningDown = new Animation(animationSpeed, frames);
         frames.clear();
 
-        for (int i = 1; i <= 4; i++) {
-            frames.add(new TextureRegion(screen.getActorsAtlas().findRegion("player"), i * 32, 64, 32, 32));
-        }
-        runningRight = new Animation(0.2f, frames);
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f00"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f01"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f03"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f04"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f05"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f06"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f07"), 0, 0, 64, 128));
+        runningRight = new Animation(animationSpeed, frames);
         frames.clear();
 
-        for (int i = 1; i <= 4; i++) {
-            frames.add(new TextureRegion(screen.getActorsAtlas().findRegion("player"), i * 32, 96, 32, 32));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f00"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f01"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f03"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f04"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f05"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f06"), 0, 0, 64, 128));
+        frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f07"), 0, 0, 64, 128));
+        for(TextureRegion frame : frames) {
+            frame.flip(true, false);
         }
-        runningDown = new Animation(0.2f, frames);
+        runningLeft = new Animation(animationSpeed, frames);
         frames.clear();
 
-         */
         standingFront = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f02"), 0, 0, 64, 128);
         standingBack = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f02"), 0, 0, 64, 128);
         standingRight = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 64, 128);
         standingLeft = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f02"), 0, 0, 64, 128);
+        standingLeft.flip(true, false);
 
         defineBomberman();
         setBounds(0, 0, 64 / ResourceManager.PPM, 128 / ResourceManager.PPM);
@@ -84,7 +106,7 @@ public class Bomberman extends Sprite {
 
         FixtureDef fdef1 = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(28 / ResourceManager.PPM);
+        shape.setRadius(26 / ResourceManager.PPM);
         shape.setPosition(new Vector2(0 / ResourceManager.PPM,-24 / ResourceManager.PPM));
         fdef1.shape = shape;
         b2Body.createFixture(fdef1).setUserData(this);
@@ -92,6 +114,40 @@ public class Bomberman extends Sprite {
     }
 
     public void update(float dt) {
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
+        previousState = currentState;
+        currentState = screen.playerDirection;
+
+        switch (currentState) {
+            case LEFT:
+                setRegion(runningLeft.getKeyFrame(stateTimer, true));
+                break;
+            case RIGHT:
+                setRegion(runningRight.getKeyFrame(stateTimer, true));
+                break;
+            case UP:
+                setRegion(runningUp.getKeyFrame(stateTimer, true));
+                break;
+            case DOWN:
+                setRegion(runningDown.getKeyFrame(stateTimer, true));
+                break;
+            case STAY:
+                switch (previousState) {
+                    case LEFT:
+                        setRegion(standingLeft);
+                        break;
+                    case RIGHT:
+                        setRegion(standingRight);
+                        break;
+                    case UP:
+                        setRegion(standingBack);
+                        break;
+                    case DOWN:
+                        setRegion(standingFront);
+                        break;
+                }
+                break;
+        }
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - getHeight() / 2);
     }
 
