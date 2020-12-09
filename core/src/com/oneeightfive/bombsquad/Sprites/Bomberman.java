@@ -99,6 +99,10 @@ public class Bomberman extends Sprite {
         defineBomberman();
         setBounds(0, 0, 64 / ResourceManager.PPM, 128 / ResourceManager.PPM);
         setRegion(standingFront);
+
+        for (int i = 0; i < numberOfBombs; i++) {
+            bombs[i] = new Bomb();
+        }
     }
 
     public void defineBomberman() {

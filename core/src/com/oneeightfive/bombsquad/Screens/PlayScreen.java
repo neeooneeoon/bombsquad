@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.ResourceManager;
@@ -46,6 +47,10 @@ public class PlayScreen implements Screen {
     public float playerX;
     public float playerY;
 
+    public final Animation<TextureRegion> bombAnimation;
+    public final Animation<TextureRegion> flameAnimation;
+    public final static float animationSpeed = 0.1f;
+
     public float stateTimer;
 
     public PlayScreen(BombSquad game) {
@@ -71,6 +76,21 @@ public class PlayScreen implements Screen {
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
+
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Bomb_f01"), 0, 0, 48, 48));
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Bomb_f02"), 0, 0, 48, 48));
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Bomb_f03"), 0, 0, 48, 48));
+        bombAnimation = new Animation<TextureRegion>(animationSpeed, frames);
+        frames.clear();
+
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_f00"), 0, 0, 48, 48));
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_f01"), 0, 0, 48, 48));
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_F02"), 0, 0, 48, 48));
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_F03"), 0, 0, 48, 48));
+        frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_F04"), 0, 0, 48, 48));
+        flameAnimation = new Animation<TextureRegion>(animationSpeed, frames);
+        frames.clear();
     }
 
     public void handleInput(float delta) {
@@ -100,7 +120,7 @@ public class PlayScreen implements Screen {
         playerY = player.getY();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            //create bomb
+            createBomb();
         }
     }
 
@@ -112,18 +132,40 @@ public class PlayScreen implements Screen {
         gameCam.update();
     }
 
-    public void drawWeaponAnimation(Animation t, boolean looping, float x, float y) {
-        batch.draw((TextureRegion) t.getKeyFrame(stateTimer, looping), x, y, 48, 48);
+    public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
+        batch.draw((TextureRegion) t.getKeyFrame(stateTimer, looping), x, y, 48 / ResourceManager.PPM, 48 / ResourceManager.PPM);
     }
 
     public void createBomb() {
         for (int i = 0; i < player.numberOfBombs; i++) {
-            if (player.bombs[i].available == false) {
-                player.bombs[i] = new Bomb(gameWorld, this, player.getX(), player.getY(), 3);
+            if (!player.bombs[i].available) {
+                player.bombs[i] = new Bomb(gameWorld, this, player.getX(), player.getY(), 1);
                 break;
             }
         }
     }
+
+    private void drawBomb() {
+        for (int i = 0; i < player.numberOfBombs; i++) {
+            if (player.bombs[i].available) {
+                if (player.bombs[i].timeLeft < 0) {
+                    player.bombs[i].blow();
+                }
+                drawWeaponAnimation(bombAnimation, true, player.bombs[i].x, player.bombs[i].y);
+                player.bombs[i].timeLeft -= Gdx.graphics.getDeltaTime();
+            }
+            if (player.bombs[i].flame) {
+                if (player.bombs[i].timeFlame <= 2 * animationSpeed) {
+                    drawFlame(i);
+                } else {
+                    player.bombs[i].clear();
+                }
+            }
+        }
+    }
+
+    private void drawFlame(int i) {}
+
 
     public World getWorld() {
         return gameWorld;
@@ -167,11 +209,12 @@ public class PlayScreen implements Screen {
 
         mapRenderer.render();
 
-        //b2dr.render(gameWorld, gameCam.combined);
+        b2dr.render(gameWorld, gameCam.combined);
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         player.draw(batch);
+        drawBomb();
         batch.end();
 
         stateTimer += delta;
