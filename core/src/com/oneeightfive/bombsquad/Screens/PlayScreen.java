@@ -18,7 +18,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
-import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.Tools.WorldCreator;
@@ -65,13 +64,13 @@ public class PlayScreen implements Screen {
         this.batch = game.getBatch();
 
         gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(ResourceManager.V_WIDTH, ResourceManager.V_HEIGHT, gameCam);
+        gamePort = new FitViewport(BombSquad.V_WIDTH, BombSquad.V_HEIGHT, gameCam);
 
         mapLoader = new TmxMapLoader();
         gameMap = mapLoader.load("map.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / ResourceManager.PPM);
+        mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
-        gameCam.position.set(ResourceManager.V_WIDTH / 2 - 2,ResourceManager.V_HEIGHT /2 - 0.5F, 0);
+        gameCam.position.set(BombSquad.V_WIDTH / 2 - 2, BombSquad.V_HEIGHT /2 - 0.5F, 0);
         worldCreator = new WorldCreator(gameWorld, gameMap);
 
         player = new Bomberman(this);
@@ -136,7 +135,7 @@ public class PlayScreen implements Screen {
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
-        batch.draw((TextureRegion) t.getKeyFrame(stateTimer, looping), x, y, 48 / ResourceManager.PPM, 48 / ResourceManager.PPM);
+        batch.draw((TextureRegion) t.getKeyFrame(stateTimer, looping), x, y, 48 / BombSquad.PPM, 48 / BombSquad.PPM);
     }
 
     public void createBomb() {

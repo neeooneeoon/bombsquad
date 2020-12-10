@@ -2,7 +2,7 @@ package com.oneeightfive.bombsquad.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
-import com.oneeightfive.bombsquad.ResourceManager;
+import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class Bomb extends Sprite {
@@ -25,8 +25,8 @@ public class Bomb extends Sprite {
     public Bomb() {}
 
     public Bomb(World world, PlayScreen screen, float x, float y, int radius) {
-        this.x = (int)((x * 64 + 24) / ResourceManager.PPM);
-        this.y = (int)((y * 64 + 24) / ResourceManager.PPM);
+        this.x = (int)((x * 64 + 24) / BombSquad.PPM);
+        this.y = (int)((y * 64 + 24) / BombSquad.PPM);
         this.radius = radius;
         this.world = world;
         this.screen = screen;
@@ -50,12 +50,12 @@ public class Bomb extends Sprite {
 
     public void defineBomb() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set( (int)((x * 64 + 24) / ResourceManager.PPM) + 0.5f, (int)((y * 64 + 24) / ResourceManager.PPM) + 0.5f);
+        bdef.position.set( (int)((x * 64 + 24) / BombSquad.PPM) + 0.5f, (int)((y * 64 + 24) / BombSquad.PPM) + 0.5f);
         bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(20 / ResourceManager.PPM);
+        shape.setRadius(20 / BombSquad.PPM);
         fdef.shape = shape;
         b2body.createFixture(fdef);
     }

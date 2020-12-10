@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
-import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class Bomberman extends Sprite {
@@ -98,7 +97,7 @@ public class Bomberman extends Sprite {
         standingLeft.flip(true, false);
 
         defineBomberman();
-        setBounds(0, 0, 64 / ResourceManager.PPM, 128 / ResourceManager.PPM);
+        setBounds(0, 0, 64 / BombSquad.PPM, 128 / BombSquad.PPM);
         setRegion(standingFront);
 
         for (int i = 0; i < numberOfBombs; i++) {
@@ -108,17 +107,17 @@ public class Bomberman extends Sprite {
 
     public void defineBomberman() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(120 / ResourceManager.PPM, 120 / ResourceManager.PPM);
+        bdef.position.set(120 / BombSquad.PPM, 120 / BombSquad.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(26 / ResourceManager.PPM);
+        shape.setRadius(26 / BombSquad.PPM);
         fdef.filter.categoryBits = BombSquad.BOMBERMAN_BIT;
         fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT;
 
-        shape.setPosition(new Vector2(0 / ResourceManager.PPM, 0 / ResourceManager.PPM));
+        shape.setPosition(new Vector2(0 / BombSquad.PPM, 0 / BombSquad.PPM));
         fdef.shape = shape;
         b2Body.createFixture(fdef).setUserData(this);
         shape.dispose();
