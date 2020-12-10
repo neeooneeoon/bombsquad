@@ -1,4 +1,4 @@
-package com.oneeightfive.bombsquad.Map;
+package com.oneeightfive.bombsquad.World;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;

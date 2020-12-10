@@ -1,4 +1,4 @@
-package com.oneeightfive.bombsquad.Tools;
+package com.oneeightfive.bombsquad.World;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;

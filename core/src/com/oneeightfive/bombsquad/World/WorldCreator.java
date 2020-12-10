@@ -1,9 +1,9 @@
-package com.oneeightfive.bombsquad.Tools;
+package com.oneeightfive.bombsquad.World;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.*;
-import com.oneeightfive.bombsquad.Map.BrickLayerCreator;
-import com.oneeightfive.bombsquad.Map.WallLayerCreator;
+import com.oneeightfive.bombsquad.World.BrickLayerCreator;
+import com.oneeightfive.bombsquad.World.WallLayerCreator;
 
 public class WorldCreator {
 

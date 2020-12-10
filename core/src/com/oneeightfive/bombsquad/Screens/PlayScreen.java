@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
-import com.oneeightfive.bombsquad.Tools.WorldCreator;
+import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class PlayScreen implements Screen {
     private final BombSquad game;
@@ -167,7 +167,22 @@ public class PlayScreen implements Screen {
         }
     }
 
-    private void drawFlame(int i) {}
+    private void drawFlame(int i) {
+        int radius = player.bombs[i].radius;
+        drawWeaponAnimation(flameAnimation, true, player.bombs[i].x, player.bombs[i].y);
+        for (int j = 1; j < radius; j++) {
+            drawWeaponAnimation(flameAnimation, true, player.bombs[i].x - 64 * j, player.bombs[i].y);
+            drawWeaponAnimation(flameAnimation, true, player.bombs[i].x, player.bombs[i].y + 64 * j);
+            drawWeaponAnimation(flameAnimation, true, player.bombs[i].x, player.bombs[i].y - 64 * j);
+            drawWeaponAnimation(flameAnimation, true, player.bombs[i].x + 32 * j, player.bombs[i].y);
+        }
+        drawWeaponAnimation(flameAnimation, true, player.bombs[i].x, player.bombs[i].y + 64 * radius);
+        drawWeaponAnimation(flameAnimation, true, player.bombs[i].x + 32 * radius, player.bombs[i].y);
+        drawWeaponAnimation(flameAnimation, true, player.bombs[i].x, player.bombs[i].y - 32 * radius);
+        drawWeaponAnimation(flameAnimation, true, player.bombs[i].x - 32 * radius, player.bombs[i].y);
+
+        player.bombs[i].timeFlame += Gdx.graphics.getDeltaTime();
+    }
 
 
     public World getWorld() {
