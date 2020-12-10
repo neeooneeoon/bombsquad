@@ -68,7 +68,7 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(ResourceManager.V_WIDTH, ResourceManager.V_HEIGHT, gameCam);
 
         mapLoader = new TmxMapLoader();
-        gameMap = mapLoader.load("map.tmx");
+        gameMap = mapLoader.load("map2.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / ResourceManager.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
         gameCam.position.set(ResourceManager.V_WIDTH / 2 - 2,ResourceManager.V_HEIGHT /2 - 0.5F, 0);
@@ -208,12 +208,12 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         update(delta);
 
-        Gdx.gl.glClearColor(255, 255, 255, 1);
+        Gdx.gl.glClearColor(0, 1, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mapRenderer.render();
 
-        b2dr.render(gameWorld, gameCam.combined);
+        //b2dr.render(gameWorld, gameCam.combined);
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
