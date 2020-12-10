@@ -32,8 +32,6 @@ public class Bomb extends Sprite {
         this.screen = screen;
         defineBomb();
         setBounds(0, 0, 48, 48);
-
-
         timeLeft = 4;
         available = true;
     }
