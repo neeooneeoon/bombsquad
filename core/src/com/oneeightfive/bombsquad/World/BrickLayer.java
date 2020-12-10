@@ -17,7 +17,7 @@ public class BrickLayer extends Layer {
     public BrickLayer(World world, TiledMap map,
                       BodyDef bdef, FixtureDef fdef, PolygonShape shape, Array<Fixture> worldBody) {
         fdef.filter.categoryBits = BombSquad.BRICK_BIT;
-        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
@@ -59,7 +59,7 @@ public class BrickLayer extends Layer {
         left = 0;
         right = 0;
         for (int i = 1; i <= bomb.radius; i++) {
-            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            layer = (TiledMapTileLayer) map.getLayers().get(2);
             if (layer.getCell((int) x + i, (int) y) != null) {
                 layer.getCell((int) x + i, (int) y).setTile(null);
                 xCoordinate = (int) x + i;
@@ -67,10 +67,16 @@ public class BrickLayer extends Layer {
                 delete(fixtures);
                 break;
             }
+
+            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            if (layer.getCell((int) x + i, (int) y) != null) {
+                right--;
+                break;
+            }
             right++;
         }
         for (int i = 1; i <= bomb.radius; i++) {
-            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            layer = (TiledMapTileLayer) map.getLayers().get(2);
             if (layer.getCell((int) x - i, (int) y) != null) {
                 layer.getCell((int) x - i, (int) y).setTile(null);
                 xCoordinate = (int) x - i;
@@ -78,10 +84,16 @@ public class BrickLayer extends Layer {
                 delete(fixtures);
                 break;
             }
+
+            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            if (layer.getCell((int) x - i, (int) y) != null) {
+                left--;
+                break;
+            }
             left++;
         }
         for (int i = 1; i <= bomb.radius; i++) {
-            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            layer = (TiledMapTileLayer) map.getLayers().get(2);
             if (layer.getCell((int) x, (int) y + i) != null) {
                 layer.getCell((int) x, (int) y + i).setTile(null);
                 xCoordinate = (int) x ;
@@ -89,16 +101,28 @@ public class BrickLayer extends Layer {
                 delete(fixtures);
                 break;
             }
+
+            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            if (layer.getCell((int) x, (int) y + i) != null) {
+                up--;
+                break;
+            }
             up++;
         }
 
         for (int i = 1; i <= bomb.radius; i++) {
-            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            layer = (TiledMapTileLayer) map.getLayers().get(2);
             if (layer.getCell((int) x, (int) y - i) != null) {
                 layer.getCell((int) x, (int) y - i).setTile(null);
                 xCoordinate = (int) x ;
                 yCoordinate = (int) y-i;
                 delete(fixtures);
+                break;
+            }
+
+            layer = (TiledMapTileLayer) map.getLayers().get(1);
+            if (layer.getCell((int) x, (int) y - i) != null) {
+                down--;
                 break;
             }
             down++;

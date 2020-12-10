@@ -12,7 +12,7 @@ public class WallLayer extends Layer {
     public WallLayer(World world, TiledMap map,
                      BodyDef bdef, FixtureDef fdef, PolygonShape shape) {
         fdef.filter.categoryBits = BombSquad.WALL_BIT;
-        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;

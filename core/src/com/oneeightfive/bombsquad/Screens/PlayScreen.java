@@ -127,6 +127,13 @@ public class PlayScreen implements Screen {
     }
 
     public void createBomb() {
+        for( Bomb bomb : player.bombs){
+            if( bomb.x == (int)((player.getX() * 64 + 24) / BombSquad.PPM)
+                    && bomb.y == (int)((player.getY() * 64 + 24) / BombSquad.PPM)){
+                System.out.println("a");
+                return;
+            }
+        }
         player.bombs.add(new Bomb(gameWorld, this, player.getX(), player.getY(), 2));
     }
 
