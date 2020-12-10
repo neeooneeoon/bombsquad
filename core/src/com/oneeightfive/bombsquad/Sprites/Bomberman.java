@@ -33,7 +33,7 @@ public class Bomberman extends Sprite {
     public Body b2Body;
 
     public int numberOfBombs = 5;
-    public Bomb bombs[] = new Bomb[5];
+    public Array<Bomb> bombs = new Array<>();
 
     public Bomberman(PlayScreen screen) {
         this.screen = screen;
@@ -100,9 +100,6 @@ public class Bomberman extends Sprite {
         setBounds(0, 0, 64 / BombSquad.PPM, 128 / BombSquad.PPM);
         setRegion(standingFront);
 
-        for (int i = 0; i < numberOfBombs; i++) {
-            bombs[i] = new Bomb();
-        }
     }
 
     public void defineBomberman() {

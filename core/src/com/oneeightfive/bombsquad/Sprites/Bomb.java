@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
+import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class Bomb extends Sprite {
     public World world;
@@ -40,6 +41,7 @@ public class Bomb extends Sprite {
         available = false;
         flame = true;
         timeFlame = 0;
+
     }
 
     public void clear() {

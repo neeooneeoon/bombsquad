@@ -13,13 +13,16 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
+import com.oneeightfive.bombsquad.World.BrickLayerCreator;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class PlayScreen implements Screen {
@@ -41,6 +44,8 @@ public class PlayScreen implements Screen {
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
+
+    private Array<Fixture> WorldBody = new Array<>();
 
     public Bomberman.STATE playerDirection;
     public float playerX;
@@ -71,7 +76,7 @@ public class PlayScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
         gameCam.position.set(BombSquad.V_WIDTH / 2 - 0.5F, BombSquad.V_HEIGHT /2 - 0.5F, 0);
-        worldCreator = new WorldCreator(gameWorld, gameMap);
+        worldCreator = new WorldCreator(gameWorld, gameMap, WorldBody);
 
         player = new Bomberman(this);
         playerDirection = Bomberman.STATE.DOWN;
@@ -139,49 +144,72 @@ public class PlayScreen implements Screen {
     }
 
     public void createBomb() {
-        for (int i = 0; i < player.numberOfBombs; i++) {
-            if (!player.bombs[i].available) {
-                player.bombs[i] = new Bomb(gameWorld, this, player.getX(), player.getY(), 3);
-                break;
-            }
-        }
+        player.bombs.add(new Bomb(gameWorld, this, player.getX(), player.getY(), 2));
     }
 
     private void drawBomb() {
-        for (int i = 0; i < player.numberOfBombs; i++) {
-            if (player.bombs[i].available) {
-                if (player.bombs[i].timeLeft < 0) {
-                    worldCreator.brickLayerCreator.test(gameMap,player.bombs[i]);
-                    player.bombs[i].blow();
+//        for (int i = 0; i < player.numberOfBombs; i++) {
+//            if (player.bombs[i].available) {
+//                if (player.bombs[i].timeLeft < 0) {
+//                    worldCreator.brickLayerCreator.test(gameMap,player.bombs[i]);
+//                    player.bombs[i].blow();
+//                }
+//                drawWeaponAnimation(bombAnimation, true, player.bombs[i].x + 10/64f, player.bombs[i].y + 10/64f);
+//                player.bombs[i].timeLeft -= Gdx.graphics.getDeltaTime();
+//            }
+//            if (player.bombs[i].flame) {
+//                if (player.bombs[i].timeFlame <= 10 * animationSpeed) {
+//                    drawFlame(i);
+//                } else {
+//                    player.bombs[i].clear();
+//                }
+//            }
+//        }
+
+        for( Bomb bomb : player.bombs){
+            if (bomb.available) {
+                if (bomb.timeLeft < 0) {
+                    worldCreator.brickLayerCreator.test(gameMap,bomb, gameWorld, WorldBody);
+                    bomb.blow();
+                    worldCreator.deleteBrick(gameWorld, gameMap, WorldBody);
                 }
-                drawWeaponAnimation(bombAnimation, true, player.bombs[i].x + 10/64f, player.bombs[i].y + 10/64f);
-                player.bombs[i].timeLeft -= Gdx.graphics.getDeltaTime();
+                drawWeaponAnimation(bombAnimation, true, bomb.x + 10/64f, bomb.y + 10/64f);
+                bomb.timeLeft -= Gdx.graphics.getDeltaTime();
             }
-            if (player.bombs[i].flame) {
-                if (player.bombs[i].timeFlame <= 10 * animationSpeed) {
-                    drawFlame(i);
+            if (bomb.flame) {
+                if (bomb.timeFlame <= 10 * animationSpeed) {
+                    drawFlame(bomb);
                 } else {
-                    player.bombs[i].clear();
+                    gameWorld.destroyBody(bomb.b2body);
+                    player.bombs.removeIndex(player.bombs.indexOf(bomb, true));
                 }
             }
         }
     }
 
-    private void drawFlame(int i) {
-        int radius = player.bombs[i].radius;
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 + 10) / BombSquad.PPM, (player.bombs[i].y*64 + 10) / BombSquad.PPM);
-        for (int j = 1; j < radius; j++) {
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 - 64 * j + 10) / BombSquad.PPM, (player.bombs[i].y*64 + 10) / BombSquad.PPM);
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x *64 + 10) / BombSquad.PPM, (player.bombs[i].y*64 + 64 * j + 10) / BombSquad.PPM);
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 + 10) / BombSquad.PPM, (player.bombs[i].y*64 - 64 * j + 10) / BombSquad.PPM);
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 + 64 * j + 10) / BombSquad.PPM, (player.bombs[i].y*64 + 10) / BombSquad.PPM);
-        }
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64  + 10) / BombSquad.PPM, (player.bombs[i].y*64 + 64 * radius  + 10) / BombSquad.PPM);
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 + 64 * radius  + 10) / BombSquad.PPM, (player.bombs[i].y*64  + 10) / BombSquad.PPM);
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64  + 10) / BombSquad.PPM, (player.bombs[i].y*64 - 64 * radius  + 10) / BombSquad.PPM);
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 - 64 * radius  + 10) / BombSquad.PPM, (player.bombs[i].y*64  + 10) / BombSquad.PPM);
+    private void drawFlame(Bomb bomb) {
+        int radius = bomb.radius;
+        drawWeaponAnimation(flameAnimation, true, (bomb.x*64 + 10) / BombSquad.PPM, (bomb.y*64 + 10) / BombSquad.PPM);
+        for (int j = 1; j <= radius; j++) {
+            if(worldCreator.brickLayerCreator.left >= j-1){
+                drawWeaponAnimation(flameAnimation, true, (bomb.x*64 - 64 * j + 10) / BombSquad.PPM, (bomb.y*64 + 10) / BombSquad.PPM);
+            }
 
-        player.bombs[i].timeFlame += Gdx.graphics.getDeltaTime();
+            if(worldCreator.brickLayerCreator.up >= j-1){
+                drawWeaponAnimation(flameAnimation, true, (bomb.x *64 + 10) / BombSquad.PPM, (bomb.y*64 + 64 * j + 10) / BombSquad.PPM);
+            }
+
+            if(worldCreator.brickLayerCreator.down >= j-1){
+                drawWeaponAnimation(flameAnimation, true, (bomb.x*64 + 10) / BombSquad.PPM, (bomb.y*64 - 64 * j + 10) / BombSquad.PPM);
+            }
+
+            if(worldCreator.brickLayerCreator.right >= j-1){
+                drawWeaponAnimation(flameAnimation, true, (bomb.x*64 + 64 * j + 10) / BombSquad.PPM, (bomb.y*64 + 10) / BombSquad.PPM);
+            }
+
+        }
+
+        bomb.timeFlame += Gdx.graphics.getDeltaTime();
     }
 
 
