@@ -169,17 +169,17 @@ public class PlayScreen implements Screen {
 
     private void drawFlame(int i) {
         int radius = player.bombs[i].radius;
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x) / BombSquad.PPM, (player.bombs[i].y) / BombSquad.PPM);
+        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64) / BombSquad.PPM, (player.bombs[i].y*64) / BombSquad.PPM);
         for (int j = 1; j < radius; j++) {
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x - 64 * j) / BombSquad.PPM, (player.bombs[i].y) / BombSquad.PPM);
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x) / BombSquad.PPM, (player.bombs[i].y + 64 * j) / BombSquad.PPM);
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x) / BombSquad.PPM, (player.bombs[i].y - 64 * j) / BombSquad.PPM);
-            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x + 64 * j) / BombSquad.PPM, (player.bombs[i].y) / BombSquad.PPM);
+            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 - 64 * j) / BombSquad.PPM, (player.bombs[i].y*64) / BombSquad.PPM);
+            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x *64) / BombSquad.PPM, (player.bombs[i].y*64 + 64 * j) / BombSquad.PPM);
+            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64) / BombSquad.PPM, (player.bombs[i].y*64 - 64 * j) / BombSquad.PPM);
+            drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 + 64 * j) / BombSquad.PPM, (player.bombs[i].y*64) / BombSquad.PPM);
         }
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x) / BombSquad.PPM, (player.bombs[i].y + 64 * radius) / BombSquad.PPM);
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x + 64 * radius) / BombSquad.PPM, (player.bombs[i].y) / BombSquad.PPM);
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x) / BombSquad.PPM, (player.bombs[i].y - 64 * radius) / BombSquad.PPM);
-        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x - 64 * radius) / BombSquad.PPM, (player.bombs[i].y) / BombSquad.PPM);
+        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64) / BombSquad.PPM, (player.bombs[i].y*64 + 64 * radius) / BombSquad.PPM);
+        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 + 64 * radius) / BombSquad.PPM, (player.bombs[i].y*64) / BombSquad.PPM);
+        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64) / BombSquad.PPM, (player.bombs[i].y*64 - 64 * radius) / BombSquad.PPM);
+        drawWeaponAnimation(flameAnimation, true, (player.bombs[i].x*64 - 64 * radius) / BombSquad.PPM, (player.bombs[i].y*64) / BombSquad.PPM);
 
         player.bombs[i].timeFlame += Gdx.graphics.getDeltaTime();
     }
@@ -231,8 +231,8 @@ public class PlayScreen implements Screen {
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
-        player.draw(batch);
         drawBomb();
+        player.draw(batch);
         batch.end();
 
         stateTimer += delta;
