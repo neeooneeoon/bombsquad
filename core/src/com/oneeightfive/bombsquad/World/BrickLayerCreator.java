@@ -9,8 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 
-public class BrickLayerCreator {
-    //public FixtureDef fdef;
+public class BrickLayerCreator extends LayerCreator{
 
     public BrickLayerCreator(World world, TiledMap map,
                              BodyDef bdef, FixtureDef fdef, PolygonShape shape) {
@@ -30,7 +29,6 @@ public class BrickLayerCreator {
         }
 
     }
-
 
     public void test(TiledMap map, Bomb bomb) {
         float x = bomb.x, y = bomb.y;

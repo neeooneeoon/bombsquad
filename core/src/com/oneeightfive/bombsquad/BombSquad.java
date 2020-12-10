@@ -8,7 +8,7 @@ public class BombSquad extends Game {
 	private SpriteBatch batch;
 
 	public static final int V_WIDTH = 32;
-	public static final int V_HEIGHT = 16;
+	public static final int V_HEIGHT = 14;
 	public static final float PPM = 64;
 
 	public static final short DEFAULT_BIT = 1;

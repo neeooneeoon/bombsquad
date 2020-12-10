@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.oneeightfive.bombsquad.BombSquad;
 
-public class WallLayerCreator {
+public class WallLayerCreator extends LayerCreator{
 
     public WallLayerCreator(World world, TiledMap map,
                             BodyDef bdef, FixtureDef fdef, PolygonShape shape) {
@@ -26,6 +26,5 @@ public class WallLayerCreator {
             body.createFixture(fdef);
         }
     }
-
 
 }
