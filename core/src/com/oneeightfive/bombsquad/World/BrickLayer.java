@@ -1,8 +1,6 @@
 package com.oneeightfive.bombsquad.World;
 
-import com.badlogic.gdx.Files;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,19 +9,13 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
-import com.sun.tools.javac.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-public class BrickLayerCreator extends LayerCreator {
+public class BrickLayer extends Layer {
     public int up, down, left, right;
     int xCoordinate, yCoordinate;
 
-
-    public BrickLayerCreator(World world, TiledMap map,
-                             BodyDef bdef, FixtureDef fdef, PolygonShape shape, Array<Fixture> worldBody) {
+    public BrickLayer(World world, TiledMap map,
+                      BodyDef bdef, FixtureDef fdef, PolygonShape shape, Array<Fixture> worldBody) {
         fdef.filter.categoryBits = BombSquad.BRICK_BIT;
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -40,11 +32,10 @@ public class BrickLayerCreator extends LayerCreator {
     }
 
     public boolean check(int x, int y) {
-        if ((int) x == xCoordinate && (int) y == yCoordinate) {
-            System.out.println("b   " + xCoordinate + " " + (int) x);
+        if (x == xCoordinate && y == yCoordinate) {
+            System.out.println("b   " + xCoordinate + " " + x);
             return false;
         }
-
         return true;
     }
 
@@ -60,7 +51,7 @@ public class BrickLayerCreator extends LayerCreator {
 
     }
 
-    public void test(TiledMap map, Bomb bomb, World world, Array<Fixture> fixtures) {
+    public void test(TiledMap map, Bomb bomb, Array<Fixture> fixtures) {
         float x = bomb.x, y = bomb.y;
         TiledMapTileLayer layer;
         up = 0;

@@ -4,13 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
-import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class Bomb extends Sprite {
     public World world;
     public PlayScreen screen;
     public Body b2body;
-    FixtureDef fdef = new FixtureDef();
+    public FixtureDef fdef = new FixtureDef();
 
     public float x;
     public float y;

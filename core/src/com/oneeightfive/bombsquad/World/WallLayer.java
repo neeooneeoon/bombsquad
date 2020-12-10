@@ -7,10 +7,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.oneeightfive.bombsquad.BombSquad;
 
-public class WallLayerCreator extends LayerCreator{
+public class WallLayer extends Layer {
 
-    public WallLayerCreator(World world, TiledMap map,
-                            BodyDef bdef, FixtureDef fdef, PolygonShape shape) {
+    public WallLayer(World world, TiledMap map,
+                     BodyDef bdef, FixtureDef fdef, PolygonShape shape) {
         fdef.filter.categoryBits = BombSquad.WALL_BIT;
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();

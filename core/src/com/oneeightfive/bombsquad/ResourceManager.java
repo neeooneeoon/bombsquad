@@ -1,8 +1,6 @@
 package com.oneeightfive.bombsquad;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 
 public class ResourceManager implements Disposable {
