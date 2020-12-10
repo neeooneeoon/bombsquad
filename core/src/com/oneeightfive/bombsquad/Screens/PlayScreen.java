@@ -13,9 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
@@ -108,6 +106,11 @@ public class PlayScreen implements Screen {
     private void drawBombs() {
         for (Bomb bomb : player.bombs) {
             if (bomb.available) {
+                if((bomb.x - 32 / BombSquad.PPM > playerX || bomb.x + 32 / BombSquad.PPM < playerX
+                        || bomb.y - 32 / BombSquad.PPM > playerY || bomb.y + 32 / BombSquad.PPM < playerY)
+                        && !bomb.defined) {
+                    bomb.defineBomb();
+                }
                 if (bomb.timeLeft < 0) {
                     worldCreator.brickLayer.test(gameMap, bomb, worldBody);
                     bomb.blow();
@@ -120,16 +123,12 @@ public class PlayScreen implements Screen {
                 if (bomb.timeFlame <= 10 * animationSpeed) {
                     drawFlames(bomb);
                 } else {
-                    gameWorld.destroyBody(bomb.b2body);
+                    if(bomb.defined) {
+                        gameWorld.destroyBody(bomb.b2body);
+                    }
                     player.bombs.removeIndex(player.bombs.indexOf(bomb, true));
                 }
             }
-        }
-    }
-
-    private void updateBombs() {
-        for (Bomb bomb : player.bombs) {
-            bomb.contactVerify();
         }
     }
 
@@ -221,7 +220,6 @@ public class PlayScreen implements Screen {
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
         player.update(delta);
-        updateBombs();
         gameCam.update();
     }
 

@@ -22,16 +22,18 @@ public class Bomb extends Sprite {
 
     public int radius;
 
+    public boolean defined;
+
     public Bomb(World world, PlayScreen screen, float x, float y, int radius) {
         this.x = (int)((x * 64 + 24) / BombSquad.PPM);
         this.y = (int)((y * 64 + 24) / BombSquad.PPM);
         this.radius = radius;
         this.world = world;
         this.screen = screen;
-        defineBomb();
         setBounds(0, 0, 48, 48);
         timeLeft = 4;
         available = true;
+        defined = false;
     }
 
     public void blow() {
@@ -41,6 +43,7 @@ public class Bomb extends Sprite {
     }
 
     public void defineBomb() {
+        defined = true;
         BodyDef bdef = new BodyDef();
         bdef.position.set( (int)((x * 64 + 24) / BombSquad.PPM) + 0.5f, (int)((y * 64 + 24) / BombSquad.PPM) + 0.5f);
         bdef.type = BodyDef.BodyType.StaticBody;
@@ -49,32 +52,7 @@ public class Bomb extends Sprite {
         CircleShape shape = new CircleShape();
         shape.setRadius(20 / BombSquad.PPM);
         fdef.shape = shape;
+        fdef.filter.categoryBits = BombSquad.BOMB_BIT;
         b2body.createFixture(fdef).setUserData(this);
-    }
-
-    public void contactVerify() {
-        world.setContactListener(new ContactListener() {
-            @Override
-            public void beginContact(Contact contact) {
-
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-                Fixture fixA = contact.getFixtureA();
-                Fixture fixB = contact.getFixtureB();
-            
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-
-            }
-        });
     }
 }
