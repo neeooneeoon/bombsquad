@@ -52,7 +52,6 @@ public class PlayScreen implements Screen {
     public WorldCreator worldCreator;
     private final Array<Fixture> worldBody = new Array<>();
 
-
     public float stateTimer;
 
     public PlayScreen(BombSquad game) {
@@ -93,6 +92,34 @@ public class PlayScreen implements Screen {
         frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_F04"), 0, 0, 48, 48));
         flameAnimation = new Animation<>(animationSpeed, frames);
         frames.clear();
+    }
+
+    public World getWorld() {
+        return gameWorld;
+    }
+
+    public TextureAtlas getCharactersAtlas() {
+        return charactersAtlas;
+    }
+
+    public TextureAtlas getStageAtlas() {
+        return stageAtlas;
+    }
+
+    public TextureAtlas getMenuAtlas() {
+        return menuAtlas;
+    }
+
+    public TextureAtlas getWeaponAtlas() {
+        return weaponAtlas;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public Bomberman getPlayer() {
+        return player;
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
@@ -154,34 +181,6 @@ public class PlayScreen implements Screen {
         }
 
         bomb.timeFlame += Gdx.graphics.getDeltaTime();
-    }
-
-    public World getWorld() {
-        return gameWorld;
-    }
-
-    public TextureAtlas getCharactersAtlas() {
-        return charactersAtlas;
-    }
-
-    public TextureAtlas getStageAtlas() {
-        return stageAtlas;
-    }
-
-    public TextureAtlas getMenuAtlas() {
-        return menuAtlas;
-    }
-
-    public TextureAtlas getWeaponAtlas() {
-        return weaponAtlas;
-    }
-
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-    public Bomberman getPlayer() {
-        return player;
     }
 
     public void handleInput(float delta) {
