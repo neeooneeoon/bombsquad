@@ -9,20 +9,18 @@ public class Bomb extends Sprite {
     public World world;
     public PlayScreen screen;
     public Body b2body;
-    public FixtureDef fdef = new FixtureDef();
+    public FixtureDef fdef;
 
     public float x;
     public float y;
 
     public double timeLeft;
-    public boolean available = false;
+    public boolean available;
 
     public boolean flame = false;
     public float timeFlame = 0;
 
-    public int radius = 1;
-
-    public Bomb() {}
+    public int radius;
 
     public Bomb(World world, PlayScreen screen, float x, float y, int radius) {
         this.x = (int)((x * 64 + 24) / BombSquad.PPM);
@@ -40,11 +38,6 @@ public class Bomb extends Sprite {
         available = false;
         flame = true;
         timeFlame = 0;
-
-    }
-
-    public void clear() {
-        flame = false;
     }
 
     public void defineBomb() {
@@ -52,12 +45,36 @@ public class Bomb extends Sprite {
         bdef.position.set( (int)((x * 64 + 24) / BombSquad.PPM) + 0.5f, (int)((y * 64 + 24) / BombSquad.PPM) + 0.5f);
         bdef.type = BodyDef.BodyType.StaticBody;
         b2body = world.createBody(bdef);
-        FixtureDef fdef = new FixtureDef();
+        fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(20 / BombSquad.PPM);
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData(this);
     }
 
+    public void contactVerify() {
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
 
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+                Fixture fixA = contact.getFixtureA();
+                Fixture fixB = contact.getFixtureB();
+            
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
+    }
 }

@@ -32,7 +32,6 @@ public class Bomberman extends Sprite {
     public World world;
     public Body b2Body;
 
-    public int numberOfBombs = 5;
     public Array<Bomb> bombs = new Array<>();
 
     public Bomberman(PlayScreen screen) {
@@ -41,7 +40,7 @@ public class Bomberman extends Sprite {
         currentState = STATE.STAY;
         previousState = STATE.STAY;
 
-        Array<TextureRegion> frames = new Array<TextureRegion>();
+        Array<TextureRegion> frames = new Array<>();
 
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f00"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f01"), 0, 0, 64, 128));
@@ -51,7 +50,7 @@ public class Bomberman extends Sprite {
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f05"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f06"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_B_f07"), 0, 0, 64, 128));
-        runningUp = new Animation(animationSpeed, frames);
+        runningUp = new Animation<>(animationSpeed, frames);
         frames.clear();
 
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f00"), 0, 0, 64, 128));
@@ -62,7 +61,7 @@ public class Bomberman extends Sprite {
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f05"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f06"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f07"), 0, 0, 64, 128));
-        runningDown = new Animation(animationSpeed, frames);
+        runningDown = new Animation<>(animationSpeed, frames);
         frames.clear();
 
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f00"), 0, 0, 64, 128));
@@ -73,7 +72,7 @@ public class Bomberman extends Sprite {
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f05"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f06"), 0, 0, 64, 128));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f07"), 0, 0, 64, 128));
-        runningRight = new Animation(animationSpeed, frames);
+        runningRight = new Animation<>(animationSpeed, frames);
         frames.clear();
 
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_S_f00"), 0, 0, 64, 128));
@@ -87,7 +86,7 @@ public class Bomberman extends Sprite {
         for(TextureRegion frame : frames) {
             frame.flip(true, false);
         }
-        runningLeft = new Animation(animationSpeed, frames);
+        runningLeft = new Animation<>(animationSpeed, frames);
         frames.clear();
 
         standingFront = new TextureRegion(screen.getCharactersAtlas().findRegion("Bman_F_f02"), 0, 0, 64, 128);

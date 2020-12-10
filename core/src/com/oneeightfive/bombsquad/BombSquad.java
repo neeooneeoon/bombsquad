@@ -16,6 +16,7 @@ public class BombSquad extends Game {
 	public static final short BRICK_BIT = 4;
 	public static final short ITEM_BIT = 8;
 	public static final short WALL_BIT = 16;
+	public static final short BOMB_BIT = 32;
 
 	public SpriteBatch getBatch() {
 		return batch;
