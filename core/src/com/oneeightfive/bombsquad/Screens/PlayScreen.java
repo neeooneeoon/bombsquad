@@ -57,10 +57,10 @@ public class PlayScreen implements Screen {
     public float stateTimer;
 
     public PlayScreen(BombSquad game) {
-        charactersAtlas = new TextureAtlas("characters.pack");
-        stageAtlas = new TextureAtlas("stage.pack");
-        menuAtlas = new TextureAtlas("menu.pack");
-        weaponAtlas = new TextureAtlas("weapon.pack");
+        charactersAtlas = new TextureAtlas("textures/characters.pack");
+        stageAtlas = new TextureAtlas("textures/stage.pack");
+        menuAtlas = new TextureAtlas("textures/menu.pack");
+        weaponAtlas = new TextureAtlas("textures/weapon.pack");
 
         this.game = game;
         this.batch = game.getBatch();
@@ -69,7 +69,7 @@ public class PlayScreen implements Screen {
         gamePort = new FitViewport(BombSquad.V_WIDTH, BombSquad.V_HEIGHT, gameCam);
 
         mapLoader = new TmxMapLoader();
-        gameMap = mapLoader.load("map.tmx");
+        gameMap = mapLoader.load("maps/map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
         gameCam.position.set(BombSquad.V_WIDTH / 2F - 0.5F, BombSquad.V_HEIGHT / 2F - 0.5F, 0);
