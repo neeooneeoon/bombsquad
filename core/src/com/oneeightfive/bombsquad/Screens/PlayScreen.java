@@ -21,6 +21,7 @@ import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
+import com.oneeightfive.bombsquad.Sprites.Enemies.Balloon;
 import com.oneeightfive.bombsquad.Tools.WorldCreator;
 
 public class PlayScreen implements Screen {
@@ -39,6 +40,7 @@ public class PlayScreen implements Screen {
     private final OrthogonalTiledMapRenderer mapRenderer;
 
     private final Bomberman player;
+    private Balloon balloon;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -75,6 +77,7 @@ public class PlayScreen implements Screen {
         worldCreator = new WorldCreator(gameWorld, gameMap);
 
         player = new Bomberman(this);
+        balloon = new Balloon(this, .32f, .32f);
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
@@ -132,6 +135,7 @@ public class PlayScreen implements Screen {
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
         player.update(delta);
+        balloon.update(delta);
         gameCam.update();
     }
 
@@ -218,6 +222,7 @@ public class PlayScreen implements Screen {
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         player.draw(batch);
+        balloon.draw(batch);
         drawBomb();
         batch.end();
 
@@ -227,6 +232,10 @@ public class PlayScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+    }
+
+    public TiledMap getMap() {
+        return gameMap;
     }
 
     @Override

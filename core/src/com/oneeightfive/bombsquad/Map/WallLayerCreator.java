@@ -26,6 +26,7 @@ public class WallLayerCreator {
 
             shape.setAsBox(rect.getWidth() / 2 / ResourceManager.PPM, rect.getHeight() / 2 / ResourceManager.PPM);
             fdef.shape = shape;
+            fdef.filter.categoryBits = BombSquad.OBJECT_BIT;
             body.createFixture(fdef);
         }
     }
