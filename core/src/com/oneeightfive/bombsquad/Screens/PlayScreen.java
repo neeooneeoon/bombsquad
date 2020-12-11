@@ -132,7 +132,6 @@ public class PlayScreen implements Screen {
         for( Bomb bomb : player.bombs){
             if( bomb.x == (int)((player.getX() * 64 + 24) / BombSquad.PPM)
                     && bomb.y == (int)((player.getY() * 64 + 24) / BombSquad.PPM)){
-                System.out.println("a");
                 return;
             }
         }
@@ -148,7 +147,7 @@ public class PlayScreen implements Screen {
                     bomb.defineBomb();
                 }
                 if (bomb.timeLeft < 0) {
-                    worldCreator.brickLayer.test(gameMap, bomb, worldBody);
+                    worldCreator.brickLayer.test(gameMap, bomb, worldBody, player);
                     bomb.blow();
                     worldCreator.deleteBrick(gameWorld, gameMap, worldBody);
                 }
@@ -209,6 +208,10 @@ public class PlayScreen implements Screen {
             player.b2Body.setLinearVelocity(new Vector2(0, -250 * delta));
             player.currentState = Bomberman.STATE.DOWN;
             playerDirection = Bomberman.STATE.DOWN;
+        } else if(player.currentState == Bomberman.STATE.DEAD) {
+            player.b2Body.setLinearVelocity(new Vector2(0, 0));
+            player.currentState = Bomberman.STATE.DEAD;
+            playerDirection = Bomberman.STATE.DEAD;
         } else {
             player.b2Body.setLinearVelocity(new Vector2(0, 0));
             player.currentState = Bomberman.STATE.STAY;

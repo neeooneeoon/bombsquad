@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
+import com.oneeightfive.bombsquad.Sprites.Bomberman;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class BrickLayer extends Layer {
 
     public boolean check(int x, int y) {
         if (x == xCoordinate && y == yCoordinate) {
-            System.out.println("b   " + xCoordinate + " " + x);
+            System.out.println("Destroyed Brick's Coordinate:   " + xCoordinate + " " + x);
             return false;
         }
         return true;
@@ -46,7 +47,6 @@ public class BrickLayer extends Layer {
     public void delete(Array<Fixture> fixtures) {
         for (Fixture fixture : fixtures) {
             if (!check((int) fixture.getBody().getPosition().x, (int) fixture.getBody().getPosition().y)) {
-                System.out.println("check");
                 Filter filter = new Filter();
                 filter.categoryBits = BombSquad.DEFAULT_BIT;
                 fixture.setFilterData(filter);
@@ -55,16 +55,24 @@ public class BrickLayer extends Layer {
 
     }
 
-    public boolean brick(int x, int y){
-        for(DestroyedBrick t : destroyedBricks){
-            if( x == t.getX() && y == t.getY()){
+    public boolean brick(int x, int y) {
+        for (DestroyedBrick t : destroyedBricks) {
+            if (x == t.getX() && y == t.getY()) {
                 return false;
             }
         }
         return true;
     }
 
-    public void test(TiledMap map, Bomb bomb, Array<Fixture> fixtures) {
+    public void playerHitBomb(int xCoordinate, int yCoordinate, Bomberman bomberman) {
+        if (((int) bomberman.getX()  == xCoordinate) && ((int) bomberman.getY() == yCoordinate)) {
+            System.out.println("Player dead");
+            bomberman.currentState = Bomberman.STATE.DEAD;
+        }
+    }
+
+    public void test(TiledMap map, Bomb bomb, Array<Fixture> fixtures, Bomberman bomberman) {
+
         float x = bomb.x, y = bomb.y;
         TiledMapTileLayer layer1, layer2;
         up = 0;
@@ -74,13 +82,14 @@ public class BrickLayer extends Layer {
         layer1 = (TiledMapTileLayer) map.getLayers().get(1);
         layer2 = (TiledMapTileLayer) map.getLayers().get(2);
 
-        for (int i = 1; i <= bomb.radius; i++) {
-            //layer = (TiledMapTileLayer) map.getLayers().get(2);
+        for (int i = 0; i <= bomb.radius; i++) {
+
+            playerHitBomb((int) x + i, (int) y, bomberman);
             if (layer2.getCell((int) x + i, (int) y) != null) {
                 xCoordinate = (int) x + i;
                 yCoordinate = (int) y;
 
-                if( brick(xCoordinate, yCoordinate)){
+                if (brick(xCoordinate, yCoordinate)) {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
@@ -88,7 +97,6 @@ public class BrickLayer extends Layer {
                 }
             }
 
-            //layer = (TiledMapTileLayer) map.getLayers().get(1);
             if (layer1.getCell((int) x + i, (int) y) != null) {
                 right--;
                 break;
@@ -96,12 +104,13 @@ public class BrickLayer extends Layer {
             right++;
         }
         for (int i = 1; i <= bomb.radius; i++) {
-            //layer = (TiledMapTileLayer) map.getLayers().get(2);
+
+            playerHitBomb((int) x - i, (int) y, bomberman);
             if (layer2.getCell((int) x - i, (int) y) != null) {
                 xCoordinate = (int) x - i;
                 yCoordinate = (int) y;
 
-                if( brick(xCoordinate, yCoordinate)){
+                if (brick(xCoordinate, yCoordinate)) {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
@@ -109,7 +118,6 @@ public class BrickLayer extends Layer {
                 }
             }
 
-            //layer = (TiledMapTileLayer) map.getLayers().get(1);
             if (layer1.getCell((int) x - i, (int) y) != null) {
                 left--;
                 break;
@@ -117,12 +125,13 @@ public class BrickLayer extends Layer {
             left++;
         }
         for (int i = 1; i <= bomb.radius; i++) {
-            //layer = (TiledMapTileLayer) map.getLayers().get(2);
-            if (layer2.getCell((int) x, (int) y + i) != null) {
-                xCoordinate = (int) x ;
-                yCoordinate = (int) y+i;
 
-                if( brick(xCoordinate, yCoordinate)){
+            playerHitBomb((int) x, (int) y + i, bomberman);
+            if (layer2.getCell((int) x, (int) y + i) != null) {
+                xCoordinate = (int) x;
+                yCoordinate = (int) y + i;
+
+                if (brick(xCoordinate, yCoordinate)) {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
@@ -130,21 +139,20 @@ public class BrickLayer extends Layer {
                 }
             }
 
-            //layer = (TiledMapTileLayer) map.getLayers().get(1);
             if (layer1.getCell((int) x, (int) y + i) != null) {
                 up--;
                 break;
             }
             up++;
         }
-
         for (int i = 1; i <= bomb.radius; i++) {
-            //layer = (TiledMapTileLayer) map.getLayers().get(2);
-            if (layer2.getCell((int) x, (int) y - i) != null) {
-                xCoordinate = (int) x ;
-                yCoordinate = (int) y-i;
 
-                if( brick(xCoordinate, yCoordinate)){
+            playerHitBomb((int) x, (int) y - i, bomberman);
+            if (layer2.getCell((int) x, (int) y - i) != null) {
+                xCoordinate = (int) x;
+                yCoordinate = (int) y - i;
+
+                if (brick(xCoordinate, yCoordinate)) {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
@@ -152,7 +160,6 @@ public class BrickLayer extends Layer {
                 }
             }
 
-            //layer = (TiledMapTileLayer) map.getLayers().get(1);
             if (layer1.getCell((int) x, (int) y - i) != null) {
                 down--;
                 break;
