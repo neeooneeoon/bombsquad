@@ -221,6 +221,7 @@ public class PlayScreen implements Screen {
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
+        batch.begin();
         player.draw(batch);
         balloon.draw(batch);
         drawBomb();

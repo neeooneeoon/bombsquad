@@ -19,8 +19,8 @@ public class Balloon extends Enemy {
 
     public enum STATE {STAY, UP, DOWN, RIGHT, LEFT, DEAD}
 
-    public Balloon.STATE currentState;
-    public Balloon.STATE previousState;
+    public STATE currentState;
+    public STATE previousState;
     public final static float animationSpeed = 0.1f;
 
     private final TextureRegion standingFront;
@@ -34,7 +34,7 @@ public class Balloon extends Enemy {
 
     public Balloon(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        currentState = Balloon.STATE.STAY;
+        currentState = STATE.STAY;
         previousState = Balloon.STATE.STAY;
         frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Creep_B_f00"), 0, 0, 64, 128));
@@ -91,7 +91,23 @@ public class Balloon extends Enemy {
     public void update(float dt) {
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
-        currentState = screen.playerDirection;
+
+        switch (screen.playerDirection){
+            case LEFT:
+                currentState = STATE.LEFT;
+                break;
+            case RIGHT:
+                currentState = STATE.RIGHT;
+                break;
+            case UP:
+                currentState = STATE.UP;
+                break;
+            case DOWN:
+                currentState = STATE.DOWN;
+                break;
+            case STAY:
+                break;
+        }
 
         switch (currentState) {
             case LEFT:
