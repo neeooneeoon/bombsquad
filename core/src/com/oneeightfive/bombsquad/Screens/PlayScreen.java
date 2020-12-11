@@ -3,7 +3,6 @@ package com.oneeightfive.bombsquad.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,17 +13,15 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.video.VideoPlayer;
-import com.badlogic.gdx.video.VideoPlayerCreator;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.World.WorldCreator;
-
-import java.io.FileNotFoundException;
 
 public class PlayScreen implements Screen {
     private final BombSquad game;
@@ -40,9 +37,6 @@ public class PlayScreen implements Screen {
     private final TmxMapLoader mapLoader;
     private final TiledMap gameMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
-
-    private final VideoPlayer videoPlayer;
-    private final FileHandle videoFile;
 
     private final Bomberman player;
 
@@ -85,15 +79,6 @@ public class PlayScreen implements Screen {
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
-
-        videoFile = Gdx.files.local("videobg.mp4");
-        videoPlayer = new VideoPlayerCreator().createVideoPlayer();
-        try {
-            videoPlayer.play(videoFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
 
         Array<TextureRegion> frames = new Array<>();
         frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Bomb_f01"), 0, 0, 48, 48));
@@ -257,8 +242,6 @@ public class PlayScreen implements Screen {
 
         Gdx.gl.glClearColor(0.3f, 0.4f, 0.4f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        videoPlayer.render();
 
         mapRenderer.render();
 
