@@ -257,7 +257,7 @@ public class PlayScreen implements Screen {
 
         mapRenderer.render();
 
-        b2dr.render(gameWorld, gameCam.combined);
+        //b2dr.render(gameWorld, gameCam.combined);
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
@@ -266,7 +266,7 @@ public class PlayScreen implements Screen {
         balloon.draw(batch);
         batch.end();
 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        batch.setProjectionMatrix(hud.camera.combined);
         hud.stage.draw();
 
         stateTimer += delta;

@@ -12,10 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.oneeightfive.bombsquad.BombSquad;
+import com.oneeightfive.bombsquad.Sprites.Bomb;
 
 public class HUD implements Disposable {
 
     public Stage stage;
+    public OrthographicCamera camera;
     private final Viewport viewport;
 
     public int score = 0;
@@ -32,7 +35,9 @@ public class HUD implements Disposable {
     private Label scoreLabel;
 
     public HUD(SpriteBatch batch) {
-        viewport = new FitViewport(1280,720, new OrthographicCamera());
+        camera = new OrthographicCamera();
+        camera.position.set(BombSquad.V_WIDTH/2f, BombSquad.V_HEIGHT/2f, 0);
+        viewport = new FitViewport(1280,720, camera);
         stage = new Stage(viewport, batch);
 
         Table topTable = new Table();
@@ -53,15 +58,19 @@ public class HUD implements Disposable {
         timeTitle = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
         
 
-        topTable.add(livesTitle).expandX().padTop(20);
-        topTable.add(bombsTitle).expandX().padTop(20);
-        topTable.add(timeTitle).expandX().padTop(20);
+        topTable.add(livesTitle).expandX().padTop(-6);
+        topTable.add(bombsTitle).expandX().padTop(-6);
+        topTable.add(timeTitle).expandX().padTop(-6);
 
         scoreTitle = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
 
 
         stage.addActor(topTable);
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
+    }
+
+    public void update() {
+
     }
 
     @Override
