@@ -114,11 +114,11 @@ public class Balloon extends Enemy {
         }
 
         if (turn && (outOfJunction() || !GoStraight())) {
-            if(!GoStraight()){
+            if (!GoStraight()) {
                 defineJunction2();
 
             }
-            if(defineJunction2()){
+            if (defineJunction2()) {
                 changeDirection(dt);
                 currentState = randomState;
                 turn = false;
@@ -128,9 +128,7 @@ public class Balloon extends Enemy {
 
         move(dt);
 
-        setPosition(b2body.getPosition().x -
-
-                getWidth() / 2, b2body.getPosition().y - (30) / 64f);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - (30) / 64f);
 
     }
 
@@ -166,7 +164,7 @@ public class Balloon extends Enemy {
         CircleShape shape = new CircleShape();
         shape.setRadius(22 / BombSquad.PPM);
         fdef.filter.categoryBits = BombSquad.BOMBERMAN_BIT;
-        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT  ;
+        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT;
 
         shape.setPosition(new Vector2(0 / BombSquad.PPM, 0 / BombSquad.PPM));
         fdef.shape = shape;
@@ -261,16 +259,16 @@ public class Balloon extends Enemy {
         TiledMapTileLayer layer2 = (TiledMapTileLayer) gameMap.getLayers().get(2);
         int enemyX = (int) b2body.getPosition().x;
         int enemyY = (int) b2body.getPosition().y;
-        if( currentState == STATE.LEFT){
+        if (currentState == STATE.LEFT) {
             enemyX = (int) (b2body.getPosition().x + 0.3f);
         }
-        if( currentState == STATE.RIGHT){
+        if (currentState == STATE.RIGHT) {
             enemyX = (int) (b2body.getPosition().x - 0.3f);
         }
-        if( currentState == STATE.UP){
+        if (currentState == STATE.UP) {
             enemyY = (int) (b2body.getPosition().y - 0.3f);
         }
-        if( currentState == STATE.DOWN){
+        if (currentState == STATE.DOWN) {
             enemyY = (int) (b2body.getPosition().y + 0.3f);
         }
         if (currentState == STATE.LEFT
@@ -338,7 +336,6 @@ public class Balloon extends Enemy {
         }
 
         if (currentState == STATE.DOWN) {
-            System.out.println(b2body.getPosition().y + " " +((int) previousY - 0.5f) );
             if (b2body.getPosition().y >= (int) previousY - 1.5f && (int) b2body.getPosition().x == (int) previousX) {
                 return false;
             }
