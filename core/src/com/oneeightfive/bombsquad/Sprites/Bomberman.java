@@ -104,7 +104,7 @@ public class Bomberman extends Sprite {
 
     public void defineBomberman() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(120 / BombSquad.PPM, 120 / BombSquad.PPM);
+        bdef.position.set(96 / BombSquad.PPM, 750 / BombSquad.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
