@@ -12,27 +12,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.oneeightfive.bombsquad.BombSquad;
 
 public class HUD implements Disposable {
 
     public Stage stage;
-    private Viewport viewport;
+    private final Viewport viewport;
 
     public int score = 0;
     public int lives = 3;
     public int timeUp = 300;
     public int timeCount = 0;
 
-    private Label livesTitle;
-    private Label timeTitle;
-    private Label scoreTitle;
+    private final Label livesTitle;
+    private final Label bombsTitle;
+    private final Label timeTitle;
+    private final Label scoreTitle;
     private Label livesLabel;
     private Label timeLabel;
     private Label scoreLabel;
 
     public HUD(SpriteBatch batch) {
-        viewport = new FitViewport(BombSquad.V_WIDTH,BombSquad.V_HEIGHT, new OrthographicCamera());
+        viewport = new FitViewport(1280,720, new OrthographicCamera());
         stage = new Stage(viewport, batch);
 
         Table topTable = new Table();
@@ -41,22 +41,27 @@ public class HUD implements Disposable {
 
         FreeTypeFontGenerator genFont = new FreeTypeFontGenerator(Gdx.files.internal("fonts/minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter paramFont = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        paramFont.size = 18;
+        paramFont.size = 24;
         paramFont.borderColor = new Color(Color.BLACK);
         paramFont.borderWidth = 1;
 
         BitmapFont font = genFont.generateFont(paramFont);
         genFont.dispose();
 
-        livesTitle = new Label("LIVES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeTitle = new Label("LIVES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreTitle = new Label("LIVES", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        livesTitle = new Label("LIVES", new Label.LabelStyle(font, Color.WHITE));
+        bombsTitle = new Label("BOMBS", new Label.LabelStyle(font, Color.WHITE));
+        timeTitle = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
+        
 
-        topTable.add(livesLabel).expandX().padTop(10);
-        topTable.add(timeLabel).expandX().padTop(10);
-        topTable.add(scoreLabel).expandX().padTop(10);
+        topTable.add(livesTitle).expandX().padTop(20);
+        topTable.add(bombsTitle).expandX().padTop(20);
+        topTable.add(timeTitle).expandX().padTop(20);
+
+        scoreTitle = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
+
 
         stage.addActor(topTable);
+        stage.setDebugAll(true);
     }
 
     @Override
