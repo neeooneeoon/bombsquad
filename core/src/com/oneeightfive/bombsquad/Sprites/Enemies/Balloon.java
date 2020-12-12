@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
+import com.oneeightfive.bombsquad.Sprites.Bomb;
 
 import java.util.Random;
 
@@ -37,8 +38,8 @@ public class Balloon extends Enemy {
     private final Animation<TextureRegion> runningUp;
     private final Animation<TextureRegion> runningDown;
 
-    private float previousX;
-    private float previousY;
+    private float previousX, px;
+    private float previousY, py;
 
     TiledMap gameMap;
 
@@ -126,7 +127,33 @@ public class Balloon extends Enemy {
 
         }
 
+        px = b2body.getPosition().x;
+        py = b2body.getPosition().y;
+
+        if (checkBom((int) px, (int) py)) {
+            switch (currentState){
+                case DOWN:
+                    down = false;
+                    break;
+                case UP:
+                    up = false;
+                    break;
+                case RIGHT:
+                    down = false;
+                    break;
+                case LEFT:
+                    left = false;
+                    break;
+            }
+            previousY = (int)b2body.getPosition().y;
+            previousX = (int)b2body.getPosition().x;
+            currentState = OppositeDirection(currentState);
+
+           // changeDirection(dt);
+        }
+
         move(dt);
+
 
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - (30) / 64f);
 
@@ -153,6 +180,46 @@ public class Balloon extends Enemy {
         }
     }
 
+//    boolean checkBom(int x, int y) {
+//        for (Bomb bomb : screen.getPlayer().bombs) {
+//            System.out.println("bomb  " + (int)bomb.x+ " " + (int) bomb.y);
+//            System.out.println("enemy  " + x+ " " + y);
+//            if( x == (int)bomb.x && y == (int) bomb.y){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    boolean checkBom(int x, int y) {
+        for (Bomb bomb : screen.getPlayer().bombs) {
+            if (currentState == STATE.RIGHT) {
+                if (x + 1 == (int) bomb.x && y == (int) bomb.y) {
+                    return true;
+                }
+            }
+
+            if (currentState == STATE.LEFT) {
+                if (x - 1 == (int) bomb.x && y == (int) bomb.y) {
+                    return true;
+                }
+            }
+
+            if (currentState == STATE.UP) {
+                if (x == (int) bomb.x && y + 1 == (int) bomb.y) {
+                    return true;
+                }
+            }
+
+            if (currentState == STATE.DOWN) {
+                if (x == (int) bomb.x && y - 1 == (int) bomb.y) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
@@ -164,7 +231,7 @@ public class Balloon extends Enemy {
         CircleShape shape = new CircleShape();
         shape.setRadius(22 / BombSquad.PPM);
         fdef.filter.categoryBits = BombSquad.BOMBERMAN_BIT;
-        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT;
+        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT | BombSquad.BOMB_BIT;
 
         shape.setPosition(new Vector2(0 / BombSquad.PPM, 0 / BombSquad.PPM));
         fdef.shape = shape;

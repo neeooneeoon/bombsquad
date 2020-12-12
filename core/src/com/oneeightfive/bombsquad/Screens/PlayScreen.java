@@ -61,6 +61,10 @@ public class PlayScreen implements Screen {
 
     public float stateTimer;
 
+    public Bomberman getPlayer() {
+        return player;
+    }
+
     public PlayScreen(BombSquad game) {
         charactersAtlas = new TextureAtlas("textures/characters.pack");
         stageAtlas = new TextureAtlas("textures/stage.pack");
