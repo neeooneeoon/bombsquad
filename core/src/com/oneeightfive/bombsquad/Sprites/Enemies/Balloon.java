@@ -131,25 +131,10 @@ public class Balloon extends Enemy {
         py = b2body.getPosition().y;
 
         if (checkBom((int) px, (int) py)) {
-            switch (currentState){
-                case DOWN:
-                    down = false;
-                    break;
-                case UP:
-                    up = false;
-                    break;
-                case RIGHT:
-                    down = false;
-                    break;
-                case LEFT:
-                    left = false;
-                    break;
-            }
             previousY = (int)b2body.getPosition().y;
             previousX = (int)b2body.getPosition().x;
             currentState = OppositeDirection(currentState);
-
-           // changeDirection(dt);
+            
         }
 
         move(dt);
