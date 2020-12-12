@@ -187,7 +187,6 @@ public class PlayScreen implements Screen {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 64 * j + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
             }
         }
-
         bomb.timeFlame += Gdx.graphics.getDeltaTime();
     }
 
@@ -213,9 +212,17 @@ public class PlayScreen implements Screen {
             playerDirection = Bomberman.STATE.DOWN;
             sounds.playFootstep();
         } else if(player.currentState == Bomberman.STATE.DEAD) {
-            player.b2Body.setLinearVelocity(new Vector2(0, 0));
-            player.currentState = Bomberman.STATE.DEAD;
-            playerDirection = Bomberman.STATE.DEAD;
+            if (player.lives > 0) {
+                player.b2Body.setLinearVelocity(new Vector2(0, 0));
+                player.currentState = Bomberman.STATE.STAY;
+                playerDirection = Bomberman.STATE.STAY;
+
+                player.lives--;
+            } else {
+                player.b2Body.setLinearVelocity(new Vector2(0, 0));
+                player.currentState = Bomberman.STATE.DEAD;
+                playerDirection = Bomberman.STATE.DEAD;
+            }
         } else {
             player.b2Body.setLinearVelocity(new Vector2(0, 0));
             player.currentState = Bomberman.STATE.STAY;
@@ -234,6 +241,14 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public boolean isLose() {
+        return hud.timeUp || player.lives == 0;
+    }
+
+    public boolean nextLevel() {
+        return false;
+    }
+
     public void update(float delta) {
         handleInput(delta);
         gameWorld.step(1 / 60f, 6, 2);
@@ -241,6 +256,15 @@ public class PlayScreen implements Screen {
         player.update(delta);
         balloon.update(delta);
         gameCam.update();
+        if (isLose()) {
+            dispose();
+        }
+        if (nextLevel()) {
+            System.out.println("next level");
+            dispose();
+        }
+        hud.update(player.lives, player.numberOfBombs, player.score, delta);
+
     }
 
     @Override

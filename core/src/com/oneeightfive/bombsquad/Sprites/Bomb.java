@@ -65,10 +65,7 @@ public class Bomb extends Sprite {
     }
 
     public boolean check(int x, int y) {
-        if (x == xCoordinate && y == yCoordinate) {
-            return false;
-        }
-        return true;
+        return x != xCoordinate || y != yCoordinate;
     }
 
     public void delete(Array<Fixture> fixtures) {

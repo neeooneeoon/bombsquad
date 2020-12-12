@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.oneeightfive.bombsquad.BombSquad;
-import com.oneeightfive.bombsquad.Sprites.Bomb;
 
 public class HUD implements Disposable {
 
@@ -22,17 +21,17 @@ public class HUD implements Disposable {
     private final Viewport viewport;
 
     public int score = 0;
+    public int bombs = 5;
     public int lives = 3;
-    public int timeUp = 300;
-    public int timeCount = 0;
+    public int timeLeft = 300;
+    public float timeCount = 0;
 
-    private final Label livesTitle;
-    private final Label bombsTitle;
-    private final Label timeTitle;
-    private final Label scoreTitle;
-    private Label livesLabel;
-    private Label timeLabel;
-    private Label scoreLabel;
+    private final Label livesLabel;
+    private final Label bombsLabel;
+    private final Label timeLabel;
+    private final Label scoreLabel;
+
+    public Boolean timeUp = false;
 
     public HUD(SpriteBatch batch) {
         camera = new OrthographicCamera();
@@ -40,37 +39,53 @@ public class HUD implements Disposable {
         viewport = new FitViewport(1280,720, camera);
         stage = new Stage(viewport, batch);
 
-        Table topTable = new Table();
-        topTable.top();
-        topTable.setFillParent(true);
-
         FreeTypeFontGenerator genFont = new FreeTypeFontGenerator(Gdx.files.internal("fonts/minecraft.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter paramFont = new FreeTypeFontGenerator.FreeTypeFontParameter();
         paramFont.size = 24;
         paramFont.borderColor = new Color(Color.BLACK);
         paramFont.borderWidth = 1;
-
         BitmapFont font = genFont.generateFont(paramFont);
         genFont.dispose();
 
-        livesTitle = new Label("LIVES", new Label.LabelStyle(font, Color.WHITE));
-        bombsTitle = new Label("BOMBS", new Label.LabelStyle(font, Color.WHITE));
-        timeTitle = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
-        
+        Table topTable = new Table();
+        topTable.top();
+        topTable.setFillParent(true);
 
-        topTable.add(livesTitle).expandX().padTop(-6);
-        topTable.add(bombsTitle).expandX().padTop(-6);
-        topTable.add(timeTitle).expandX().padTop(-6);
+        livesLabel = new Label("LIVES: " + lives, new Label.LabelStyle(font, Color.WHITE));
+        bombsLabel = new Label("BOMBS: " + bombs, new Label.LabelStyle(font, Color.WHITE));
+        timeLabel = new Label("TIME: " + timeLeft, new Label.LabelStyle(font, Color.WHITE));
 
-        scoreTitle = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
+        topTable.add(livesLabel).expandX().padTop(-6);
+        topTable.add(bombsLabel).expandX().padTop(-6);
+        topTable.add(timeLabel).expandX().padTop(-6);
 
+        Table bottomTable = new Table();
+        bottomTable.bottom();
+        bottomTable.setFillParent(true);
+
+        scoreLabel = new Label("SCORE: " + score, new Label.LabelStyle(font, Color.WHITE));
+
+        bottomTable.add(scoreLabel).expandX().padBottom(-6);
 
         stage.addActor(topTable);
+        stage.addActor(bottomTable);
         //stage.setDebugAll(true);
     }
 
-    public void update() {
+    public void update(int lives, int bombs, int score, float delta) {
+        bombsLabel.setText("BOMBS: " + bombs);
+        livesLabel.setText("LIVES: " + lives);
 
+        timeCount += delta;
+        if(timeCount >= 1) {
+            if(timeLeft > 0) {
+                timeLeft--;
+            } else {
+                timeUp = true;
+            }
+            timeCount = 0;
+        }
+        timeLabel.setText("TIME: " + timeLeft);
     }
 
     @Override

@@ -3,16 +3,10 @@ package com.oneeightfive.bombsquad.World;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
-import com.oneeightfive.bombsquad.Sprites.Bomb;
-import com.oneeightfive.bombsquad.Sprites.Bomberman;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BrickLayer extends Layer {
 
@@ -32,6 +26,4 @@ public class BrickLayer extends Layer {
         }
 
     }
-
-
 }
