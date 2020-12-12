@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
+import com.oneeightfive.bombsquad.Sprites.Enemies.Balloon;
 import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
@@ -35,11 +36,12 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final FitViewport gamePort;
 
-    private final TmxMapLoader mapLoader;
+    //private final TmxMapLoader mapLoader;
     private final TiledMap gameMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
 
     private final Bomberman player;
+    private final Balloon balloon;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -70,7 +72,7 @@ public class PlayScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(BombSquad.V_WIDTH, BombSquad.V_HEIGHT, gameCam);
 
-        mapLoader = new TmxMapLoader();
+        TmxMapLoader mapLoader = new TmxMapLoader();
         gameMap = mapLoader.load("maps/map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
@@ -78,6 +80,7 @@ public class PlayScreen implements Screen {
         worldCreator = new WorldCreator(gameWorld, gameMap, worldBody);
 
         player = new Bomberman(this);
+        balloon = new Balloon(this, .32f, .32f);
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
@@ -124,6 +127,10 @@ public class PlayScreen implements Screen {
 
     public Bomberman getPlayer() {
         return player;
+    }
+
+    public BombSquad getGame() {
+        return game;
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
@@ -232,6 +239,7 @@ public class PlayScreen implements Screen {
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
         player.update(delta);
+        balloon.update(delta);
         gameCam.update();
     }
 
@@ -256,6 +264,7 @@ public class PlayScreen implements Screen {
 
         drawBombs();
         player.draw(batch);
+        balloon.draw(batch);
 
         batch.end();
 
