@@ -104,7 +104,7 @@ public class Bomberman extends Sprite {
 
     public void defineBomberman() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(120 / BombSquad.PPM, 120 / BombSquad.PPM);
+        bdef.position.set(96 / BombSquad.PPM, 750 / BombSquad.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);
 
@@ -155,8 +155,6 @@ public class Bomberman extends Sprite {
                 }
                 break;
             case DEAD:
-                System.out.println("deadAnimation");
-                setRegion(standingFront);
                 break;
         }
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);
