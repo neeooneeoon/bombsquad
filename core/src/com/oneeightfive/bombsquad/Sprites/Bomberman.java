@@ -34,6 +34,7 @@ public class Bomberman extends Sprite {
     public Body b2Body;
 
     public Array<Bomb> bombs = new Array<>();
+    public int numberOfBombs = 5;
 
     public Bomberman(PlayScreen screen) {
         this.screen = screen;
@@ -155,6 +156,7 @@ public class Bomberman extends Sprite {
                 }
                 break;
             case DEAD:
+                System.out.println("Player is dead");
                 break;
         }
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);

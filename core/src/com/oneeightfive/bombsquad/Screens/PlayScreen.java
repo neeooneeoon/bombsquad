@@ -18,6 +18,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.oneeightfive.bombsquad.Audio.BGM;
+import com.oneeightfive.bombsquad.Audio.Sounds;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
@@ -56,6 +58,9 @@ public class PlayScreen implements Screen {
     public WorldCreator worldCreator;
     private final Array<Fixture> worldBody = new Array<>();
     Array<DestroyedBrick> destroyedBricks = new Array<>();
+
+    private final BGM bgm;
+    private final Sounds sounds;
 
     public float stateTimer;
 
@@ -98,6 +103,11 @@ public class PlayScreen implements Screen {
         frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_F04"), 0, 0, 48, 48));
         flameAnimation = new Animation<>(animationSpeed, frames);
         frames.clear();
+
+        bgm = new BGM();
+        bgm.play();
+
+        sounds = new Sounds();
     }
 
     public BombSquad getGame() {
@@ -136,6 +146,7 @@ public class PlayScreen implements Screen {
                 return;
             }
         }
+        player.numberOfBombs--;
         player.bombs.add(new Bomb(gameWorld, this, player.getX(), player.getY(), 2));
     }
 
@@ -150,6 +161,8 @@ public class PlayScreen implements Screen {
                 if (bomb.timeLeft < 0) {
                     bomb.FlameCollision(gameMap, destroyedBricks, worldBody, player);
                     bomb.blow();
+                    sounds.playExplode();
+                    player.numberOfBombs++;
                 }
                 drawWeaponAnimation(bombAnimation, true, bomb.x + 10 / 64f, bomb.y + 10 / 64f);
                 bomb.timeLeft -= Gdx.graphics.getDeltaTime();
@@ -196,18 +209,22 @@ public class PlayScreen implements Screen {
             player.b2Body.setLinearVelocity(new Vector2(0, 250 * delta));
             player.currentState = Bomberman.STATE.UP;
             playerDirection = Bomberman.STATE.UP;
+            sounds.playFootstep();
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             player.b2Body.setLinearVelocity(new Vector2(250 * delta, 0));
             player.currentState = Bomberman.STATE.RIGHT;
             playerDirection = Bomberman.STATE.RIGHT;
+            sounds.playFootstep();
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             player.b2Body.setLinearVelocity(new Vector2(-250 * delta, 0));
             player.currentState = Bomberman.STATE.LEFT;
             playerDirection = Bomberman.STATE.LEFT;
+            sounds.playFootstep();
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             player.b2Body.setLinearVelocity(new Vector2(0, -250 * delta));
             player.currentState = Bomberman.STATE.DOWN;
             playerDirection = Bomberman.STATE.DOWN;
+            sounds.playFootstep();
         } else if(player.currentState == Bomberman.STATE.DEAD) {
             player.b2Body.setLinearVelocity(new Vector2(0, 0));
             player.currentState = Bomberman.STATE.DEAD;
@@ -216,13 +233,17 @@ public class PlayScreen implements Screen {
             player.b2Body.setLinearVelocity(new Vector2(0, 0));
             player.currentState = Bomberman.STATE.STAY;
             playerDirection = Bomberman.STATE.STAY;
+            sounds.stopFootstep();
         }
 
         playerX = player.getX();
         playerY = player.getY();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            createBomb();
+            if(player.numberOfBombs>0) {
+                createBomb();
+                sounds.playPlanted();
+            }
         }
     }
 
