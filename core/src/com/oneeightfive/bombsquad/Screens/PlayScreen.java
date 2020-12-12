@@ -29,11 +29,8 @@ import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class PlayScreen implements Screen {
-    private final BombSquad game;
     private final SpriteBatch batch;
     private final TextureAtlas charactersAtlas;
-    private final TextureAtlas stageAtlas;
-    private final TextureAtlas menuAtlas;
     private final TextureAtlas weaponAtlas;
 
     private final OrthographicCamera gameCam;
@@ -69,11 +66,8 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(BombSquad game) {
         charactersAtlas = new TextureAtlas("textures/characters.pack");
-        stageAtlas = new TextureAtlas("textures/stage.pack");
-        menuAtlas = new TextureAtlas("textures/menu.pack");
         weaponAtlas = new TextureAtlas("textures/weapon.pack");
 
-        this.game = game;
         this.batch = game.getBatch();
 
         gameCam = new OrthographicCamera();
@@ -115,10 +109,6 @@ public class PlayScreen implements Screen {
         sounds = new Sounds();
     }
 
-    public BombSquad getGame() {
-        return game;
-    }
-
     public World getWorld() {
         return gameWorld;
     }
@@ -129,14 +119,6 @@ public class PlayScreen implements Screen {
 
     public TextureAtlas getWeaponAtlas() {
         return weaponAtlas;
-    }
-
-    public TextureAtlas getStageAtlas() {
-        return stageAtlas;
-    }
-
-    public TextureAtlas getMenuAtlas() {
-        return menuAtlas;
     }
 
 
