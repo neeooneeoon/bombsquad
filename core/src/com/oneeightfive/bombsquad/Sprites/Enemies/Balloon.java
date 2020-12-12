@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
+import java.util.Random;
+
 public class Balloon extends Enemy {
     private float stateTimer;
     private Array<TextureRegion> frames;
@@ -30,10 +32,13 @@ public class Balloon extends Enemy {
     private final Animation<TextureRegion> runningUp;
     private final Animation<TextureRegion> runningDown;
 
+    private float previousX=300;
+    private float previousY=300;
+
     public Balloon(PlayScreen screen, float x, float y) {
         super(screen, x, y);
-        currentState = STATE.STAY;
-        previousState = Balloon.STATE.STAY;
+        currentState = STATE.RIGHT;
+        previousState = STATE.RIGHT;
         frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Creep_B_f00"), 0, 0, 64, 64));
         frames.add(new TextureRegion(screen.getCharactersAtlas().findRegion("Creep_B_f01"), 0, 0, 64, 64));
@@ -90,51 +95,53 @@ public class Balloon extends Enemy {
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
 
-        switch (screen.playerDirection){
-            case LEFT:
-                currentState = STATE.LEFT;
-                break;
-            case RIGHT:
-                currentState = STATE.RIGHT;
-                break;
-            case UP:
-                currentState = STATE.UP;
-                break;
-            case DOWN:
-                currentState = STATE.DOWN;
-                break;
-            case STAY:
-                break;
+        if( ((int)(b2body.getPosition().x *1000))/1000f == ((int)(previousX *1000))/1000f
+                && ((int)(b2body.getPosition().y *1000))/1000f == ((int)(previousY *1000))/1000f){
+            while( currentState == previousState){
+                Random random = new Random();
+                switch (Math.abs(random.nextInt())%4){
+                    case 0:
+                        System.out.println("Left");
+                        currentState = STATE.LEFT;
+                        break;
+                    case 1:
+                        System.out.println("Right");
+                        currentState = STATE.RIGHT;
+                        break;
+                    case 2:
+                        System.out.println("Up");
+                        currentState = STATE.UP;
+                        break;
+                    case 3:
+                        System.out.println("Down");
+                        currentState = STATE.DOWN;
+                        break;
+                }
+            }
+        } else {
+            System.out.println("b2body position:   " + ((int)(b2body.getPosition().x *1000))/1000f + " " + ((int)(b2body.getPosition().y *1000))/1000f);
+            System.out.println("previous position:   " + ((int)(previousX *1000))/1000f + " " + ((int)(previousY *1000))/1000f);
         }
+
+        previousX = b2body.getPosition().x;
+        previousY = b2body.getPosition().y;
 
         switch (currentState) {
             case LEFT:
+                b2body.setLinearVelocity(new Vector2(-150 * dt, 0));
                 setRegion(runningLeft.getKeyFrame(stateTimer, true));
                 break;
             case RIGHT:
+                b2body.setLinearVelocity(new Vector2(150 * dt, 0));
                 setRegion(runningRight.getKeyFrame(stateTimer, true));
                 break;
             case UP:
+                b2body.setLinearVelocity(new Vector2(0, 150 * dt));
                 setRegion(runningUp.getKeyFrame(stateTimer, true));
                 break;
             case DOWN:
+                b2body.setLinearVelocity(new Vector2(0, -150 * dt));
                 setRegion(runningDown.getKeyFrame(stateTimer, true));
-                break;
-            case STAY:
-                switch (previousState) {
-                    case LEFT:
-                        setRegion(standingLeft);
-                        break;
-                    case RIGHT:
-                        setRegion(standingRight);
-                        break;
-                    case UP:
-                        setRegion(standingBack);
-                        break;
-                    case DOWN:
-                        setRegion(standingFront);
-                        break;
-                }
                 break;
         }
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - (30)/64f);
