@@ -80,7 +80,7 @@ public class PlayScreen implements Screen {
         worldCreator = new WorldCreator(gameWorld, gameMap, worldBody);
 
         player = new Bomberman(this);
-        balloon = new Balloon(this, .32f, .32f);
+        balloon = new Balloon(this, .32f, .32f, gameMap);
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
