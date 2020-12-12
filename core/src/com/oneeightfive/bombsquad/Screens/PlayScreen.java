@@ -96,6 +96,8 @@ public class PlayScreen implements Screen {
         frames.add(new TextureRegion(this.getWeaponAtlas().findRegion("Flame_F04"), 0, 0, 48, 48));
         flameAnimation = new Animation<>(animationSpeed, frames);
         frames.clear();
+
+
     }
 
     public World getWorld() {
