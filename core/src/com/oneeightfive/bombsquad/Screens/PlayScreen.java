@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
+import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class PlayScreen implements Screen {
@@ -53,6 +54,7 @@ public class PlayScreen implements Screen {
 
     public WorldCreator worldCreator;
     private final Array<Fixture> worldBody = new Array<>();
+    Array<DestroyedBrick> destroyedBricks = new Array<>();
 
     public float stateTimer;
 
@@ -147,7 +149,7 @@ public class PlayScreen implements Screen {
                     bomb.defineBomb();
                 }
                 if (bomb.timeLeft < 0) {
-                    worldCreator.brickLayer.FlameCollision(gameMap, bomb, worldBody, player);
+                    bomb.FlameCollision(gameMap, destroyedBricks, worldBody, player);
                     bomb.blow();
                 }
                 drawWeaponAnimation(bombAnimation, true, bomb.x + 10 / 64f, bomb.y + 10 / 64f);
@@ -170,19 +172,19 @@ public class PlayScreen implements Screen {
         int radius = bomb.radius;
         drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
         for (int j = 1; j <= radius; j++) {
-            if (worldCreator.brickLayer.left >= j - 1) {
+            if (bomb.left >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 - 64 * j + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
             }
 
-            if (worldCreator.brickLayer.up >= j - 1) {
+            if (bomb.up >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 10) / BombSquad.PPM, (bomb.y * 64 + 64 * j + 10) / BombSquad.PPM);
             }
 
-            if (worldCreator.brickLayer.down >= j - 1) {
+            if (bomb.down >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 10) / BombSquad.PPM, (bomb.y * 64 - 64 * j + 10) / BombSquad.PPM);
             }
 
-            if (worldCreator.brickLayer.right >= j - 1) {
+            if (bomb.right >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 64 * j + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
             }
         }
