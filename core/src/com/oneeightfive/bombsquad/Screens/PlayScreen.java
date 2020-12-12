@@ -35,7 +35,6 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final FitViewport gamePort;
 
-    private final TmxMapLoader mapLoader;
     private final TiledMap gameMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
 
@@ -70,7 +69,7 @@ public class PlayScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(BombSquad.V_WIDTH, BombSquad.V_HEIGHT, gameCam);
 
-        mapLoader = new TmxMapLoader();
+        TmxMapLoader mapLoader = new TmxMapLoader();
         gameMap = mapLoader.load("maps/map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
@@ -125,6 +124,10 @@ public class PlayScreen implements Screen {
 
     public Bomberman getPlayer() {
         return player;
+    }
+
+    public BombSquad getGame() {
+        return game;
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
@@ -293,4 +296,5 @@ public class PlayScreen implements Screen {
         gameWorld.dispose();
         b2dr.dispose();
     }
+
 }

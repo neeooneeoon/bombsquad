@@ -33,7 +33,6 @@ public class BrickLayer extends Layer {
             fdef.shape = shape;
             worldBody.add(body.createFixture(fdef));
         }
-
     }
 
     public boolean check(int x, int y) {
@@ -65,14 +64,12 @@ public class BrickLayer extends Layer {
     }
 
     public void playerHitBomb(int xCoordinate, int yCoordinate, Bomberman bomberman) {
-        if (((int) bomberman.getX()  == xCoordinate) && ((int) bomberman.getY() == yCoordinate)) {
-            System.out.println("Player dead");
+        if (((int) bomberman.getX() == xCoordinate) && ((int) bomberman.getY() == yCoordinate)) {
             bomberman.currentState = Bomberman.STATE.DEAD;
         }
     }
 
     public void test(TiledMap map, Bomb bomb, Array<Fixture> fixtures, Bomberman bomberman) {
-
         float x = bomb.x, y = bomb.y;
         TiledMapTileLayer layer1, layer2;
         up = 0;
@@ -166,7 +163,5 @@ public class BrickLayer extends Layer {
             }
             down++;
         }
-
     }
-
 }
