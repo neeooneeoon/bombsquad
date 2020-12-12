@@ -7,27 +7,29 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.oneeightfive.bombsquad.Audio.BGM;
+import com.oneeightfive.bombsquad.Audio.Sounds;
 import com.oneeightfive.bombsquad.BombSquad;
-import com.oneeightfive.bombsquad.Sprites.Bomberman;
 
 public class MainMenu implements Screen {
-    private BombSquad game;
-    private SpriteBatch batch;
+    private final BombSquad game;
+    private final SpriteBatch batch;
 
     public Stage stage;
     public OrthographicCamera camera;
     public Viewport viewport;
 
-    private Boolean isPlay = true;
-    private Boolean isHighScore = false;
-    private Boolean isQuit = false;
+    private final Boolean isPlay = true;
+    private final Boolean isHighScore = false;
+    private final Boolean isQuit = false;
 
-    private TextureRegion bg;
+    private final TextureRegion bg;
+
+    private final BGM bgm;
+    private final Sounds sounds;
 
     public MainMenu(BombSquad game) {
         this.game = game;
@@ -40,17 +42,29 @@ public class MainMenu implements Screen {
 
         bg = new TextureRegion(new Texture("textures/menubg.jpg"), 0, 0, 3344, 1254);
 
+        bgm = new BGM();
+        bgm.playMenu();
+
+        sounds = new Sounds();
     }
 
-    public void handleInput(float delta) {
+    public void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            game.setScreen(new PlayScreen(game));
-            dispose();
+            if (isPlay) {
+                game.setScreen(new PlayScreen(game));
+                dispose();
+            } else if (isHighScore) {
+                //game.setScreen(new HighScoreScreen(game));
+                dispose();
+            } else if (isQuit) {
+                game.dispose();
+                dispose();
+            }
         }
     }
 
-    public void update(float delta) {
-        handleInput(delta);
+    public void update() {
+        handleInput();
 
         batch.begin();
         batch.draw(bg, 0, 0, viewport.getWorldWidth(),viewport.getWorldHeight());
@@ -67,7 +81,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
+        update();
 
     }
 
@@ -93,6 +107,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        bgm.dispose();
+        sounds.dispose();
     }
 }

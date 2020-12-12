@@ -6,20 +6,27 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class BGM implements Disposable {
 
-    Music bgm;
+    Music menuBgm;
+    Music inGameBGM;
 
     public BGM() {
-        bgm = Gdx.audio.newMusic(Gdx.files.internal("audio/bgm.ogg"));
-
+        menuBgm = Gdx.audio.newMusic(Gdx.files.internal("audio/menu_bgm.ogg"));
+        inGameBGM = Gdx.audio.newMusic(Gdx.files.internal("audio/ingame_bgm.ogg"));
     }
 
-    public void play() {
-        bgm.setVolume(0.05f);
-        bgm.play();
+    public void playMenu() {
+        menuBgm.setVolume(0.05f);
+        menuBgm.play();
+    }
+
+    public void playInGame() {
+        inGameBGM.setVolume(0.05f);
+        inGameBGM.play();
     }
 
     @Override
     public void dispose() {
-        bgm.dispose();
+        menuBgm.dispose();
+        inGameBGM.dispose();
     }
 }

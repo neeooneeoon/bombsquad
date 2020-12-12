@@ -106,7 +106,7 @@ public class PlayScreen implements Screen {
         frames.clear();
 
         bgm = new BGM();
-        bgm.play();
+        bgm.playInGame();
 
         sounds = new Sounds();
     }
