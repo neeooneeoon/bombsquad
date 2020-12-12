@@ -42,6 +42,7 @@ public class PlayScreen implements Screen {
 
     private final Bomberman player;
     private final Balloon balloon;
+    private final Balloon balloon2;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -81,6 +82,7 @@ public class PlayScreen implements Screen {
 
         player = new Bomberman(this);
         balloon = new Balloon(this, .32f, .32f, gameMap);
+        balloon2 = new Balloon(this, .320f, .320f, gameMap);
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
@@ -221,6 +223,7 @@ public class PlayScreen implements Screen {
         mapRenderer.setView(gameCam);
         player.update(delta);
         balloon.update(delta);
+        balloon2.update(delta);
         gameCam.update();
     }
 
@@ -246,6 +249,7 @@ public class PlayScreen implements Screen {
         drawBombs();
         player.draw(batch);
         balloon.draw(batch);
+        balloon2.draw(batch);
 
         batch.end();
 
