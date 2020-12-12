@@ -106,56 +106,20 @@ public class Balloon extends Enemy {
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
 
-//        if( ((int)(b2body.getPosition().x *1000))/1000f == ((int)(previousX *1000))/1000f
-//                && ((int)(b2body.getPosition().y *1000))/1000f == ((int)(previousY *1000))/1000f){
-//            while( currentState == previousState){
-//                Random random = new Random();
-//                switch (Math.abs(random.nextInt())%4){
-//                    case 0:
-//                        System.out.println("Left");
-//                        currentState = STATE.LEFT;
-//                        break;
-//                    case 1:
-//                        System.out.println("Right");
-//                        currentState = STATE.RIGHT;
-//                        break;
-//                    case 2:
-//                        System.out.println("Up");
-//                        currentState = STATE.UP;
-//                        break;
-//                    case 3:
-//                        System.out.println("Down");
-//                        currentState = STATE.DOWN;
-//                        break;
-//                }
-//            }
-//        } else {
-//            System.out.println("b2body position:   " + ((int)(b2body.getPosition().x *1000))/1000f + " " + ((int)(b2body.getPosition().y *1000))/1000f);
-//            System.out.println("previous position:   " + ((int)(previousX *1000))/1000f + " " + ((int)(previousY *1000))/1000f);
-//        }
-//
 
         if (!turn && outOfJunction2()) {
             if (defineJunction2()) {
                 turn = true;
-                System.out.println("juction");
             }
         }
 
-//        if(!GoStraight()){
-//            System.out.println("A");
-//        }
-//        if(outOfJunction2()){
-//            System.out.println("B");
-//        }
         if (turn && (outOfJunction() || !GoStraight())) {
             if(!GoStraight()){
-                System.out.println("cant straight");
                 defineJunction2();
 
             }
             if(defineJunction2()){
-                defineJunction(dt);
+                changeDirection(dt);
                 currentState = randomState;
                 turn = false;
             }
@@ -201,8 +165,8 @@ public class Balloon extends Enemy {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(22 / BombSquad.PPM);
-        fdef.filter.categoryBits = BombSquad.ENEMY_BIT;
-        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT | BombSquad.ENEMY_BIT | BombSquad.OBJECT_BIT;
+        fdef.filter.categoryBits = BombSquad.BOMBERMAN_BIT;
+        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT | BombSquad.BOMBERMAN_BIT ;
 
         shape.setPosition(new Vector2(0 / BombSquad.PPM, 0 / BombSquad.PPM));
         fdef.shape = shape;
@@ -253,13 +217,10 @@ public class Balloon extends Enemy {
         }
 
         if (check == true) {
-            System.out.println("change");
-            System.out.println("LRUD " + left + " " + right + " " + up + " " + down);
             previousY = b2body.getPosition().y;
             previousX = b2body.getPosition().x;
             return true;
         } else if (!GoStraight()) {
-            System.out.println("cant go straight");
             previousY = b2body.getPosition().y;
             previousX = b2body.getPosition().x;
             return true;
@@ -267,11 +228,7 @@ public class Balloon extends Enemy {
         return false;
     }
 
-    private void defineJunction(float dt) {
-        int enemyX = (int) b2body.getPosition().x;
-        int enemyY = (int) b2body.getPosition().y;
-        TiledMapTileLayer layer1 = (TiledMapTileLayer) gameMap.getLayers().get(1);
-        TiledMapTileLayer layer2 = (TiledMapTileLayer) gameMap.getLayers().get(2);
+    private void changeDirection(float dt) {
         previousY = b2body.getPosition().y;
         previousX = b2body.getPosition().x;
 
@@ -282,63 +239,6 @@ public class Balloon extends Enemy {
         }
 
     }
-
-//    private void defineJunction(float dt) {
-//        int enemyX = (int) b2body.getPosition().x;
-//        int enemyY = (int) b2body.getPosition().y;
-//        TiledMapTileLayer layer1 = (TiledMapTileLayer) gameMap.getLayers().get(1);
-//        TiledMapTileLayer layer2 = (TiledMapTileLayer) gameMap.getLayers().get(2);
-//        if (layer1.getCell(enemyX + 1, enemyY) == null &&
-//                layer2.getCell(enemyX + 1, enemyY) == null) {
-//            right = true;
-//            if (currentState != STATE.LEFT && currentState != STATE.RIGHT) {
-//                check = true;
-//            }
-//        }
-//        if (layer1.getCell(enemyX - 1, enemyY) == null &&
-//                layer2.getCell(enemyX - 1, enemyY) == null) {
-//            left = true;
-//            if (currentState != STATE.RIGHT && currentState != STATE.LEFT) {
-//                check = true;
-//            }
-//        }
-//        if (layer1.getCell(enemyX, enemyY + 1) == null &&
-//                layer2.getCell(enemyX, enemyY + 1) == null) {
-//            up = true;
-//            if (currentState != STATE.DOWN && currentState != STATE.UP) {
-//                check = true;
-//            }
-//        }
-//        if (layer1.getCell(enemyX, enemyY - 1) == null &&
-//                layer2.getCell(enemyX, enemyY - 1) == null) {
-//            down = true;
-//            if (currentState != STATE.UP && currentState != STATE.DOWN) {
-//                check = true;
-//            }
-//        }
-//
-//        if (check == true) {
-//            if (turn) {
-//                System.out.println("change");
-//                previousY = b2body.getPosition().y;
-//                previousX = b2body.getPosition().x;
-//
-//                randomState = RandomDirection();
-//                turn = false;
-//            }
-//            if (outOfJunction()) {
-//                turn = true;
-//            }
-//
-//        } else if (!GoStraight()) {
-//            previousY = b2body.getPosition().y;
-//            previousX = b2body.getPosition().x;
-//            randomState = OppositeDirection(currentState);
-//
-//            turn = false;
-//        }
-//
-//    }
 
     private STATE OppositeDirection(STATE state) {
         if (state == STATE.RIGHT) {
@@ -425,8 +325,6 @@ public class Balloon extends Enemy {
     }
 
     private boolean outOfJunction() {
-//        System.out.println("b2body's position  " + (int) b2body.getPosition().x + " " + (int) b2body.getPosition().y);
-//        System.out.println("previous position  " + (int) previousX + " " + (int) previousY);
         if (currentState == STATE.RIGHT) {
             if ((int) b2body.getPosition().y == (int) previousY && b2body.getPosition().x <= (int) previousX + 0.5f) {
                 return false;
