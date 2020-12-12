@@ -18,7 +18,6 @@ public class HUD implements Disposable {
 
     public Stage stage;
     public OrthographicCamera camera;
-    private final Viewport viewport;
 
     public int score = 0;
     public int bombs = 5;
@@ -36,7 +35,7 @@ public class HUD implements Disposable {
     public HUD(SpriteBatch batch) {
         camera = new OrthographicCamera();
         camera.position.set(BombSquad.V_WIDTH/2f, BombSquad.V_HEIGHT/2f, 0);
-        viewport = new FitViewport(1280,720, camera);
+        Viewport viewport = new FitViewport(1280, 720, camera);
         stage = new Stage(viewport, batch);
 
         FreeTypeFontGenerator genFont = new FreeTypeFontGenerator(Gdx.files.internal("fonts/minecraft.ttf"));

@@ -62,6 +62,8 @@ public class PlayScreen implements Screen {
     private final BGM bgm;
     private final Sounds sounds;
 
+    public int numberOfBricks = 50;
+
     public float stateTimer;
 
     public PlayScreen(BombSquad game) {
@@ -246,7 +248,7 @@ public class PlayScreen implements Screen {
     }
 
     public boolean nextLevel() {
-        return false;
+        return numberOfBricks <= 0;
     }
 
     public void update(float delta) {
@@ -263,6 +265,7 @@ public class PlayScreen implements Screen {
             System.out.println("next level");
             dispose();
         }
+        System.out.println(numberOfBricks);
         hud.update(player.lives, player.numberOfBombs, player.score, delta);
 
     }

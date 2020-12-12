@@ -94,7 +94,8 @@ public class Bomb extends Sprite {
     }
 
     public void FlameCollision(TiledMap map,
-                               Array<DestroyedBrick> destroyedBricks, Array<Fixture> fixtures, Bomberman bomberman) {
+                               Array<DestroyedBrick> destroyedBricks, Array<Fixture> fixtures,
+                               Bomberman bomberman) {
 
         float x = this.x, y = this.y;
         TiledMapTileLayer layer1, layer2;
@@ -117,6 +118,7 @@ public class Bomb extends Sprite {
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
                     bomberman.score += 300;
+                    screen.numberOfBricks--;
                     break;
                 }
             }
@@ -139,6 +141,7 @@ public class Bomb extends Sprite {
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
                     bomberman.score += 300;
+                    screen.numberOfBricks--;
                     break;
                 }
             }
@@ -161,6 +164,7 @@ public class Bomb extends Sprite {
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
                     bomberman.score += 300;
+                    screen.numberOfBricks--;
                     break;
                 }
             }
@@ -183,6 +187,7 @@ public class Bomb extends Sprite {
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
                     bomberman.score += 300;
+                    screen.numberOfBricks--;
                     break;
                 }
             }
