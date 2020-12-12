@@ -2,6 +2,7 @@ package com.oneeightfive.bombsquad;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.oneeightfive.bombsquad.Screens.MainMenu;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class BombSquad extends Game {
@@ -26,7 +27,7 @@ public class BombSquad extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		setScreen(new MainMenu(this));
 	}
 
 	@Override

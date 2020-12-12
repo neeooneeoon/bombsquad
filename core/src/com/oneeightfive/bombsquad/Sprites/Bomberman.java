@@ -32,6 +32,7 @@ public class Bomberman extends Sprite {
     private final PlayScreen screen;
     public World world;
     public Body b2Body;
+    public BodyDef bdef;
 
     public Array<Bomb> bombs = new Array<>();
 
@@ -107,7 +108,7 @@ public class Bomberman extends Sprite {
     }
 
     public void defineBomberman() {
-        BodyDef bdef = new BodyDef();
+        bdef = new BodyDef();
         bdef.position.set(96 / BombSquad.PPM, 750 / BombSquad.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2Body = world.createBody(bdef);

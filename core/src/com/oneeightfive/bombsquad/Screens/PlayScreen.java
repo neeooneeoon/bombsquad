@@ -213,12 +213,14 @@ public class PlayScreen implements Screen {
             player.currentState = Bomberman.STATE.DOWN;
             playerDirection = Bomberman.STATE.DOWN;
             sounds.playFootstep();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            dispose();
         } else if(player.currentState == Bomberman.STATE.DEAD) {
             if (player.lives > 0) {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
                 player.currentState = Bomberman.STATE.STAY;
                 playerDirection = Bomberman.STATE.STAY;
-
+                player.setPosition(0,0);
                 player.lives--;
             } else {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
@@ -265,7 +267,6 @@ public class PlayScreen implements Screen {
             System.out.println("next level");
             dispose();
         }
-        System.out.println(numberOfBricks);
         hud.update(player.lives, player.numberOfBombs, player.score, delta);
 
     }
