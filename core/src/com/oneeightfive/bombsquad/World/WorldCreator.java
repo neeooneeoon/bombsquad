@@ -21,8 +21,4 @@ public class WorldCreator {
         brickLayer = new BrickLayer(world, map, bdef, fdef, shape, worldBody);
     }
 
-    public void deleteBrick(World world, TiledMap map, Array<Fixture> worldBody){
-        brickLayer.delete(worldBody);
-    }
-
 }
