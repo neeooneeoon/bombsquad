@@ -22,6 +22,7 @@ import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.Sprites.Enemies.Balloon;
+import com.oneeightfive.bombsquad.Sprites.Enemies.Oneal;
 import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
@@ -42,6 +43,7 @@ public class PlayScreen implements Screen {
 
     private final Bomberman player;
     private final Balloon balloon;
+    private final Oneal oneal;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -81,6 +83,8 @@ public class PlayScreen implements Screen {
 
         player = new Bomberman(this);
         balloon = new Balloon(this, .32f, .32f);
+        oneal = new Oneal(this, .32f, .32f);
+
         playerDirection = Bomberman.STATE.DOWN;
 
         b2dr = new Box2DDebugRenderer();
@@ -221,6 +225,7 @@ public class PlayScreen implements Screen {
         mapRenderer.setView(gameCam);
         player.update(delta);
         balloon.update(delta);
+        oneal.update(delta);
         gameCam.update();
     }
 
@@ -246,6 +251,7 @@ public class PlayScreen implements Screen {
         drawBombs();
         player.draw(batch);
         balloon.draw(batch);
+        oneal.draw(batch);
 
         batch.end();
 
