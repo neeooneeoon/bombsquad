@@ -75,6 +75,7 @@ public class HUD implements Disposable {
     public void update(int lives, int bombs, int score, float delta) {
         bombsLabel.setText("BOMBS: " + bombs);
         livesLabel.setText("LIVES: " + lives);
+        scoreLabel.setText("SCORE: " + score);
 
         timeCount += delta;
         if(timeCount >= 1) {

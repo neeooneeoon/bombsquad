@@ -31,7 +31,6 @@ public class Bomb extends Sprite {
     public int up, down, left, right;
     int xCoordinate, yCoordinate;
 
-
     public Bomb(World world, PlayScreen screen, float x, float y, int radius) {
         this.x = (int)((x * 64 + 24) / BombSquad.PPM);
         this.y = (int)((y * 64 + 24) / BombSquad.PPM);
@@ -94,7 +93,8 @@ public class Bomb extends Sprite {
         }
     }
 
-    public void FlameCollision(TiledMap map, Array<DestroyedBrick> destroyedBricks, Array<Fixture> fixtures, Bomberman bomberman) {
+    public void FlameCollision(TiledMap map,
+                               Array<DestroyedBrick> destroyedBricks, Array<Fixture> fixtures, Bomberman bomberman) {
 
         float x = this.x, y = this.y;
         TiledMapTileLayer layer1, layer2;
@@ -116,6 +116,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
+                    bomberman.score += 300;
                     break;
                 }
             }
@@ -137,6 +138,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
+                    bomberman.score += 300;
                     break;
                 }
             }
@@ -158,6 +160,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
+                    bomberman.score += 300;
                     break;
                 }
             }
@@ -179,6 +182,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
+                    bomberman.score += 300;
                     break;
                 }
             }
