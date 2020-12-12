@@ -2,8 +2,9 @@ package com.oneeightfive.bombsquad.Audio;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Disposable;
 
-public class Sounds {
+public class Sounds implements Disposable {
 
     Sound footstep;
     Sound fire;
@@ -73,5 +74,18 @@ public class Sounds {
 
     public void playEnemyDie() {
         enemy_die.play(0.5f);
+    }
+
+    @Override
+    public void dispose() {
+        footstep.dispose();
+        fire.dispose();
+        powerup.dispose();
+        explode.dispose();
+        die.dispose();
+        select.dispose();
+        selected.dispose();
+        enemy_die.dispose();
+        planted.dispose();
     }
 }

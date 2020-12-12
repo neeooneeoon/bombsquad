@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.Audio.BGM;
 import com.oneeightfive.bombsquad.Audio.Sounds;
 import com.oneeightfive.bombsquad.BombSquad;
+import com.oneeightfive.bombsquad.HUD.HUD;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.Sprites.Enemies.Balloon;
@@ -40,6 +41,8 @@ public class PlayScreen implements Screen {
 
     private final TiledMap gameMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
+
+    private final HUD hud;
 
     private final Bomberman player;
     private final Balloon balloon;
@@ -86,6 +89,8 @@ public class PlayScreen implements Screen {
         player = new Bomberman(this);
         balloon = new Balloon(this, .32f, .32f);
         playerDirection = Bomberman.STATE.DOWN;
+
+        hud = new HUD(batch);
 
         b2dr = new Box2DDebugRenderer();
 
@@ -274,12 +279,13 @@ public class PlayScreen implements Screen {
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
-
         drawBombs();
         player.draw(batch);
         balloon.draw(batch);
-
         batch.end();
+
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
         stateTimer += delta;
     }
@@ -310,5 +316,7 @@ public class PlayScreen implements Screen {
         mapRenderer.dispose();
         gameWorld.dispose();
         b2dr.dispose();
+        bgm.dispose();
+        sounds.dispose();
     }
 }
