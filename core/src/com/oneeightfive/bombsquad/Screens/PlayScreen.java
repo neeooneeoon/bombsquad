@@ -109,29 +109,10 @@ public class PlayScreen implements Screen {
         return charactersAtlas;
     }
 
-    public TextureAtlas getStageAtlas() {
-        return stageAtlas;
-    }
-
-    public TextureAtlas getMenuAtlas() {
-        return menuAtlas;
-    }
-
     public TextureAtlas getWeaponAtlas() {
         return weaponAtlas;
     }
 
-    public SpriteBatch getBatch() {
-        return batch;
-    }
-
-    public Bomberman getPlayer() {
-        return player;
-    }
-
-    public BombSquad getGame() {
-        return game;
-    }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
         batch.draw(t.getKeyFrame(stateTimer, looping), x, y, 48 / BombSquad.PPM, 48 / BombSquad.PPM);

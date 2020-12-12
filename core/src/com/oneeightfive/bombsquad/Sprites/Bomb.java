@@ -66,7 +66,6 @@ public class Bomb extends Sprite {
 
     public boolean check(int x, int y) {
         if (x == xCoordinate && y == yCoordinate) {
-            System.out.println("Destroyed Brick's Coordinate:   " + xCoordinate + " " + x);
             return false;
         }
         return true;
@@ -94,7 +93,6 @@ public class Bomb extends Sprite {
 
     public void playerHitBomb(int xCoordinate, int yCoordinate, Bomberman bomberman) {
         if (((int) bomberman.getX()  == xCoordinate) && ((int) bomberman.getY() == yCoordinate)) {
-            System.out.println("Player dead");
             bomberman.currentState = Bomberman.STATE.DEAD;
         }
     }
