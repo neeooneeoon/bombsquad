@@ -71,7 +71,7 @@ public class BrickLayer extends Layer {
         }
     }
 
-    public void test(TiledMap map, Bomb bomb, Array<Fixture> fixtures, Bomberman bomberman) {
+    public void FlameCollision(TiledMap map, Bomb bomb, Array<Fixture> fixtures, Bomberman bomberman) {
 
         float x = bomb.x, y = bomb.y;
         TiledMapTileLayer layer1, layer2;
@@ -82,7 +82,7 @@ public class BrickLayer extends Layer {
         layer1 = (TiledMapTileLayer) map.getLayers().get(1);
         layer2 = (TiledMapTileLayer) map.getLayers().get(2);
 
-        for (int i = 0; i <= bomb.radius; i++) {
+        for (int i = 1; i <= bomb.radius; i++) {
 
             playerHitBomb((int) x + i, (int) y, bomberman);
             if (layer2.getCell((int) x + i, (int) y) != null) {

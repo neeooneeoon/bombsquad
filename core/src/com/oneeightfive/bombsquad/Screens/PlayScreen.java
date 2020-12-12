@@ -147,9 +147,8 @@ public class PlayScreen implements Screen {
                     bomb.defineBomb();
                 }
                 if (bomb.timeLeft < 0) {
-                    worldCreator.brickLayer.test(gameMap, bomb, worldBody, player);
+                    worldCreator.brickLayer.FlameCollision(gameMap, bomb, worldBody, player);
                     bomb.blow();
-                    worldCreator.deleteBrick(gameWorld, gameMap, worldBody);
                 }
                 drawWeaponAnimation(bombAnimation, true, bomb.x + 10 / 64f, bomb.y + 10 / 64f);
                 bomb.timeLeft -= Gdx.graphics.getDeltaTime();
