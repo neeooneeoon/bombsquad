@@ -36,7 +36,6 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final FitViewport gamePort;
 
-    //private final TmxMapLoader mapLoader;
     private final TiledMap gameMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
 
@@ -101,6 +100,10 @@ public class PlayScreen implements Screen {
         frames.clear();
     }
 
+    public BombSquad getGame() {
+        return game;
+    }
+
     public World getWorld() {
         return gameWorld;
     }
@@ -111,6 +114,14 @@ public class PlayScreen implements Screen {
 
     public TextureAtlas getWeaponAtlas() {
         return weaponAtlas;
+    }
+
+    public TextureAtlas getStageAtlas() {
+        return stageAtlas;
+    }
+
+    public TextureAtlas getMenuAtlas() {
+        return menuAtlas;
     }
 
 
