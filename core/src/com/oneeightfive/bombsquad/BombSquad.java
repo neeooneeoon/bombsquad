@@ -38,6 +38,5 @@ public class BombSquad extends Game {
 	public void dispose () {
 		super.dispose();
 		batch.dispose();
-		ResourceManager.getInstance().getAssetManager().dispose();
 	}
 }

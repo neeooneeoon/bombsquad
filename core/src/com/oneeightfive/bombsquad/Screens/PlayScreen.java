@@ -22,6 +22,7 @@ import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.Sprites.Enemies.Balloon;
+import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class PlayScreen implements Screen {
@@ -35,7 +36,7 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera gameCam;
     private final FitViewport gamePort;
 
-    private final TmxMapLoader mapLoader;
+    //private final TmxMapLoader mapLoader;
     private final TiledMap gameMap;
     private final OrthogonalTiledMapRenderer mapRenderer;
 
@@ -55,6 +56,7 @@ public class PlayScreen implements Screen {
 
     public WorldCreator worldCreator;
     private final Array<Fixture> worldBody = new Array<>();
+    Array<DestroyedBrick> destroyedBricks = new Array<>();
 
     public float stateTimer;
 
@@ -70,7 +72,7 @@ public class PlayScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(BombSquad.V_WIDTH, BombSquad.V_HEIGHT, gameCam);
 
-        mapLoader = new TmxMapLoader();
+        TmxMapLoader mapLoader = new TmxMapLoader();
         gameMap = mapLoader.load("maps/map.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
@@ -127,6 +129,10 @@ public class PlayScreen implements Screen {
         return player;
     }
 
+    public BombSquad getGame() {
+        return game;
+    }
+
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
         batch.draw(t.getKeyFrame(stateTimer, looping), x, y, 48 / BombSquad.PPM, 48 / BombSquad.PPM);
     }
@@ -150,9 +156,8 @@ public class PlayScreen implements Screen {
                     bomb.defineBomb();
                 }
                 if (bomb.timeLeft < 0) {
-                    worldCreator.brickLayer.test(gameMap, bomb, worldBody, player);
+                    bomb.FlameCollision(gameMap, destroyedBricks, worldBody, player);
                     bomb.blow();
-                    worldCreator.deleteBrick(gameWorld, gameMap, worldBody);
                 }
                 drawWeaponAnimation(bombAnimation, true, bomb.x + 10 / 64f, bomb.y + 10 / 64f);
                 bomb.timeLeft -= Gdx.graphics.getDeltaTime();
@@ -174,19 +179,19 @@ public class PlayScreen implements Screen {
         int radius = bomb.radius;
         drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
         for (int j = 1; j <= radius; j++) {
-            if (worldCreator.brickLayer.left >= j - 1) {
+            if (bomb.left >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 - 64 * j + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
             }
 
-            if (worldCreator.brickLayer.up >= j - 1) {
+            if (bomb.up >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 10) / BombSquad.PPM, (bomb.y * 64 + 64 * j + 10) / BombSquad.PPM);
             }
 
-            if (worldCreator.brickLayer.down >= j - 1) {
+            if (bomb.down >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 10) / BombSquad.PPM, (bomb.y * 64 - 64 * j + 10) / BombSquad.PPM);
             }
 
-            if (worldCreator.brickLayer.right >= j - 1) {
+            if (bomb.right >= j - 1) {
                 drawWeaponAnimation(flameAnimation, true, (bomb.x * 64 + 64 * j + 10) / BombSquad.PPM, (bomb.y * 64 + 10) / BombSquad.PPM);
             }
         }

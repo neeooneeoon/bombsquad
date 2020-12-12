@@ -9,9 +9,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
-import com.oneeightfive.bombsquad.ResourceManager;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
-import com.oneeightfive.bombsquad.Sprites.Bomberman;
 
 public class Balloon extends Enemy {
     private float stateTimer;

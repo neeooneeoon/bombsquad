@@ -155,8 +155,6 @@ public class Bomberman extends Sprite {
                 }
                 break;
             case DEAD:
-                System.out.println("deadAnimation");
-                setRegion(standingFront);
                 break;
         }
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);
