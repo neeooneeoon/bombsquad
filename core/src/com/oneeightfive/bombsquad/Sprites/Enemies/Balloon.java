@@ -152,8 +152,8 @@ public class Balloon extends Enemy {
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(26 / BombSquad.PPM);
-        fdef.filter.categoryBits = BombSquad.ENEMY_BIT;
-        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT | BombSquad.ENEMY_BIT | BombSquad.OBJECT_BIT;
+        fdef.filter.categoryBits = Enemy.ENEMY_BIT;
+        fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT | Enemy.ENEMY_BIT | Enemy.OBJECT_BIT;
 
         shape.setPosition(new Vector2(0 / BombSquad.PPM, 0 / BombSquad.PPM));
         fdef.shape = shape;
