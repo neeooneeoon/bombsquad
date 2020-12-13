@@ -229,7 +229,7 @@ public class PlayScreen implements Screen {
         } else if(player.currentState == Bomberman.STATE.DEAD) {
             if (player.lives > 0) {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
-                player.defineBomberman();
+                player.b2Body.setTransform(new Vector2(96 / BombSquad.PPM, 750 / BombSquad.PPM),0);
                 player.currentState = Bomberman.STATE.STAY;
                 playerDirection = Bomberman.STATE.DOWN;
                 player.setPosition(0,0);

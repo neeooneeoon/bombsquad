@@ -125,6 +125,10 @@ public class Bomberman extends Sprite {
         shape.dispose();
     }
 
+    public void resetBomberman() {
+
+    }
+
     public void update(float dt) {
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
