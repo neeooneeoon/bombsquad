@@ -44,7 +44,9 @@ public class PlayScreen implements Screen {
     private final HUD hud;
 
     private final Bomberman player;
+
     private final Balloon balloon;
+    private final Balloon balloon2;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -70,10 +72,6 @@ public class PlayScreen implements Screen {
     public float stateTimer;
     public float delayTimer;
 
-    public Bomberman getPlayer() {
-        return player;
-    }
-
     public PlayScreen(BombSquad game, int level) {
         charactersAtlas = new TextureAtlas("textures/characters.pack");
         weaponAtlas = new TextureAtlas("textures/weapon.pack");
@@ -97,8 +95,11 @@ public class PlayScreen implements Screen {
         worldCreator = new WorldCreator(gameWorld, gameMap, worldBody);
 
         player = new Bomberman(this);
-        balloon = new Balloon(this, .32f, .32f, gameMap);
         playerDirection = Bomberman.STATE.DOWN;
+
+        balloon = new Balloon(this, .32f, .32f, gameMap);
+        balloon2 = new Balloon(this, .32f, .32f, gameMap);
+
 
         hud = new HUD(batch);
 
@@ -137,6 +138,9 @@ public class PlayScreen implements Screen {
         return weaponAtlas;
     }
 
+    public Bomberman getPlayer() {
+        return player;
+    }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
         batch.draw(t.getKeyFrame(stateTimer, looping), x, y, 48 / BombSquad.PPM, 48 / BombSquad.PPM);
@@ -281,6 +285,7 @@ public class PlayScreen implements Screen {
         mapRenderer.setView(gameCam);
         player.update(delta);
         balloon.update(delta);
+        balloon2.update(delta);
         gameCam.update();
         if (isLose()) {
             game.setScreen(new MainMenu(game));
@@ -314,6 +319,7 @@ public class PlayScreen implements Screen {
         drawBombs();
         player.draw(batch);
         balloon.draw(batch);
+        balloon2.draw(batch);
         batch.end();
 
         batch.setProjectionMatrix(hud.camera.combined);
