@@ -105,7 +105,7 @@ public class MainMenu implements Screen {
                     System.exit(0);
                 }
                 delayTimer = 0;
-            } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
                 if (isPlay) {
                     isPlay = false;
                     isHighScore = true;
@@ -120,7 +120,7 @@ public class MainMenu implements Screen {
                     isQuit = false;
                 }
                 delayTimer = 0;
-            } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
                 if (isPlay) {
                     isPlay = false;
                     isHighScore = false;
