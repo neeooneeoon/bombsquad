@@ -130,19 +130,15 @@ public class Balloon extends Enemy {
 
         px = b2body.getPosition().x;
         py = b2body.getPosition().y;
-
         if (checkBom((int) px, (int) py)) {
             previousY = (int)b2body.getPosition().y;
             previousX = (int)b2body.getPosition().x;
             currentState = OppositeDirection(currentState);
 
         }
-
         move(dt);
 
-
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - (30) / 64f);
-
     }
 
     private void move(float dt) {
@@ -166,16 +162,6 @@ public class Balloon extends Enemy {
         }
     }
 
-//    boolean checkBom(int x, int y) {
-//        for (Bomb bomb : screen.getPlayer().bombs) {
-//            System.out.println("bomb  " + (int)bomb.x+ " " + (int) bomb.y);
-//            System.out.println("enemy  " + x+ " " + y);
-//            if( x == (int)bomb.x && y == (int) bomb.y){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 
     boolean checkBom(int x, int y) {
         for (Bomb bomb : screen.getPlayer().bombs) {
