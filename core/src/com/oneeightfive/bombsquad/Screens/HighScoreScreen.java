@@ -113,7 +113,7 @@ public class HighScoreScreen implements Screen {
         batch.begin();
         batch.draw(bg, 0, 0, viewport.getWorldWidth(),viewport.getWorldHeight());
         titleFont.draw(batch, "High Scores", WIDTH / 2f - 110f,HEIGHT / 2f + 240f);
-        font.draw(batch, "Press [Escape] / [Enter] to return", WIDTH / 2f - 170f,HEIGHT / 2f + 180f);
+        font.draw(batch, "Press ESCAPE or ENTER to return", WIDTH / 2f - 170f,HEIGHT / 2f + 180f);
         list();
         batch.end();
     }
