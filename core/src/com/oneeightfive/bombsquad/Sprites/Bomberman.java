@@ -135,6 +135,7 @@ public class Bomberman extends Sprite {
         currentState = screen.playerDirection;
 
 
+
         switch (currentState) {
             case LEFT:
                 setRegion(runningLeft.getKeyFrame(stateTimer, true));
@@ -166,6 +167,7 @@ public class Bomberman extends Sprite {
                 break;
             case DEAD:
                 setPosition(0,0);
+                currentState = STATE.DOWN;
                 break;
         }
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);

@@ -54,6 +54,8 @@ public class PlayScreen implements Screen {
     public Bomberman.STATE playerDirection;
     public float playerX;
     public float playerY;
+    public float previousPlayerX;
+    public float previousPlayerY;
 
     public final Animation<TextureRegion> bombAnimation;
     public final Animation<TextureRegion> flameAnimation;
@@ -213,7 +215,10 @@ public class PlayScreen implements Screen {
 
     public void handleInput(float delta) {
         delayTimer += delta;
-        if(player.currentState == Bomberman.STATE.DEAD ) {
+        previousPlayerX = player.b2Body.getPosition().x;
+        previousPlayerY = player.b2Body.getPosition().y;
+
+        if(player.currentState == Bomberman.STATE.DEAD) {
             if (player.lives > 0) {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
                 player.b2Body.setTransform(new Vector2(96 / BombSquad.PPM, 750 / BombSquad.PPM), 0);
@@ -222,46 +227,47 @@ public class PlayScreen implements Screen {
                 player.lives--;
             } else {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
-                player.currentState = Bomberman.STATE.DEAD;
                 playerDirection = Bomberman.STATE.DEAD;
             }
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            player.b2Body.setLinearVelocity(new Vector2(0, 250 * delta));
-            playerDirection = Bomberman.STATE.UP;
-            sounds.playFootstep();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            player.b2Body.setLinearVelocity(new Vector2(250 * delta, 0));
-            playerDirection = Bomberman.STATE.RIGHT;
-            sounds.playFootstep();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            player.b2Body.setLinearVelocity(new Vector2(-250 * delta, 0));
-            playerDirection = Bomberman.STATE.LEFT;
-            sounds.playFootstep();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            player.b2Body.setLinearVelocity(new Vector2(0, -250 * delta));
-            playerDirection = Bomberman.STATE.DOWN;
-            sounds.playFootstep();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && delayTimer > 0.15) {
-            game.setScreen(new GameOver(game));
-            dispose();
-            delayTimer = 0;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.P) && delayTimer > 0.15) {
-            game.setScreen(new PlayScreen(game, 2));
-            delayTimer = 0;
-            dispose();
         } else {
-            player.b2Body.setLinearVelocity(new Vector2(0, 0));
-            playerDirection = Bomberman.STATE.STAY;
-            sounds.stopFootstep();
-        }
+            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                player.b2Body.setLinearVelocity(new Vector2(0, 250 * delta));
+                playerDirection = Bomberman.STATE.UP;
+                sounds.playFootstep();
+            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                player.b2Body.setLinearVelocity(new Vector2(250 * delta, 0));
+                playerDirection = Bomberman.STATE.RIGHT;
+                sounds.playFootstep();
+            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                player.b2Body.setLinearVelocity(new Vector2(-250 * delta, 0));
+                playerDirection = Bomberman.STATE.LEFT;
+                sounds.playFootstep();
+            } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                player.b2Body.setLinearVelocity(new Vector2(0, -250 * delta));
+                playerDirection = Bomberman.STATE.DOWN;
+                sounds.playFootstep();
+            } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && delayTimer > 0.15) {
+                game.setScreen(new GameOver(game));
+                dispose();
+                delayTimer = 0;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.P) && delayTimer > 0.15) {
+                game.setScreen(new PlayScreen(game, 2));
+                delayTimer = 0;
+                dispose();
+            } else {
+                player.b2Body.setLinearVelocity(new Vector2(0, 0));
+                playerDirection = Bomberman.STATE.STAY;
+                sounds.stopFootstep();
+            }
 
-        playerX = player.getX();
-        playerY = player.getY();
+            playerX = player.getX();
+            playerY = player.getY();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if(player.numberOfBombs>0) {
-                createBomb();
-                sounds.playPlanted();
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                if (player.numberOfBombs > 0) {
+                    createBomb();
+                    sounds.playPlanted();
+                }
             }
         }
     }
@@ -278,9 +284,10 @@ public class PlayScreen implements Screen {
         handleInput(delta);
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
-        player.update(delta);
         balloon.update(delta);
         balloon2.update(delta);
+        player.update(delta);
+
         gameCam.update();
         if (isLose()) {
             game.setScreen(new GameOver(game));

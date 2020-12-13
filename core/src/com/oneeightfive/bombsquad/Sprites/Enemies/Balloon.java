@@ -138,12 +138,13 @@ public class Balloon extends Enemy {
 
         }
 
-        move(dt);
         if(touchPlayer()){
             screen.getPlayer().currentState = Bomberman.STATE.DEAD;
-            System.out.println( "Player  " + screen.getPlayer().getX() + " " + screen.getPlayer().getY());
-            System.out.println( "Enemy  " + previousX + " " + previousY);
+            screen.getPlayer().b2Body.setLinearVelocity(new Vector2(0, 0));
+            screen.getPlayer().b2Body.setTransform(new Vector2(96 / BombSquad.PPM, 750 / BombSquad.PPM), 0);
+            screen.getPlayer().lives--;
         }
+        move(dt);
 
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - (30) / 64f);
     }
@@ -404,8 +405,8 @@ public class Balloon extends Enemy {
     private boolean touchPlayer(){
        // System.out.println(previousX + " " + previousY);
         System.out.println(screen.getPlayer().getX() + " " + screen.getPlayer().getY());
-        if( ((screen.getPlayer().b2Body.getPosition().x > previousX - 0.8f) && (screen.getPlayer().b2Body.getPosition().x < previousX + 0.8f))
-        && (((screen.getPlayer().b2Body.getPosition().y > previousY - 0.8f)) && ( (screen.getPlayer().b2Body.getPosition().y < previousY + 0.8f)))){
+        if( ((screen.previousPlayerX > b2body.getPosition().x - 0.7f) && (screen.previousPlayerX < b2body.getPosition().x + 0.7f))
+        && (((screen.previousPlayerY > b2body.getPosition().y - 0.7f)) && ( (screen.previousPlayerY < b2body.getPosition().y + 0.7f)))){
             return true;
         }
         return false;
