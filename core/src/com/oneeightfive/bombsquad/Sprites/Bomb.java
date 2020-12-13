@@ -87,8 +87,8 @@ public class Bomb extends Sprite {
         return true;
     }
 
-    public void playerHitBomb(int xCoordinate, int yCoordinate, Bomberman bomberman) {
-        if (((int) bomberman.getX()  == xCoordinate) && ((int) bomberman.getY() == yCoordinate)) {
+    public void playerHitBomb(int xFlame, int yFlame, Bomberman bomberman) {
+        if (((int) bomberman.getX()  == xFlame) && ((int) bomberman.getY() == yFlame)) {
             bomberman.currentState = Bomberman.STATE.DEAD;
         }
     }
