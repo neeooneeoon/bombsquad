@@ -1,5 +1,5 @@
 buildscript {
-
+    apply plugin: 'java-library'
 
     repositories {
         mavenLocal()
@@ -50,6 +50,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        compile group:'org.xerial', name:'sqlite-jdbc', version:'3.34.0'
     }
 }
 
@@ -81,5 +82,6 @@ project(":core") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile group:'org.xerial', name:'sqlite-jdbc', version:'3.34.0'
     }
 }
