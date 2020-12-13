@@ -18,13 +18,13 @@ public class SQL {
 
     public void listAll() {
         String sql = "SELECT * FROM " + "highscore" + " ORDER BY score DESC";
-        HighScore.highscores.clear();
+        HighScore.list.clear();
 
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                HighScore.highscores.put(rs.getString("player_name"), rs.getInt("score"));
+                HighScore.list.put(rs.getString("player_name"), rs.getInt("score"));
             }
 
         } catch (SQLException e) {

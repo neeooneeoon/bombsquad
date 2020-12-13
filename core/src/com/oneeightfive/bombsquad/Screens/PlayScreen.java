@@ -234,7 +234,7 @@ public class PlayScreen implements Screen {
             playerDirection = Bomberman.STATE.DOWN;
             sounds.playFootstep();
         } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && delayTimer > 0.15) {
-            game.setScreen(new MainMenu(game));
+            game.setScreen(new GameOver(game));
             dispose();
             delayTimer = 0;
         } else if (Gdx.input.isKeyPressed(Input.Keys.P) && delayTimer > 0.15) {
@@ -289,7 +289,7 @@ public class PlayScreen implements Screen {
         balloon2.update(delta);
         gameCam.update();
         if (isLose()) {
-            game.setScreen(new MainMenu(game));
+            game.setScreen(new GameOver(game));
             dispose();
         }
         if (nextLevel()) {
