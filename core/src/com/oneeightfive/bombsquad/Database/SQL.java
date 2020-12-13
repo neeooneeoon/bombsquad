@@ -1,5 +1,7 @@
 package com.oneeightfive.bombsquad.Database;
 
+import com.oneeightfive.bombsquad.Screens.HighScoreScreen;
+
 import java.sql.*;
 
 public class SQL {
@@ -16,13 +18,15 @@ public class SQL {
 
     public void listAll() {
         String sql = "SELECT * FROM " + "highscore" + " ORDER BY score DESC";
+        HighScoreScreen.highscores.clear();
 
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                System.out.println(rs.getString("player_name") + " " + rs.getInt("score"));
+                HighScoreScreen.highscores.put(rs.getString("player_name"), rs.getInt("score"));
             }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -40,11 +44,7 @@ public class SQL {
             System.out.println(e.getMessage());
         }
 
-    }
+        listAll();
 
-    public static void main(String[] args) {
-        SQL sql = new SQL();
-        sql.addRecord("Hoa", 11);
-        sql.listAll();
     }
 }
