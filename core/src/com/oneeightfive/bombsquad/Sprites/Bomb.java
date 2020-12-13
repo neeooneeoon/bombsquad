@@ -57,7 +57,7 @@ public class Bomb extends Sprite {
         b2body = world.createBody(bdef);
         fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(20 / BombSquad.PPM);
+        shape.setRadius(24 / BombSquad.PPM);
         fdef.shape = shape;
         fdef.filter.categoryBits = BombSquad.BOMB_BIT;
         b2body.createFixture(fdef).setUserData(this);

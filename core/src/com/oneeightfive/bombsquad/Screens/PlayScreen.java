@@ -298,7 +298,7 @@ public class PlayScreen implements Screen {
 
         mapRenderer.render();
 
-        //b2dr.render(gameWorld, gameCam.combined);
+        b2dr.render(gameWorld, gameCam.combined);
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
