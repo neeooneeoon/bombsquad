@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
+import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.World.DestroyedBrick;
 
 import java.util.Random;
@@ -136,7 +137,13 @@ public class Balloon extends Enemy {
             currentState = OppositeDirection(currentState);
 
         }
+
         move(dt);
+        if(touchPlayer()){
+            screen.getPlayer().currentState = Bomberman.STATE.DEAD;
+            System.out.println( "Player  " + screen.getPlayer().getX() + " " + screen.getPlayer().getY());
+            System.out.println( "Enemy  " + previousX + " " + previousY);
+        }
 
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - (30) / 64f);
     }
@@ -389,6 +396,16 @@ public class Balloon extends Enemy {
             }
         }
         if(layer1.getCell(x, y) == null && layer2.getCell(x, y) == null){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean touchPlayer(){
+       // System.out.println(previousX + " " + previousY);
+        System.out.println(screen.getPlayer().getX() + " " + screen.getPlayer().getY());
+        if( ((screen.getPlayer().b2Body.getPosition().x > previousX - 0.8f) && (screen.getPlayer().b2Body.getPosition().x < previousX + 0.8f))
+        && (((screen.getPlayer().b2Body.getPosition().y > previousY - 0.8f)) && ( (screen.getPlayer().b2Body.getPosition().y < previousY + 0.8f)))){
             return true;
         }
         return false;

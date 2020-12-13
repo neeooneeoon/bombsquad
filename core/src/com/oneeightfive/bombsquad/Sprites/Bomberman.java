@@ -115,7 +115,7 @@ public class Bomberman extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(26 / BombSquad.PPM);
+        shape.setRadius(22 / BombSquad.PPM);
         fdef.filter.categoryBits = BombSquad.BOMBERMAN_BIT;
         fdef.filter.maskBits = BombSquad.BRICK_BIT | BombSquad.ITEM_BIT | BombSquad.WALL_BIT | BombSquad.BOMB_BIT;
 
@@ -133,6 +133,7 @@ public class Bomberman extends Sprite {
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         currentState = screen.playerDirection;
+
 
         switch (currentState) {
             case LEFT:
