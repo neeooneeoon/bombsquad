@@ -124,6 +124,7 @@ public class PlayScreen implements Screen {
         bgm.playInGame();
 
         sounds = new Sounds();
+
     }
 
     public World getWorld() {
