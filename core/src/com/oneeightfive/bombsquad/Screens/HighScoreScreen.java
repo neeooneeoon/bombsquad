@@ -18,7 +18,6 @@ import com.oneeightfive.bombsquad.Audio.Sounds;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Database.SQL;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -32,11 +31,15 @@ public class HighScoreScreen implements Screen {
 
     private final TextureRegion bg;
     private final BitmapFont font;
+    private final BitmapFont titleFont;
 
     private final BGM bgm;
     private final Sounds sounds;
 
     public static Map<String,Integer> highscores = new LinkedHashMap<>();
+
+    private final int WIDTH = 1280;
+    private final int HEIGHT = 720;
 
     private float delayTimer = 0;
 
@@ -46,8 +49,6 @@ public class HighScoreScreen implements Screen {
 
         camera = new OrthographicCamera();
         camera.position.set(BombSquad.V_WIDTH/2f, BombSquad.V_HEIGHT/2f, 0);
-        int WIDTH = 1280;
-        int HEIGHT = 720;
         viewport = new StretchViewport(WIDTH, HEIGHT, camera);
         stage = new Stage(viewport, batch);
 
@@ -60,6 +61,8 @@ public class HighScoreScreen implements Screen {
         paramFont.borderColor = new Color(Color.BLACK);
         paramFont.borderWidth = 1;
         font = genFont.generateFont(paramFont);
+        paramFont.size = 48;
+        titleFont = genFont.generateFont(paramFont);
         genFont.dispose();
 
         bgm = new BGM();
@@ -67,9 +70,19 @@ public class HighScoreScreen implements Screen {
         sounds = new Sounds();
 
         (new SQL()).listAll();
+    }
+
+    public void list() {
+        float xTitle = WIDTH / 2f - 75f;
+        float yTitle = HEIGHT / 2f + 120f;
+
+        int c = 0;
+
+        font.setColor(Color.WHITE);
 
         for (Map.Entry<String, Integer> set : highscores.entrySet()) {
-            System.out.println(set.getKey() + " " + set.getValue());
+            font.draw(batch, set.getKey() + " " + set.getValue(), xTitle, yTitle - c * 45f);
+            c++;
         }
     }
 
@@ -97,9 +110,10 @@ public class HighScoreScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
-
         batch.begin();
         batch.draw(bg, 0, 0, viewport.getWorldWidth(),viewport.getWorldHeight());
+        titleFont.draw(batch, "High Scores", WIDTH / 2f - 120f,HEIGHT / 2f + 240f);
+        list();
         batch.end();
     }
 

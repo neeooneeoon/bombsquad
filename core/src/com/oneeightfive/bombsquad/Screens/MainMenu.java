@@ -72,11 +72,11 @@ public class MainMenu implements Screen {
             font.setColor(Color.RED);
             font.draw(batch, "Play", xTitle, HEIGHT / 2f - 10f);
             font.setColor(Color.WHITE);
-            font.draw(batch, "High Score", xTitle, HEIGHT / 2f - 45f);
+            font.draw(batch, "High Scores", xTitle, HEIGHT / 2f - 45f);
             font.draw(batch, "Quit", xTitle, HEIGHT / 2f - 80f);
         } else if (isHighScore) {
             font.setColor(Color.RED);
-            font.draw(batch, "High Score", xTitle, HEIGHT / 2f - 45f);
+            font.draw(batch, "High Scores", xTitle, HEIGHT / 2f - 45f);
             font.setColor(Color.WHITE);
             font.draw(batch, "Play", xTitle, HEIGHT / 2f - 10f);
             font.draw(batch, "Quit", xTitle, HEIGHT / 2f - 80f);
@@ -84,7 +84,7 @@ public class MainMenu implements Screen {
             font.setColor(Color.RED);
             font.draw(batch, "Quit", xTitle, HEIGHT / 2f - 80f);
             font.setColor(Color.WHITE);
-            font.draw(batch, "High Score", xTitle, HEIGHT / 2f - 45f);
+            font.draw(batch, "High Scores", xTitle, HEIGHT / 2f - 45f);
             font.draw(batch, "Play", xTitle, HEIGHT / 2f - 10f);
         }
     }
