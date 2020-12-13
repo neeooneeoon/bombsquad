@@ -105,7 +105,7 @@ public class Bomb extends Sprite {
         right = 0;
         layer1 = (TiledMapTileLayer) map.getLayers().get(1);
         layer2 = (TiledMapTileLayer) map.getLayers().get(2);
-
+        playerHitBomb((int) x , (int) y, bomberman);
         for (int i = 1; i <= this.radius; i++) {
 
             playerHitBomb((int) x + i, (int) y, bomberman);
