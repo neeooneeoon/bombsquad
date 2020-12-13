@@ -70,6 +70,10 @@ public class PlayScreen implements Screen {
     public float stateTimer;
     public float delayTimer;
 
+    public Bomberman getPlayer() {
+        return player;
+    }
+
     public PlayScreen(BombSquad game, int level) {
         charactersAtlas = new TextureAtlas("textures/characters.pack");
         weaponAtlas = new TextureAtlas("textures/weapon.pack");
@@ -93,7 +97,7 @@ public class PlayScreen implements Screen {
         worldCreator = new WorldCreator(gameWorld, gameMap, worldBody);
 
         player = new Bomberman(this);
-        balloon = new Balloon(this, .32f, .32f);
+        balloon = new Balloon(this, .32f, .32f, gameMap);
         playerDirection = Bomberman.STATE.DOWN;
 
         hud = new HUD(batch);
