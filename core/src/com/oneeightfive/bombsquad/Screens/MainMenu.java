@@ -114,7 +114,7 @@ public class MainMenu implements Screen {
                     System.exit(0);
                 }
                 delayTimer = 0;
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
                 sounds.playSelect();
                 if (isPlay) {
                     isPlay = false;
@@ -130,7 +130,7 @@ public class MainMenu implements Screen {
                     isQuit = false;
                 }
                 delayTimer = 0;
-            } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
                 sounds.playSelect();
                 if (isPlay) {
                     isPlay = false;
