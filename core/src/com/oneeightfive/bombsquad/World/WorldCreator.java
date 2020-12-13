@@ -8,9 +8,11 @@ public class WorldCreator {
 
     public WallLayer wallLayer;
     public BrickLayer brickLayer;
+
     BodyDef bdef;
     FixtureDef fdef;
     PolygonShape shape;
+
     public WorldCreator(World world, TiledMap map, Array<Fixture> worldBody) {
         bdef = new BodyDef();
         fdef = new FixtureDef();
