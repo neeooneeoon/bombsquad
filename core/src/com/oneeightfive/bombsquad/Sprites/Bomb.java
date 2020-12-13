@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
+import com.oneeightfive.bombsquad.Database.Score;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 import com.oneeightfive.bombsquad.World.DestroyedBrick;
 
@@ -117,7 +118,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
-                    bomberman.score += 300;
+                    Score.current += 300;
                     screen.numberOfBricks--;
                     break;
                 }
@@ -140,7 +141,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
-                    bomberman.score += 300;
+                    Score.current += 300;
                     screen.numberOfBricks--;
                     break;
                 }
@@ -163,7 +164,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
-                    bomberman.score += 300;
+                    Score.current += 300;
                     screen.numberOfBricks--;
                     break;
                 }
@@ -186,7 +187,7 @@ public class Bomb extends Sprite {
                     layer2.getCell(xCoordinate, yCoordinate).setTile(null);
                     destroyedBricks.add(new DestroyedBrick(xCoordinate, yCoordinate));
                     delete(fixtures);
-                    bomberman.score += 300;
+                    Score.current += 300;
                     screen.numberOfBricks--;
                     break;
                 }

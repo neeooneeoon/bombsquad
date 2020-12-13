@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.oneeightfive.bombsquad.Audio.BGM;
 import com.oneeightfive.bombsquad.Audio.Sounds;
 import com.oneeightfive.bombsquad.BombSquad;
+import com.oneeightfive.bombsquad.Database.Score;
 import com.oneeightfive.bombsquad.HUD.HUD;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
@@ -224,8 +225,13 @@ public class PlayScreen implements Screen {
             playerDirection = Bomberman.STATE.DOWN;
             sounds.playFootstep();
         } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && delayTimer > 0.15) {
+            game.setScreen(new MainMenu(game));
+            dispose();
+            delayTimer = 0;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.P) && delayTimer > 0.15) {
             game.setScreen(new PlayScreen(game, 2));
             delayTimer = 0;
+            dispose();
         } else if(player.currentState == Bomberman.STATE.DEAD) {
             if (player.lives > 0) {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
@@ -280,8 +286,7 @@ public class PlayScreen implements Screen {
             game.setScreen(new PlayScreen(game, 2));
             delayTimer = 0;
         }
-        hud.update(player.lives, player.numberOfBombs, player.score, delta);
-
+        hud.update(player.lives, player.numberOfBombs, Score.current, delta);
     }
 
     @Override
@@ -335,10 +340,6 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-        gameMap.dispose();
-        mapRenderer.dispose();
-        gameWorld.dispose();
-        b2dr.dispose();
         bgm.dispose();
         sounds.dispose();
     }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.oneeightfive.bombsquad.Audio.BGM;
 import com.oneeightfive.bombsquad.Audio.Sounds;
 import com.oneeightfive.bombsquad.BombSquad;
+import com.oneeightfive.bombsquad.Database.Score;
 
 public class MainMenu implements Screen {
     private final BombSquad game;
@@ -92,7 +93,13 @@ public class MainMenu implements Screen {
         delayTimer += delta;
         if(delayTimer >= 0.15) {
             if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+                sounds.playSelected();
+                delayTimer = 0;
+                while (delayTimer <=1) {
+                    delayTimer += delta;
+                }
                 if (isPlay) {
+                    Score.current = 0;
                     game.setScreen(new PlayScreen(game,1));
                     dispose();
                 } else if (isHighScore) {
@@ -106,6 +113,7 @@ public class MainMenu implements Screen {
                 }
                 delayTimer = 0;
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+                sounds.playSelect();
                 if (isPlay) {
                     isPlay = false;
                     isHighScore = true;
@@ -121,6 +129,7 @@ public class MainMenu implements Screen {
                 }
                 delayTimer = 0;
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+                sounds.playSelect();
                 if (isPlay) {
                     isPlay = false;
                     isHighScore = false;
