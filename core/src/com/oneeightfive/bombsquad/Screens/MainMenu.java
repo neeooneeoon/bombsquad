@@ -103,7 +103,7 @@ public class MainMenu implements Screen {
                     game.setScreen(new PlayScreen(game,1));
                     dispose();
                 } else if (isHighScore) {
-                    game.setScreen(new HighScoreScreen(game));
+                    game.setScreen(new HighScore(game));
                     dispose();
                 } else if (isQuit) {
                     dispose();

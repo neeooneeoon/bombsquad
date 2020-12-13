@@ -21,7 +21,7 @@ import com.oneeightfive.bombsquad.Database.SQL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class HighScoreScreen implements Screen {
+public class HighScore implements Screen {
     private final BombSquad game;
     private final SpriteBatch batch;
 
@@ -43,7 +43,7 @@ public class HighScoreScreen implements Screen {
 
     private float delayTimer = 0;
 
-    public HighScoreScreen(BombSquad game) {
+    public HighScore(BombSquad game) {
         this.game = game;
         batch = game.getBatch();
 
@@ -112,8 +112,8 @@ public class HighScoreScreen implements Screen {
         update(delta);
         batch.begin();
         batch.draw(bg, 0, 0, viewport.getWorldWidth(),viewport.getWorldHeight());
-        titleFont.draw(batch, "High Scores", WIDTH / 2f - 110f,HEIGHT / 2f + 240f);
-        font.draw(batch, "Press ESCAPE or ENTER to return", WIDTH / 2f - 170f,HEIGHT / 2f + 180f);
+        titleFont.draw(batch, "High Scores", WIDTH / 2f - 125f,HEIGHT / 2f + 240f);
+        font.draw(batch, "Press ESCAPE or ENTER to return", WIDTH / 2f - 185f,HEIGHT / 2f + 180f);
         list();
         batch.end();
     }

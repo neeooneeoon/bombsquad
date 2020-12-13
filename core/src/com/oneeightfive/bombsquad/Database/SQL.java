@@ -1,6 +1,6 @@
 package com.oneeightfive.bombsquad.Database;
 
-import com.oneeightfive.bombsquad.Screens.HighScoreScreen;
+import com.oneeightfive.bombsquad.Screens.HighScore;
 
 import java.sql.*;
 
@@ -18,13 +18,13 @@ public class SQL {
 
     public void listAll() {
         String sql = "SELECT * FROM " + "highscore" + " ORDER BY score DESC";
-        HighScoreScreen.highscores.clear();
+        HighScore.highscores.clear();
 
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                HighScoreScreen.highscores.put(rs.getString("player_name"), rs.getInt("score"));
+                HighScore.highscores.put(rs.getString("player_name"), rs.getInt("score"));
             }
 
         } catch (SQLException e) {
