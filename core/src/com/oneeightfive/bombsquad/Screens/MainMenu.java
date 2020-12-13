@@ -64,6 +64,8 @@ public class MainMenu implements Screen {
         paramFont.borderWidth = 1;
         font = genFont.generateFont(paramFont);
         genFont.dispose();
+
+        Score.current = 0;
     }
 
     public void drawTitles() {

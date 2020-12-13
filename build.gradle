@@ -51,6 +51,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         compile group:'org.xerial', name:'sqlite-jdbc', version:'3.34.0'
+        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     }
 }
 
@@ -83,5 +84,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile group:'org.xerial', name:'sqlite-jdbc', version:'3.34.0'
+        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+
     }
 }
