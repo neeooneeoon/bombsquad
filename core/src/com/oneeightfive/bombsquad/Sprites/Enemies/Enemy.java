@@ -9,8 +9,6 @@ public abstract class Enemy extends Sprite {
     protected World world;
     protected PlayScreen screen;
     public Body b2body;
-    public static final short OBJECT_BIT = 32;
-    public static final short ENEMY_BIT = 64;
 
     public Enemy(PlayScreen screen, float x, float y) {
         this.world = screen.getWorld();

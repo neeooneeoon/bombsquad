@@ -3,7 +3,6 @@ package com.oneeightfive.bombsquad;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oneeightfive.bombsquad.Screens.MainMenu;
-import com.oneeightfive.bombsquad.Screens.PlayScreen;
 
 public class BombSquad extends Game {
 	private SpriteBatch batch;
@@ -20,6 +19,8 @@ public class BombSquad extends Game {
 	public static final short BOMB_BIT = 32;
 	public static final short PREBOMB_BIT = 64;
 	public static final short POWER_UP = 128;
+	public static final short OBJECT_BIT = 256;
+	public static final short ENEMY_BIT = 512;
 
 	public SpriteBatch getBatch() {
 		return batch;
