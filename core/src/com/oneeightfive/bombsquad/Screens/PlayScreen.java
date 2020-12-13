@@ -29,6 +29,7 @@ import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
 public class PlayScreen implements Screen {
+    private final BombSquad game;
     private final SpriteBatch batch;
     private final TextureAtlas charactersAtlas;
     private final TextureAtlas weaponAtlas;
@@ -63,20 +64,28 @@ public class PlayScreen implements Screen {
     private final Sounds sounds;
 
     public int numberOfBricks = 50;
+    public String mapPath = "maps/level1.tmx";
 
     public float stateTimer;
+    public float delayTimer;
 
-    public PlayScreen(BombSquad game) {
+    public PlayScreen(BombSquad game, int level) {
         charactersAtlas = new TextureAtlas("textures/characters.pack");
         weaponAtlas = new TextureAtlas("textures/weapon.pack");
 
+        this.game = game;
         this.batch = game.getBatch();
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(BombSquad.V_WIDTH, BombSquad.V_HEIGHT, gameCam);
 
+        if(level == 2) {
+            numberOfBricks = 60;
+            mapPath = "maps/level2.tmx";
+        }
+
         TmxMapLoader mapLoader = new TmxMapLoader();
-        gameMap = mapLoader.load("maps/map.tmx");
+        gameMap = mapLoader.load(mapPath);
         mapRenderer = new OrthogonalTiledMapRenderer(gameMap, 1 / BombSquad.PPM);
         gameWorld = new World(new Vector2(0, 0), true);
         gameCam.position.set(BombSquad.V_WIDTH / 2F - 0.5F, BombSquad.V_HEIGHT / 2F - 0.5F, 0);
@@ -193,6 +202,7 @@ public class PlayScreen implements Screen {
     }
 
     public void handleInput(float delta) {
+        delayTimer += delta;
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player.b2Body.setLinearVelocity(new Vector2(0, 250 * delta));
             player.currentState = Bomberman.STATE.UP;
@@ -213,8 +223,9 @@ public class PlayScreen implements Screen {
             player.currentState = Bomberman.STATE.DOWN;
             playerDirection = Bomberman.STATE.DOWN;
             sounds.playFootstep();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            dispose();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && delayTimer > 0.15) {
+            game.setScreen(new PlayScreen(game, 2));
+            delayTimer = 0;
         } else if(player.currentState == Bomberman.STATE.DEAD) {
             if (player.lives > 0) {
                 player.b2Body.setLinearVelocity(new Vector2(0, 0));
@@ -262,11 +273,12 @@ public class PlayScreen implements Screen {
         balloon.update(delta);
         gameCam.update();
         if (isLose()) {
+            game.setScreen(new MainMenu(game));
             dispose();
         }
         if (nextLevel()) {
-            System.out.println("next level");
-            dispose();
+            game.setScreen(new PlayScreen(game, 2));
+            delayTimer = 0;
         }
         hud.update(player.lives, player.numberOfBombs, player.score, delta);
 

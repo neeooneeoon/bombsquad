@@ -90,10 +90,10 @@ public class MainMenu implements Screen {
 
     public void handleInput(float delta) {
         delayTimer += delta;
-        if(delayTimer >= 0.1) {
+        if(delayTimer >= 0.15) {
             if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
                 if (isPlay) {
-                    game.setScreen(new PlayScreen(game));
+                    game.setScreen(new PlayScreen(game,1));
                     dispose();
                 } else if (isHighScore) {
                     game.setScreen(new HighScoreScreen(game));
