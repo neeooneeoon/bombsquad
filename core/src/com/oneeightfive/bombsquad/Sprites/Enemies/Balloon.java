@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.oneeightfive.bombsquad.BombSquad;
 import com.oneeightfive.bombsquad.Screens.PlayScreen;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
+import com.oneeightfive.bombsquad.World.DestroyedBrick;
 
 import java.util.Random;
 
@@ -235,31 +236,25 @@ public class Balloon extends Enemy {
         check = false;
         int enemyX = (int) b2body.getPosition().x;
         int enemyY = (int) b2body.getPosition().y;
-        TiledMapTileLayer layer1 = (TiledMapTileLayer) gameMap.getLayers().get(1);
-        TiledMapTileLayer layer2 = (TiledMapTileLayer) gameMap.getLayers().get(2);
-        if (layer1.getCell(enemyX + 1, enemyY) == null &&
-                layer2.getCell(enemyX + 1, enemyY) == null) {
+        if (checkDirection(enemyX + 1, enemyY)) {
             right = true;
             if (currentState != STATE.LEFT && currentState != STATE.RIGHT) {
                 check = true;
             }
         }
-        if (layer1.getCell(enemyX - 1, enemyY) == null &&
-                layer2.getCell(enemyX - 1, enemyY) == null) {
+        if (checkDirection(enemyX - 1, enemyY)) {
             left = true;
             if (currentState != STATE.RIGHT && currentState != STATE.LEFT) {
                 check = true;
             }
         }
-        if (layer1.getCell(enemyX, enemyY + 1) == null &&
-                layer2.getCell(enemyX, enemyY + 1) == null) {
+        if (checkDirection(enemyX, enemyY + 1) ) {
             up = true;
             if (currentState != STATE.DOWN && currentState != STATE.UP) {
                 check = true;
             }
         }
-        if (layer1.getCell(enemyX, enemyY - 1) == null &&
-                layer2.getCell(enemyX, enemyY - 1) == null) {
+        if (checkDirection(enemyX, enemyY - 1)) {
             down = true;
             if (currentState != STATE.UP && currentState != STATE.DOWN) {
                 check = true;
@@ -307,8 +302,6 @@ public class Balloon extends Enemy {
     }
 
     private boolean GoStraight() {
-        TiledMapTileLayer layer1 = (TiledMapTileLayer) gameMap.getLayers().get(1);
-        TiledMapTileLayer layer2 = (TiledMapTileLayer) gameMap.getLayers().get(2);
         int enemyX = (int) b2body.getPosition().x;
         int enemyY = (int) b2body.getPosition().y;
         if (currentState == STATE.LEFT) {
@@ -323,24 +316,16 @@ public class Balloon extends Enemy {
         if (currentState == STATE.DOWN) {
             enemyY = (int) (b2body.getPosition().y + 0.3f);
         }
-        if (currentState == STATE.LEFT
-                && layer1.getCell(enemyX - 1, enemyY) == null &&
-                layer2.getCell(enemyX - 1, enemyY) == null) {
+        if (currentState == STATE.LEFT && checkDirection(enemyX - 1, enemyY)) {
             return true;
         }
-        if (currentState == STATE.RIGHT
-                && layer1.getCell(enemyX + 1, enemyY) == null &&
-                layer2.getCell(enemyX + 1, enemyY) == null) {
+        if (currentState == STATE.RIGHT && checkDirection(enemyX + 1, enemyY)) {
             return true;
         }
-        if (currentState == STATE.UP
-                && layer1.getCell(enemyX, enemyY + 1) == null &&
-                layer2.getCell(enemyX, enemyY + 1) == null) {
+        if (currentState == STATE.UP && checkDirection(enemyX, enemyY + 1)) {
             return true;
         }
-        if (currentState == STATE.DOWN
-                && layer1.getCell(enemyX, enemyY - 1) == null &&
-                layer2.getCell(enemyX, enemyY - 1) == null) {
+        if (currentState == STATE.DOWN && checkDirection(enemyX, enemyY - 1)) {
             return true;
         }
 
@@ -407,5 +392,19 @@ public class Balloon extends Enemy {
             return false;
         }
         return true;
+    }
+
+    private boolean checkDirection(int x, int y){
+        TiledMapTileLayer layer1 = (TiledMapTileLayer) gameMap.getLayers().get(1);
+        TiledMapTileLayer layer2 = (TiledMapTileLayer) gameMap.getLayers().get(2);
+        for(DestroyedBrick destroyedBrick : screen.destroyedBricks){
+            if( x == destroyedBrick.getX() && y == destroyedBrick.getY() ){
+                return true;
+            }
+        }
+        if(layer1.getCell(x, y) == null && layer2.getCell(x, y) == null){
+            return true;
+        }
+        return false;
     }
 }

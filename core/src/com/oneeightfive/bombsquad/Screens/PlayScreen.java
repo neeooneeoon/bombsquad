@@ -61,7 +61,7 @@ public class PlayScreen implements Screen {
 
     public WorldCreator worldCreator;
     private final Array<Fixture> worldBody = new Array<>();
-    Array<DestroyedBrick> destroyedBricks = new Array<>();
+    public Array<DestroyedBrick> destroyedBricks = new Array<>();
 
     private final BGM bgm;
     private final Sounds sounds;
