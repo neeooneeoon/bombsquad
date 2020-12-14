@@ -45,8 +45,11 @@ public class PlayScreen implements Screen {
 
     private final Bomberman player;
 
-    private final Balloon balloon;
-    private final Balloon balloon2;
+    private Balloon balloon;
+    private Balloon balloon2;
+    private Balloon balloon3;
+    private Balloon balloon4;
+    private Balloon balloon5;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -99,9 +102,7 @@ public class PlayScreen implements Screen {
         player = new Bomberman(this);
         playerDirection = Bomberman.STATE.DOWN;
 
-        balloon = new Balloon(this, .32f, .32f, gameMap);
-        balloon2 = new Balloon(this, .32f, .32f, gameMap);
-
+        enemyGen(level);
 
         hud = new HUD(batch);
 
@@ -143,6 +144,38 @@ public class PlayScreen implements Screen {
 
     public Bomberman getPlayer() {
         return player;
+    }
+
+    public void enemyGen(int level) {
+        if(level == 2) {
+            balloon = new Balloon(this, 16f, 10f, gameMap);
+            balloon2 = new Balloon(this, 16f, 12f, gameMap);
+            balloon3 = new Balloon(this, 28f, 4f, gameMap);
+            balloon4 = new Balloon(this, 30f, 2f, gameMap);
+            balloon5 = new Balloon(this, 10f, 5f, gameMap);
+        } else {
+            balloon = new Balloon(this, 10f, 10f, gameMap);
+            balloon2 = new Balloon(this, 12f, 12f, gameMap);
+            balloon3 = new Balloon(this, 20f, 8f, gameMap);
+            balloon4 = new Balloon(this, 30f, 4f, gameMap);
+            balloon5 = new Balloon(this, 9f, 9f, gameMap);
+        }
+    }
+
+    public void enemyDraw() {
+        balloon.draw(batch);
+        balloon2.draw(batch);
+        balloon3.draw(batch);
+        balloon4.draw(batch);
+        balloon5.draw(batch);
+    }
+
+    public void enemyUpdate(float delta) {
+        balloon.update(delta);
+        balloon2.update(delta);
+        balloon3.update(delta);
+        balloon4.update(delta);
+        balloon5.update(delta);
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
@@ -284,8 +317,7 @@ public class PlayScreen implements Screen {
         handleInput(delta);
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
-        balloon.update(delta);
-        balloon2.update(delta);
+        enemyUpdate(delta);
         player.update(delta);
 
         gameCam.update();
@@ -319,8 +351,7 @@ public class PlayScreen implements Screen {
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         drawBombs();
-        balloon.draw(batch);
-        balloon2.draw(batch);
+        enemyDraw();
         player.draw(batch);
         batch.end();
 

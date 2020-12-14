@@ -22,6 +22,9 @@ public class Balloon extends Enemy {
     private float stateTimer;
     private Array<TextureRegion> frames;
 
+    private float startX;
+    private float startY;
+
     public enum STATE {STAY, UP, DOWN, RIGHT, LEFT, DEAD}
 
     public STATE currentState;
@@ -47,6 +50,8 @@ public class Balloon extends Enemy {
 
     public Balloon(PlayScreen screen, float x, float y, TiledMap gameMap) {
         super(screen, x, y);
+        startX = x;
+        startY = y;
         this.gameMap = gameMap;
         currentState = STATE.RIGHT;
         previousState = STATE.RIGHT;
@@ -203,7 +208,7 @@ public class Balloon extends Enemy {
     @Override
     protected void defineEnemy() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(120 / BombSquad.PPM, 120 / BombSquad.PPM);
+        bdef.position.set(startX, startY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -404,7 +409,7 @@ public class Balloon extends Enemy {
 
     private boolean touchPlayer(){
        // System.out.println(previousX + " " + previousY);
-        System.out.println(screen.getPlayer().getX() + " " + screen.getPlayer().getY());
+        //System.out.println(screen.getPlayer().getX() + " " + screen.getPlayer().getY());
         if( ((screen.previousPlayerX > b2body.getPosition().x - 0.7f) && (screen.previousPlayerX < b2body.getPosition().x + 0.7f))
         && (((screen.previousPlayerY > b2body.getPosition().y - 0.7f)) && ( (screen.previousPlayerY < b2body.getPosition().y + 0.7f)))){
             return true;

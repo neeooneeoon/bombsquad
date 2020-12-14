@@ -81,7 +81,7 @@ public class HighScore implements Screen {
         font.setColor(Color.WHITE);
 
         for (Map.Entry<String, Integer> set : list.entrySet()) {
-            if (c<=10) {
+            if (c<=9) {
                 font.draw(batch, set.getKey() + " " + set.getValue(), xTitle, yTitle - c * 45f);
                 c++;
             }
