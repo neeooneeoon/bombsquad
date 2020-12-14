@@ -48,6 +48,8 @@ public class Balloon extends Enemy {
 
     TiledMap gameMap;
 
+    public Boolean available;
+
     public Balloon(PlayScreen screen, float x, float y, TiledMap gameMap) {
         super(screen, x, y);
         startX = x;

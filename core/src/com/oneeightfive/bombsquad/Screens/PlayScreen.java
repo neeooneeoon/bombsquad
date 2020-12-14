@@ -49,11 +49,11 @@ public class PlayScreen implements Screen {
 
     private final Bomberman player;
 
-    private Balloon balloon;
-    private Balloon balloon2;
-    private Balloon balloon3;
-    private Balloon balloon4;
-    private Balloon balloon5;
+    public Balloon balloon;
+    public Balloon balloon2;
+    public Balloon balloon3;
+    public Balloon balloon4;
+    public Balloon balloon5;
 
     private BombItem itemBomb;
     private FlameItem itemFlame;
@@ -176,6 +176,11 @@ public class PlayScreen implements Screen {
             balloon4 = new Balloon(this, 30f, 4f, gameMap);
             balloon5 = new Balloon(this, 9f, 9f, gameMap);
         }
+        balloon.available = true;
+        balloon2.available = true;
+        balloon3.available = true;
+        balloon4.available = true;
+        balloon5.available = true;
     }
 
     public void itemGen(int level) {
@@ -195,19 +200,49 @@ public class PlayScreen implements Screen {
     }
 
     public void enemyDraw() {
-        balloon.draw(batch);
-        balloon2.draw(batch);
-        balloon3.draw(batch);
-        balloon4.draw(batch);
-        balloon5.draw(batch);
+        if(balloon.available == true){
+            balloon.draw(batch);
+        }
+
+        if(balloon2.available == true){
+            balloon2.draw(batch);
+        }
+
+        if(balloon3.available == true){
+            balloon3.draw(batch);
+        }
+
+        if(balloon4.available == true){
+            balloon4.draw(batch);
+        }
+
+        if(balloon5.available == true){
+            balloon5.draw(batch);
+        }
+
     }
 
     public void enemyUpdate(float delta) {
-        balloon.update(delta);
-        balloon2.update(delta);
-        balloon3.update(delta);
-        balloon4.update(delta);
-        balloon5.update(delta);
+        if(balloon.available == true){
+            balloon.update(delta);
+        }
+
+        if(balloon2.available == true){
+            balloon2.update(delta);
+        }
+
+        if(balloon3.available == true){
+            balloon3.update(delta);
+        }
+
+        if(balloon4.available == true){
+            balloon4.update(delta);
+        }
+
+        if(balloon5.available == true) {
+            balloon5.update(delta);
+        }
+
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
