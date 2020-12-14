@@ -281,7 +281,7 @@ public class PlayScreen implements Screen {
             }
         }
         player.numberOfBombs--;
-        player.bombs.add(new Bomb(gameWorld, this, player.getX(), player.getY(), 2));
+        player.bombs.add(new Bomb(gameWorld, this, player.getX(), player.getY(), player.bombRadius));
     }
 
     private void drawBombs() {
@@ -355,19 +355,19 @@ public class PlayScreen implements Screen {
             }
         } else {
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                player.b2Body.setLinearVelocity(new Vector2(0, 250 * delta));
+                player.b2Body.setLinearVelocity(new Vector2(0, player.speed * delta));
                 playerDirection = Bomberman.STATE.UP;
                 sounds.playFootstep();
             } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                player.b2Body.setLinearVelocity(new Vector2(250 * delta, 0));
+                player.b2Body.setLinearVelocity(new Vector2(player.speed * delta, 0));
                 playerDirection = Bomberman.STATE.RIGHT;
                 sounds.playFootstep();
             } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                player.b2Body.setLinearVelocity(new Vector2(-250 * delta, 0));
+                player.b2Body.setLinearVelocity(new Vector2(-player.speed * delta, 0));
                 playerDirection = Bomberman.STATE.LEFT;
                 sounds.playFootstep();
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                player.b2Body.setLinearVelocity(new Vector2(0, -250 * delta));
+                player.b2Body.setLinearVelocity(new Vector2(0, -player.speed * delta));
                 playerDirection = Bomberman.STATE.DOWN;
                 sounds.playFootstep();
             } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && delayTimer > 0.15) {
