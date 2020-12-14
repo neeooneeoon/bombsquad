@@ -26,6 +26,9 @@ import com.oneeightfive.bombsquad.HUD.HUD;
 import com.oneeightfive.bombsquad.Sprites.Bomb;
 import com.oneeightfive.bombsquad.Sprites.Bomberman;
 import com.oneeightfive.bombsquad.Sprites.Enemies.Balloon;
+import com.oneeightfive.bombsquad.Sprites.Items.BombItem;
+import com.oneeightfive.bombsquad.Sprites.Items.FlameItem;
+import com.oneeightfive.bombsquad.Sprites.Items.SpeedItem;
 import com.oneeightfive.bombsquad.World.DestroyedBrick;
 import com.oneeightfive.bombsquad.World.WorldCreator;
 
@@ -34,6 +37,7 @@ public class PlayScreen implements Screen {
     private final SpriteBatch batch;
     private final TextureAtlas charactersAtlas;
     private final TextureAtlas weaponAtlas;
+    private final TextureAtlas itemAtlas;
 
     private final OrthographicCamera gameCam;
     private final FitViewport gamePort;
@@ -50,6 +54,10 @@ public class PlayScreen implements Screen {
     private Balloon balloon3;
     private Balloon balloon4;
     private Balloon balloon5;
+
+    private BombItem itemBomb;
+    private FlameItem itemFlame;
+    private SpeedItem itemSpeed;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -80,6 +88,7 @@ public class PlayScreen implements Screen {
     public PlayScreen(BombSquad game, int level) {
         charactersAtlas = new TextureAtlas("textures/characters.pack");
         weaponAtlas = new TextureAtlas("textures/weapon.pack");
+        itemAtlas = new TextureAtlas("textures/items.pack");
 
         this.game = game;
         this.batch = game.getBatch();
@@ -103,6 +112,8 @@ public class PlayScreen implements Screen {
         playerDirection = Bomberman.STATE.DOWN;
 
         enemyGen(level);
+
+        itemGen(level);
 
         hud = new HUD(batch);
 
@@ -142,6 +153,11 @@ public class PlayScreen implements Screen {
         return weaponAtlas;
     }
 
+    public TextureAtlas getItemAtlas() {
+        return itemAtlas;
+    }
+
+
     public Bomberman getPlayer() {
         return player;
     }
@@ -160,6 +176,22 @@ public class PlayScreen implements Screen {
             balloon4 = new Balloon(this, 30f, 4f, gameMap);
             balloon5 = new Balloon(this, 9f, 9f, gameMap);
         }
+    }
+
+    public void itemGen(int level) {
+        if(level == 2) {
+            itemBomb = new BombItem(this, 88/BombSquad.PPM,154/BombSquad.PPM);
+        } else {
+            itemBomb = new BombItem(this, 88/BombSquad.PPM,90/BombSquad.PPM);
+        }
+    }
+
+    public void itemDraw() {
+        itemBomb.draw(batch);
+    }
+
+    private void itemUpdate(float delta) {
+        itemBomb.update();
     }
 
     public void enemyDraw() {
@@ -318,6 +350,7 @@ public class PlayScreen implements Screen {
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
         enemyUpdate(delta);
+        itemUpdate(delta);
         player.update(delta);
 
         gameCam.update();
@@ -352,6 +385,7 @@ public class PlayScreen implements Screen {
         batch.begin();
         drawBombs();
         enemyDraw();
+        itemDraw();
         player.draw(batch);
         batch.end();
 
