@@ -178,6 +178,22 @@ public class PlayScreen implements Screen {
         }
     }
 
+    public void enemyDraw() {
+        balloon.draw(batch);
+        balloon2.draw(batch);
+        balloon3.draw(batch);
+        balloon4.draw(batch);
+        balloon5.draw(batch);
+    }
+
+    public void enemyUpdate(float delta) {
+        balloon.update(delta);
+        balloon2.update(delta);
+        balloon3.update(delta);
+        balloon4.update(delta);
+        balloon5.update(delta);
+    }
+
     public void itemGen(int level) {
         if(level == 2) {
             itemBomb = new BombItem(this, 88/BombSquad.PPM,154/BombSquad.PPM);
@@ -199,22 +215,6 @@ public class PlayScreen implements Screen {
         itemBomb.update();
         itemFlame.update();
         itemSpeed.update();
-    }
-
-    public void enemyDraw() {
-        balloon.draw(batch);
-        balloon2.draw(batch);
-        balloon3.draw(batch);
-        balloon4.draw(batch);
-        balloon5.draw(batch);
-    }
-
-    public void enemyUpdate(float delta) {
-        balloon.update(delta);
-        balloon2.update(delta);
-        balloon3.update(delta);
-        balloon4.update(delta);
-        balloon5.update(delta);
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
