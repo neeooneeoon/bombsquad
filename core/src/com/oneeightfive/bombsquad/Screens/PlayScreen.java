@@ -181,17 +181,24 @@ public class PlayScreen implements Screen {
     public void itemGen(int level) {
         if(level == 2) {
             itemBomb = new BombItem(this, 88/BombSquad.PPM,154/BombSquad.PPM);
+            itemFlame = new FlameItem(this, 1175/BombSquad.PPM,730/BombSquad.PPM);
         } else {
             itemBomb = new BombItem(this, 88/BombSquad.PPM,90/BombSquad.PPM);
+            itemFlame = new FlameItem(this, 600/BombSquad.PPM,730/BombSquad.PPM);
         }
+        itemSpeed = new SpeedItem(this, 1305/BombSquad.PPM,730/BombSquad.PPM);
     }
 
     public void itemDraw() {
         itemBomb.draw(batch);
+        itemFlame.draw(batch);
+        itemSpeed.draw(batch);
     }
 
-    private void itemUpdate(float delta) {
+    private void itemUpdate() {
         itemBomb.update();
+        itemFlame.update();
+        itemSpeed.update();
     }
 
     public void enemyDraw() {
@@ -350,7 +357,7 @@ public class PlayScreen implements Screen {
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
         enemyUpdate(delta);
-        itemUpdate(delta);
+        itemUpdate();
         player.update(delta);
 
         gameCam.update();
