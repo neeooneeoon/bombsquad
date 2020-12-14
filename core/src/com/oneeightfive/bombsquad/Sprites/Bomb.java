@@ -88,7 +88,7 @@ public class Bomb extends Sprite {
         return true;
     }
 
-    public void playerHitBomb(int xFlame, int yFlame, Bomberman bomberman) {
+    public void objectHitBomb(int xFlame, int yFlame, Bomberman bomberman) {
         if (((int) bomberman.getX()  == xFlame) && ((int) bomberman.getY() == yFlame)) {
             bomberman.currentState = Bomberman.STATE.DEAD;
         }
@@ -126,10 +126,10 @@ public class Bomb extends Sprite {
         right = 0;
         layer1 = (TiledMapTileLayer) map.getLayers().get(1);
         layer2 = (TiledMapTileLayer) map.getLayers().get(2);
-        playerHitBomb((int) x , (int) y, bomberman);
+        objectHitBomb((int) x , (int) y, bomberman);
         for (int i = 1; i <= this.radius; i++) {
 
-            playerHitBomb((int) x + i, (int) y, bomberman);
+            objectHitBomb((int) x + i, (int) y, bomberman);
             if (layer2.getCell((int) x + i, (int) y) != null) {
                 xCoordinate = (int) x + i;
                 yCoordinate = (int) y;
@@ -152,7 +152,7 @@ public class Bomb extends Sprite {
         }
         for (int i = 1; i <= this.radius; i++) {
 
-            playerHitBomb((int) x - i, (int) y, bomberman);
+            objectHitBomb((int) x - i, (int) y, bomberman);
             if (layer2.getCell((int) x - i, (int) y) != null) {
                 xCoordinate = (int) x - i;
                 yCoordinate = (int) y;
@@ -175,7 +175,7 @@ public class Bomb extends Sprite {
         }
         for (int i = 1; i <= this.radius; i++) {
 
-            playerHitBomb((int) x, (int) y + i, bomberman);
+            objectHitBomb((int) x, (int) y + i, bomberman);
             if (layer2.getCell((int) x, (int) y + i) != null) {
                 xCoordinate = (int) x;
                 yCoordinate = (int) y + i;
@@ -198,7 +198,7 @@ public class Bomb extends Sprite {
         }
         for (int i = 1; i <= this.radius; i++) {
 
-            playerHitBomb((int) x, (int) y - i, bomberman);
+            objectHitBomb((int) x, (int) y - i, bomberman);
             if (layer2.getCell((int) x, (int) y - i) != null) {
                 xCoordinate = (int) x;
                 yCoordinate = (int) y - i;

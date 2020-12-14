@@ -19,6 +19,8 @@ public class BombItem extends Sprite {
 
     TextureRegion texture;
 
+    public boolean available;
+
     public BombItem(PlayScreen screen, float x, float y) {
         this.x = x;
         this.y = y;
@@ -27,7 +29,7 @@ public class BombItem extends Sprite {
         this.world = screen.getWorld();
 
         texture = new TextureRegion(screen.getItemAtlas().findRegion("BombPowerup"), 0, 0, 32, 32);
-
+        available = true;
         defineItem();
         setBounds(0, 0, 32 / BombSquad.PPM, 32 / BombSquad.PPM);
         setRegion(texture);

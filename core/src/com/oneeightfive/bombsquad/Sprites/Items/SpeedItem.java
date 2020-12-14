@@ -17,6 +17,7 @@ public class SpeedItem extends Sprite {
     private final float y;
 
     TextureRegion texture;
+    public boolean available;
 
     public SpeedItem(PlayScreen screen, float x, float y) {
         this.x = x;
@@ -26,7 +27,7 @@ public class SpeedItem extends Sprite {
         this.world = screen.getWorld();
 
         texture = new TextureRegion(screen.getItemAtlas().findRegion("SpeedPowerup"), 0, 0, 32, 32);
-
+        available = true;
         defineItem();
         setBounds(0, 0, 32 / BombSquad.PPM, 32 / BombSquad.PPM);
         setRegion(texture);

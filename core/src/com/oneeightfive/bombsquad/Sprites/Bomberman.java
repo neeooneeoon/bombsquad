@@ -130,11 +130,10 @@ public class Bomberman extends Sprite {
     }
 
     public void update(float dt) {
+        hitBombItem();
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         currentState = screen.playerDirection;
-
-
 
         switch (currentState) {
             case LEFT:
@@ -173,7 +172,16 @@ public class Bomberman extends Sprite {
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);
     }
 
-
+    public boolean hitBombItem(){
+        if((int)screen.itemBomb.b2Body.getPosition().x + 1f > b2Body.getPosition().x && (int)screen.itemBomb.b2Body.getPosition().x - 1f < b2Body.getPosition().x
+        && (int)screen.itemBomb.b2Body.getPosition().y + 1f > b2Body.getPosition().y && (int)screen.itemBomb.b2Body.getPosition().y - 1f < b2Body.getPosition().y
+        && screen.itemBomb.available){
+            screen.itemBomb.available = false;
+            numberOfBombs++;
+            return true;
+        }
+        return false;
+    }
 
     public void draw(Batch batch) {
         super.draw(batch);

@@ -55,9 +55,9 @@ public class PlayScreen implements Screen {
     public Balloon balloon4;
     public Balloon balloon5;
 
-    private BombItem itemBomb;
-    private FlameItem itemFlame;
-    private SpeedItem itemSpeed;
+    public BombItem itemBomb;
+    public FlameItem itemFlame;
+    public SpeedItem itemSpeed;
 
     private final World gameWorld;
     private final Box2DDebugRenderer b2dr;
@@ -241,15 +241,32 @@ public class PlayScreen implements Screen {
     }
 
     public void itemDraw() {
-        itemBomb.draw(batch);
-        itemFlame.draw(batch);
-        itemSpeed.draw(batch);
+        if(itemBomb.available){
+            itemBomb.draw(batch);
+        }
+
+        if(itemFlame.available){
+            itemFlame.draw(batch);
+        }
+
+        if(itemSpeed.available){
+            itemSpeed.draw(batch);
+        }
+
     }
 
     private void itemUpdate() {
-        itemBomb.update();
-        itemFlame.update();
-        itemSpeed.update();
+        if(itemBomb.available){
+            itemBomb.update();
+        }
+
+        if(itemFlame.available){
+            itemFlame.update();
+        }
+
+        if(itemSpeed.available){
+            itemSpeed.update();
+        }
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
