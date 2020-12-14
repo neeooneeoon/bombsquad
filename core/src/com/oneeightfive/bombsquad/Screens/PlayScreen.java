@@ -164,17 +164,17 @@ public class PlayScreen implements Screen {
 
     public void enemyGen(int level) {
         if(level == 2) {
-            balloon = new Balloon(this, 16f, 10f, gameMap);
-            balloon2 = new Balloon(this, 16f, 12f, gameMap);
+            balloon = new Balloon(this, 15f, 9f, gameMap);
+            balloon2 = new Balloon(this, 16f, 10f, gameMap);
             balloon3 = new Balloon(this, 28f, 4f, gameMap);
             balloon4 = new Balloon(this, 30f, 2f, gameMap);
             balloon5 = new Balloon(this, 10f, 5f, gameMap);
         } else {
-            balloon = new Balloon(this, 10f, 10f, gameMap);
-            balloon2 = new Balloon(this, 12f, 12f, gameMap);
-            balloon3 = new Balloon(this, 20f, 8f, gameMap);
+            balloon = new Balloon(this, 10f, 9f, gameMap);
+            balloon2 = new Balloon(this, 13f, 10f, gameMap);
+            balloon3 = new Balloon(this, 20f, 9f, gameMap);
             balloon4 = new Balloon(this, 30f, 4f, gameMap);
-            balloon5 = new Balloon(this, 9f, 9f, gameMap);
+            balloon5 = new Balloon(this, 10f, 9f, gameMap);
         }
         balloon.available = true;
         balloon2.available = true;
