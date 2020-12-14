@@ -94,22 +94,27 @@ public class Bomb extends Sprite {
         }
         if( (int) screen.balloon.b2body.getPosition().x == xFlame && (int) screen.balloon.b2body.getPosition().y == yFlame ){
             screen.balloon.available = false;
+            Score.current += 500;
         }
 
         if( (int) screen.balloon2.b2body.getPosition().x == xFlame && (int) screen.balloon2.b2body.getPosition().y == yFlame ){
             screen.balloon2.available = false;
+            Score.current += 500;
         }
 
-        if( (int) screen.balloon3.b2body.getPosition().x == xFlame && (int) screen.balloon.b2body.getPosition().y == yFlame ){
+        if( (int) screen.balloon3.b2body.getPosition().x == xFlame && (int) screen.balloon3.b2body.getPosition().y == yFlame ){
             screen.balloon3.available = false;
+            Score.current += 500;
         }
 
         if( (int) screen.balloon4.b2body.getPosition().x == xFlame && (int) screen.balloon4.b2body.getPosition().y == yFlame ){
             screen.balloon4.available = false;
+            Score.current += 500;
         }
 
         if( (int) screen.balloon5.b2body.getPosition().x == xFlame && (int) screen.balloon5.b2body.getPosition().y == yFlame ){
             screen.balloon5.available = false;
+            Score.current += 500;
         }
 
     }
