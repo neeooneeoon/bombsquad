@@ -183,22 +183,6 @@ public class PlayScreen implements Screen {
         balloon5.available = true;
     }
 
-    public void itemGen(int level) {
-        if(level == 2) {
-            itemBomb = new BombItem(this, 88/BombSquad.PPM,154/BombSquad.PPM);
-        } else {
-            itemBomb = new BombItem(this, 88/BombSquad.PPM,90/BombSquad.PPM);
-        }
-    }
-
-    public void itemDraw() {
-        itemBomb.draw(batch);
-    }
-
-    private void itemUpdate(float delta) {
-        itemBomb.update();
-    }
-
     public void enemyDraw() {
         if(balloon.available == true){
             balloon.draw(batch);
@@ -243,6 +227,29 @@ public class PlayScreen implements Screen {
             balloon5.update(delta);
         }
 
+    }
+
+    public void itemGen(int level) {
+        if(level == 2) {
+            itemBomb = new BombItem(this, 88/BombSquad.PPM,154/BombSquad.PPM);
+            itemFlame = new FlameItem(this, 1175/BombSquad.PPM,730/BombSquad.PPM);
+        } else {
+            itemBomb = new BombItem(this, 88/BombSquad.PPM,90/BombSquad.PPM);
+            itemFlame = new FlameItem(this, 600/BombSquad.PPM,730/BombSquad.PPM);
+        }
+        itemSpeed = new SpeedItem(this, 1305/BombSquad.PPM,730/BombSquad.PPM);
+    }
+
+    public void itemDraw() {
+        itemBomb.draw(batch);
+        itemFlame.draw(batch);
+        itemSpeed.draw(batch);
+    }
+
+    private void itemUpdate() {
+        itemBomb.update();
+        itemFlame.update();
+        itemSpeed.update();
     }
 
     public void drawWeaponAnimation(Animation<TextureRegion> t, boolean looping, float x, float y) {
@@ -385,7 +392,7 @@ public class PlayScreen implements Screen {
         gameWorld.step(1 / 60f, 6, 2);
         mapRenderer.setView(gameCam);
         enemyUpdate(delta);
-        itemUpdate(delta);
+        itemUpdate();
         player.update(delta);
 
         gameCam.update();
