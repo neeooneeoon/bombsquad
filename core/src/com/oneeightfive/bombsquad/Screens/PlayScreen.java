@@ -168,7 +168,7 @@ public class PlayScreen implements Screen {
             balloon2 = new Balloon(this, 16f, 10f, gameMap);
             balloon3 = new Balloon(this, 28f, 4f, gameMap);
             balloon4 = new Balloon(this, 30f, 2f, gameMap);
-            balloon5 = new Balloon(this, 10f, 5f, gameMap);
+            balloon5 = new Balloon(this, 9f, 5f, gameMap);
         } else {
             balloon = new Balloon(this, 10f, 9f, gameMap);
             balloon2 = new Balloon(this, 13f, 10f, gameMap);
@@ -438,7 +438,7 @@ public class PlayScreen implements Screen {
 
         mapRenderer.render();
 
-        b2dr.render(gameWorld, gameCam.combined);
+        //b2dr.render(gameWorld, gameCam.combined);
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
