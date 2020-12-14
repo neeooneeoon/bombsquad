@@ -182,6 +182,7 @@ public class Bomberman extends Sprite {
         && screen.itemBomb.available){
             screen.itemBomb.available = false;
             numberOfBombs++;
+            screen.sounds.playSelected();
         }
 
         if((int)screen.itemSpeed.b2Body.getPosition().x + 1f > b2Body.getPosition().x && (int)screen.itemSpeed.b2Body.getPosition().x - 1f < b2Body.getPosition().x
@@ -189,6 +190,7 @@ public class Bomberman extends Sprite {
                 && screen.itemSpeed.available){
             screen.itemSpeed.available = false;
             speed+= 70;
+            screen.sounds.playSelected();
         }
 
         if((int)screen.itemFlame.b2Body.getPosition().x + 1f > b2Body.getPosition().x && (int)screen.itemFlame.b2Body.getPosition().x - 1f < b2Body.getPosition().x
@@ -196,6 +198,7 @@ public class Bomberman extends Sprite {
                 && screen.itemFlame.available){
             screen.itemFlame.available = false;
             bombRadius++;
+            screen.sounds.playSelected();
         }
 
 

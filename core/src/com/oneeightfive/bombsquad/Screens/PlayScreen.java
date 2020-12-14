@@ -76,8 +76,8 @@ public class PlayScreen implements Screen {
     private final Array<Fixture> worldBody = new Array<>();
     public Array<DestroyedBrick> destroyedBricks = new Array<>();
 
-    private final BGM bgm;
-    private final Sounds sounds;
+    public BGM bgm;
+    public Sounds sounds;
 
     public int numberOfBricks = 50;
     public String mapPath = "maps/level1.tmx";
@@ -184,46 +184,46 @@ public class PlayScreen implements Screen {
     }
 
     public void enemyDraw() {
-        if(balloon.available == true){
+        if(balloon.available){
             balloon.draw(batch);
         }
 
-        if(balloon2.available == true){
+        if(balloon2.available){
             balloon2.draw(batch);
         }
 
-        if(balloon3.available == true){
+        if(balloon3.available){
             balloon3.draw(batch);
         }
 
-        if(balloon4.available == true){
+        if(balloon4.available){
             balloon4.draw(batch);
         }
 
-        if(balloon5.available == true){
+        if(balloon5.available){
             balloon5.draw(batch);
         }
 
     }
 
     public void enemyUpdate(float delta) {
-        if(balloon.available == true){
+        if(balloon.available){
             balloon.update(delta);
         }
 
-        if(balloon2.available == true){
+        if(balloon2.available){
             balloon2.update(delta);
         }
 
-        if(balloon3.available == true){
+        if(balloon3.available){
             balloon3.update(delta);
         }
 
-        if(balloon4.available == true){
+        if(balloon4.available){
             balloon4.update(delta);
         }
 
-        if(balloon5.available == true) {
+        if(balloon5.available) {
             balloon5.update(delta);
         }
 
