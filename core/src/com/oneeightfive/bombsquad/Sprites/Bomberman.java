@@ -39,12 +39,16 @@ public class Bomberman extends Sprite {
     public int numberOfBombs = 5;
     public int score = 0;
     public int lives = 3;
+    public int speed;
+    public int bombRadius;
 
     public Bomberman(PlayScreen screen) {
         this.screen = screen;
         this.world = screen.getWorld();
         currentState = STATE.STAY;
         previousState = STATE.STAY;
+        speed = 250;
+        bombRadius = 2;
 
         Array<TextureRegion> frames = new Array<>();
 
@@ -130,7 +134,7 @@ public class Bomberman extends Sprite {
     }
 
     public void update(float dt) {
-        hitBombItem();
+        hitItem();
         stateTimer = currentState == previousState ? stateTimer + dt : 0;
         previousState = currentState;
         currentState = screen.playerDirection;
@@ -172,15 +176,29 @@ public class Bomberman extends Sprite {
         setPosition(b2Body.getPosition().x - getWidth() / 2, b2Body.getPosition().y - (30)/64f);
     }
 
-    public boolean hitBombItem(){
+    public void hitItem(){
         if((int)screen.itemBomb.b2Body.getPosition().x + 1f > b2Body.getPosition().x && (int)screen.itemBomb.b2Body.getPosition().x - 1f < b2Body.getPosition().x
         && (int)screen.itemBomb.b2Body.getPosition().y + 1f > b2Body.getPosition().y && (int)screen.itemBomb.b2Body.getPosition().y - 1f < b2Body.getPosition().y
         && screen.itemBomb.available){
             screen.itemBomb.available = false;
             numberOfBombs++;
-            return true;
         }
-        return false;
+
+        if((int)screen.itemSpeed.b2Body.getPosition().x + 1f > b2Body.getPosition().x && (int)screen.itemSpeed.b2Body.getPosition().x - 1f < b2Body.getPosition().x
+                && (int)screen.itemSpeed.b2Body.getPosition().y + 1f > b2Body.getPosition().y && (int)screen.itemSpeed.b2Body.getPosition().y - 1f < b2Body.getPosition().y
+                && screen.itemSpeed.available){
+            screen.itemSpeed.available = false;
+            speed+= 70;
+        }
+
+        if((int)screen.itemFlame.b2Body.getPosition().x + 1f > b2Body.getPosition().x && (int)screen.itemFlame.b2Body.getPosition().x - 1f < b2Body.getPosition().x
+                && (int)screen.itemFlame.b2Body.getPosition().y + 1f > b2Body.getPosition().y && (int)screen.itemFlame.b2Body.getPosition().y - 1f < b2Body.getPosition().y
+                && screen.itemFlame.available){
+            screen.itemFlame.available = false;
+            bombRadius++;
+        }
+
+
     }
 
     public void draw(Batch batch) {
